@@ -1,0 +1,1140 @@
+version 3
+run Simple-0-20230927-10:54:20-75265
+attr configname Simple
+attr datetime 20230927-10:54:20
+attr datetimef 20230927-105420
+attr experiment Simple
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network GradysNetwork
+attr processid 75265
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config image-path ../../../../inet4.5/images
+config extends Wifi
+config description "Sets up an experiment with the simple drone configuration"
+config *.numUAVs 2
+config *.quads[0].app[0].destAddresses "\"quads[1] sensors[0] sensors[1] sensors[2] groundStation\""
+config *.quads[1].app[0].destAddresses "\"quads[0] sensors[0] sensors[1] sensors[2] groundStation\""
+config *.quads[0].mobility.waypointFile "\"paths/voo_sensor1.waypoints\""
+config *.quads[1].mobility.waypointFile "\"paths/voo_sensor2.waypoints\""
+config *.quads[*].protocol.typename SimpleDroneProtocol
+config *.quads[0].app[*].startTime "normal(1s, 1s)"
+config *.quads[1].app[*].startTime "normal(1s, 1s)"
+config *.sensors[*].app[*].destAddresses "\"quads[0] quads[1]\""
+config *.sensors[0..2].protocol.typename SimpleSensorProtocol
+config *.groundStation.app[0].typename UdpCommunicationApp
+config *.groundStation.app[*].destAddresses "\"quads[0] quads[1]\""
+config *.groundStation.app[0].startTime 0s
+config *.groundStation.protocol.typename SimpleGroundProtocol
+config network GradysNetwork
+config description "Configure quads, ground stations and sensors for wifi only communication"
+config *.quads[*].numApps 1
+config *.quads[*].app[0].typename UdpCommunicationApp
+config *.quads[*].app[0].localPort 1000
+config *.quads[*].app[0].destPort 1000
+config *.quads[*].app[0].sendInterval 1s
+config *.quads[*].app[0].startTime 1s
+config *.quads[*].app[0].stopTime -1s
+config *.quads[*].app[0].messageLength 1454Byte
+config *.quads[*].protocol.typename SimpleDroneProtocol
+config *.quads[*].mobility.typename DroneMobility
+config *.quads[*].mobility.coordinateSystemModule "\"coordinateSystem\""
+config *.quads[*].mobility.waypointProximity 1m
+config *.quads[*].mobility.speed 10mps
+config *.quads[*].mobility.homeLatitude -15.840068deg
+config *.quads[*].mobility.homeLongitude -47.926633deg
+config *.groundStation.numApps 1
+config *.groundStation.app[0].typename UdpCommunicationApp
+config *.groundStation.app[0].destPort 1000
+config *.groundStation.app[0].localPort 1000
+config *.groundStation.app[0].sendInterval 1s
+config *.groundStation.app[0].messageLength 1454Byte
+config *.groundStation.app[0].startTime 1s
+config *.groundStation.protocol.typename SimpleGroundProtocol
+config *.groundStation.mobility.typename StationaryMobility
+config *.groundStation.mobility.coordinateSystemModule "\"coordinateSystem\""
+config *.groundStation.mobility.initialAltitude 0m
+config *.groundStation.mobility.initialLatitude -15.840068deg
+config *.groundStation.mobility.initialLongitude -47.926633deg
+config *.numSensors 8
+config *.sensors[*].numApps 1
+config *.sensors[*].app[0].typename UdpCommunicationApp
+config *.sensors[*].app[0].destPort 1000
+config *.sensors[*].app[0].localPort 1000
+config *.sensors[*].app[0].sendInterval 8s
+config *.sensors[*].app[0].startTime exponential(1s)
+config *.sensors[*].app[0].messageLength 1454Byte
+config *.sensors[0..2].protocol.typename SimpleProtocolSensor
+config *.sensors[*].mobility.typename StationaryMobility
+config *.sensors[*].mobility.coordinateSystemModule "\"coordinateSystem\""
+config *.sensors[*].mobility.initialAltitude 0m
+config *.sensors[0].mobility.initialLatitude -15.84245230deg
+config *.sensors[0].mobility.initialLongitude -47.92948720deg
+config *.sensors[1].mobility.initialLatitude -15.84262780deg
+config *.sensors[1].mobility.initialLongitude -47.92650460deg
+config *.sensors[2].mobility.initialLatitude -15.84161630deg
+config *.sensors[2].mobility.initialLongitude -47.92395110deg
+config *.sensors[3].mobility.initialLatitude -15.8436264deg
+config *.sensors[3].mobility.initialLongitude -47.9270250deg
+config *.sensors[4].mobility.initialLatitude -15.8406461deg
+config *.sensors[4].mobility.initialLongitude -47.9240263deg
+config *.sensors[5].mobility.initialLatitude -15.8416370deg
+config *.sensors[5].mobility.initialLongitude -47.9227066deg
+config *.sensors[6].mobility.initialLatitude -15.8437115deg
+config *.sensors[6].mobility.initialLongitude -47.9259145deg
+config *.sensors[7].mobility.initialLatitude -15.8437425deg
+config *.sensors[7].mobility.initialLongitude -47.9246378deg
+config description "Setup visualisation, scene origin, sensors"
+config cmdenv-status-frequency 10s
+config cmdenv-output-file results/0.out
+config allow-object-stealing-on-deletion true
+config *.visualizer.osgVisualizer.sceneVisualizer.typename SceneOsgEarthVisualizer
+config *.visualizer.osgVisualizer.sceneVisualizer.mapFile "\"map.earth\""
+config *.visualizer.*.sceneVisualizer.sceneImageSize 10000m
+config *.visualizer.*.sceneVisualizer.sceneMinX -100000m
+config *.visualizer.*.sceneVisualizer.sceneMinY -10000m
+config *.visualizer.*.sceneVisualizer.sceneMinZ -10000m
+config *.visualizer.*.sceneVisualizer.sceneMaxX 10000m
+config *.visualizer.*.sceneVisualizer.sceneMaxY 10000m
+config *.visualizer.*.sceneVisualizer.sceneMaxZ 10000m
+config *.visualizer.*.physicalLinkVisualizer.lineShift 0
+config *.visualizer.*.dataLinkVisualizer.lineShift 0
+config *.visualizer.*.networkRouteVisualizer.lineShift 0
+config *.visualizer.*.networkNodeVisualizer.displayModuleName true
+config *.visualizer.*.statisticVisualizer.signalName "\"dataLoad\""
+config *.visualizer.*.statisticVisualizer.format "\"(%v)\""
+config *.visualizer.*.statisticVisualizer.textColor "\"red\""
+config *.visualizer.*.statisticVisualizer.font "\"Courier New, 12px, bold\""
+config *.visualizer.*.statisticVisualizer.opacity 1
+config *.visualizer.*.mobilityVisualizer.displayMobility true
+config *.visualizer.*.mobilityVisualizer.displayPositions true
+config *.visualizer.*.mobilityVisualizer.displayOrientations true
+config *.visualizer.*.mobilityVisualizer.displayVelocities true
+config *.visualizer.*.mobilityVisualizer.displayMovementTrails true
+config *.visualizer.*.mobilityVisualizer.animationSpeed 10
+config *.environment.ground.typename FlatGround
+config *.quads[*].osgModel "\"3d/drone.ive.10.scale.0,0,90.rot\""
+config **.mobility.initFromDisplayString false
+config *.coordinateSystem.sceneLongitude -47.926634deg
+config *.coordinateSystem.sceneLatitude -15.840075deg
+config *.coordinateSystem.sceneHeading 0deg
+config *.*[*].mobility.constraintAreaMinX -10000m
+config *.*[*].mobility.constraintAreaMinY -10000m
+config *.*[*].mobility.constraintAreaMinZ -10000m
+config *.*[*].mobility.constraintAreaMaxX 10000m
+config *.*[*].mobility.constraintAreaMaxY 10000m
+config *.*[*].mobility.constraintAreaMaxZ 10000m
+config *.*[*].wlan[*].radio.displayCommunicationRange true
+config *.*[*].wlan[0].radio.displayInterferenceRange false
+config *.sensor*.wlan[0].radio.energyConsumer.typename SensorStateBasedEpEnergyConsumer
+config *.sensor*.wlan[0].radio.energyConsumer.offPowerConsumption 0mW
+config *.sensor*.wlan[0].radio.energyConsumer.sleepPowerConsumption 1mW
+config *.sensor*.wlan[0].radio.energyConsumer.switchingPowerConsumption 1mW
+config *.sensor*.wlan[0].radio.energyConsumer.receiverIdlePowerConsumption 2mW
+config *.sensor*.wlan[0].radio.energyConsumer.receiverBusyPowerConsumption 5mW
+config *.sensor*.wlan[0].radio.energyConsumer.receiverReceivingPowerConsumption 10mW
+config *.sensor*.wlan[0].radio.energyConsumer.transmitterIdlePowerConsumption 2mW
+config *.sensor*.wlan[0].radio.energyConsumer.transmitterTransmittingPowerConsumption 100mW
+config *.sensor*.energyStorage.typename IdealEpEnergyStorage
+
+vector 0 GradysNetwork.quads[0].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 1 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 2 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 3 GradysNetwork.quads[0].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 4 GradysNetwork.quads[0].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 5 GradysNetwork.quads[0].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 6 GradysNetwork.quads[1].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 7 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 8 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 9 GradysNetwork.quads[1].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 10 GradysNetwork.quads[1].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 11 GradysNetwork.quads[1].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 12 GradysNetwork.sensors[0].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 13 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 14 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 15 GradysNetwork.sensors[0].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 16 GradysNetwork.sensors[0].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 17 GradysNetwork.sensors[0].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 18 GradysNetwork.sensors[1].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 19 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 20 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 21 GradysNetwork.sensors[1].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 22 GradysNetwork.sensors[1].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 23 GradysNetwork.sensors[1].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 24 GradysNetwork.sensors[2].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 25 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 26 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 27 GradysNetwork.sensors[2].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 28 GradysNetwork.sensors[2].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 29 GradysNetwork.sensors[2].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 30 GradysNetwork.sensors[3].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 31 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 32 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 33 GradysNetwork.sensors[3].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 34 GradysNetwork.sensors[3].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 35 GradysNetwork.sensors[3].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 36 GradysNetwork.sensors[4].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 37 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 38 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 39 GradysNetwork.sensors[4].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 40 GradysNetwork.sensors[4].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 41 GradysNetwork.sensors[4].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 42 GradysNetwork.sensors[5].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 43 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 44 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 45 GradysNetwork.sensors[5].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 46 GradysNetwork.sensors[5].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 47 GradysNetwork.sensors[5].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 48 GradysNetwork.sensors[6].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 49 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 50 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 51 GradysNetwork.sensors[6].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 52 GradysNetwork.sensors[6].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 53 GradysNetwork.sensors[6].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 54 GradysNetwork.sensors[7].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 55 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 56 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 57 GradysNetwork.sensors[7].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 58 GradysNetwork.sensors[7].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 59 GradysNetwork.sensors[7].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 60 GradysNetwork.groundStation.wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 61 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 62 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 63 GradysNetwork.groundStation.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 64 GradysNetwork.groundStation.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 65 GradysNetwork.groundStation.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 66 GradysNetwork.sensors[0].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 67 GradysNetwork.sensors[1].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 68 GradysNetwork.sensors[2].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 69 GradysNetwork.sensors[3].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 70 GradysNetwork.sensors[4].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 71 GradysNetwork.sensors[5].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 72 GradysNetwork.sensors[6].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 73 GradysNetwork.sensors[7].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 74 GradysNetwork.quads[0].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 75 GradysNetwork.quads[0].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 76 GradysNetwork.quads[1].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 77 GradysNetwork.quads[1].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 78 GradysNetwork.sensors[0].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 79 GradysNetwork.sensors[0].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 80 GradysNetwork.sensors[0].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 81 GradysNetwork.sensors[1].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 82 GradysNetwork.sensors[1].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 83 GradysNetwork.sensors[1].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 84 GradysNetwork.sensors[2].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 85 GradysNetwork.sensors[2].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 86 GradysNetwork.sensors[2].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 87 GradysNetwork.sensors[3].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 88 GradysNetwork.sensors[3].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 89 GradysNetwork.sensors[3].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 90 GradysNetwork.sensors[4].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 91 GradysNetwork.sensors[4].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 92 GradysNetwork.sensors[4].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 93 GradysNetwork.sensors[5].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 94 GradysNetwork.sensors[5].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 95 GradysNetwork.sensors[5].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 96 GradysNetwork.sensors[6].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 97 GradysNetwork.sensors[6].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 98 GradysNetwork.sensors[6].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 99 GradysNetwork.sensors[7].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 100 GradysNetwork.sensors[7].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 101 GradysNetwork.sensors[7].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 102 GradysNetwork.groundStation.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 103 GradysNetwork.groundStation.wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 104 GradysNetwork.quads[0].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 105 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 106 GradysNetwork.quads[1].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 107 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 108 GradysNetwork.sensors[0].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 109 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 110 GradysNetwork.sensors[1].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 111 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 112 GradysNetwork.sensors[2].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 113 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 114 GradysNetwork.sensors[3].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 115 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 116 GradysNetwork.sensors[4].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 117 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 118 GradysNetwork.sensors[5].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 119 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 120 GradysNetwork.sensors[6].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 121 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 122 GradysNetwork.sensors[7].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 123 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 124 GradysNetwork.groundStation.wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 125 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 126 GradysNetwork.quads[0].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 127 GradysNetwork.quads[1].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 128 GradysNetwork.sensors[0].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 129 GradysNetwork.sensors[1].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 130 GradysNetwork.sensors[2].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 131 GradysNetwork.sensors[3].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 132 GradysNetwork.sensors[4].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 133 GradysNetwork.sensors[5].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 134 GradysNetwork.sensors[6].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 135 GradysNetwork.sensors[7].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 136 GradysNetwork.groundStation.wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+0	0	0	0
+0	0	0	0
+1	0	0	0
+1	0	0	0
+2	0	0	0
+2	0	0	0
+3	0	0	0
+4	0	0	0
+5	0	0	0
+6	0	0	0
+6	0	0	0
+7	0	0	0
+7	0	0	0
+8	0	0	0
+8	0	0	0
+9	0	0	0
+10	0	0	0
+11	0	0	0
+12	0	0	0
+12	0	0	0
+13	0	0	0
+13	0	0	0
+14	0	0	0
+14	0	0	0
+15	0	0	0
+16	0	0	0
+17	0	0	0
+18	0	0	0
+18	0	0	0
+19	0	0	0
+19	0	0	0
+20	0	0	0
+20	0	0	0
+21	0	0	0
+22	0	0	0
+23	0	0	0
+24	0	0	0
+24	0	0	0
+25	0	0	0
+25	0	0	0
+26	0	0	0
+26	0	0	0
+27	0	0	0
+28	0	0	0
+29	0	0	0
+30	0	0	0
+30	0	0	0
+31	0	0	0
+31	0	0	0
+32	0	0	0
+32	0	0	0
+33	0	0	0
+34	0	0	0
+35	0	0	0
+36	0	0	0
+36	0	0	0
+37	0	0	0
+37	0	0	0
+38	0	0	0
+38	0	0	0
+39	0	0	0
+40	0	0	0
+41	0	0	0
+42	0	0	0
+42	0	0	0
+43	0	0	0
+43	0	0	0
+44	0	0	0
+44	0	0	0
+45	0	0	0
+46	0	0	0
+47	0	0	0
+48	0	0	0
+48	0	0	0
+49	0	0	0
+49	0	0	0
+50	0	0	0
+50	0	0	0
+51	0	0	0
+52	0	0	0
+53	0	0	0
+54	0	0	0
+54	0	0	0
+55	0	0	0
+55	0	0	0
+56	0	0	0
+56	0	0	0
+57	0	0	0
+58	0	0	0
+59	0	0	0
+60	0	0	0
+60	0	0	0
+61	0	0	0
+61	0	0	0
+62	0	0	0
+62	0	0	0
+63	0	0	0
+64	0	0	0
+65	0	0	0
+66	0	0	0
+66	0	0	0
+66	0	0	0
+66	0	0	0
+66	0	0	0.002
+67	0	0	0
+67	0	0	0
+67	0	0	0
+67	0	0	0
+67	0	0	0.002
+68	0	0	0
+68	0	0	0
+68	0	0	0
+68	0	0	0
+68	0	0	0.002
+69	0	0	0
+69	0	0	0
+69	0	0	0
+69	0	0	0
+69	0	0	0.002
+70	0	0	0
+70	0	0	0
+70	0	0	0
+70	0	0	0
+70	0	0	0.002
+71	0	0	0
+71	0	0	0
+71	0	0	0
+71	0	0	0
+71	0	0	0.002
+72	0	0	0
+72	0	0	0
+72	0	0	0
+72	0	0	0
+72	0	0	0.002
+73	0	0	0
+73	0	0	0
+73	0	0	0
+73	0	0	0
+73	0	0	0.002
+74	0	0	0
+74	0	0	0
+74	0	0	2
+75	0	0	0
+76	0	0	0
+76	0	0	0
+76	0	0	2
+77	0	0	0
+78	0	0	0
+78	0	0	0
+78	0	0	2
+79	0	0	0
+79	0	0	0
+79	0	0	0
+79	0	0	0.002
+80	0	0	0
+81	0	0	0
+81	0	0	0
+81	0	0	2
+82	0	0	0
+82	0	0	0
+82	0	0	0
+82	0	0	0.002
+83	0	0	0
+84	0	0	0
+84	0	0	0
+84	0	0	2
+85	0	0	0
+85	0	0	0
+85	0	0	0
+85	0	0	0.002
+86	0	0	0
+87	0	0	0
+87	0	0	0
+87	0	0	2
+88	0	0	0
+88	0	0	0
+88	0	0	0
+88	0	0	0.002
+89	0	0	0
+90	0	0	0
+90	0	0	0
+90	0	0	2
+91	0	0	0
+91	0	0	0
+91	0	0	0
+91	0	0	0.002
+92	0	0	0
+93	0	0	0
+93	0	0	0
+93	0	0	2
+94	0	0	0
+94	0	0	0
+94	0	0	0
+94	0	0	0.002
+95	0	0	0
+96	0	0	0
+96	0	0	0
+96	0	0	2
+97	0	0	0
+97	0	0	0
+97	0	0	0
+97	0	0	0.002
+98	0	0	0
+99	0	0	0
+99	0	0	0
+99	0	0	2
+100	0	0	0
+100	0	0	0
+100	0	0	0
+100	0	0	0.002
+101	0	0	0
+102	0	0	0
+102	0	0	0
+102	0	0	2
+103	0	0	0
+104	0	0	1
+105	0	0	0
+105	0	0	0
+106	0	0	1
+107	0	0	0
+107	0	0	0
+108	0	0	1
+109	0	0	0
+109	0	0	0
+110	0	0	1
+111	0	0	0
+111	0	0	0
+112	0	0	1
+113	0	0	0
+113	0	0	0
+114	0	0	1
+115	0	0	0
+115	0	0	0
+116	0	0	1
+117	0	0	0
+117	0	0	0
+118	0	0	1
+119	0	0	0
+119	0	0	0
+120	0	0	1
+121	0	0	0
+121	0	0	0
+122	0	0	1
+123	0	0	0
+123	0	0	0
+124	0	0	1
+125	0	0	0
+125	0	0	0
+126	0	0	31
+127	0	0	31
+128	0	0	31
+129	0	0	31
+130	0	0	31
+131	0	0	31
+132	0	0	31
+133	0	0	31
+134	0	0	31
+135	0	0	31
+136	0	0	31
+

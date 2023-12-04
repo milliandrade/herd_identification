@@ -1,0 +1,5772 @@
+version 3
+run Simple-0-20230928-13:14:15-232267
+attr configname Simple
+attr datetime 20230928-13:14:15
+attr datetimef 20230928-131415
+attr experiment Simple
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network GradysNetwork
+attr processid 232267
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config image-path ../../../../inet4.5/images
+config extends Wifi
+config description "Sets up an experiment with the simple drone configuration"
+config *.numUAVs 2
+config *.quads[*].protocol "\"simple\""
+config *.groundStation[*].protocol "\"simple\""
+config *.sensors[*].protocol "\"simple\""
+config *.quads[*].protocolFileName "\"protocol_mobile\""
+config *.groundStation[*].protocolFileName "\"protocol_ground\""
+config *.sensors[*].protocolFileName "\"protocol_sensor\""
+config *.quads[*].protocolMobile "\"SimpleProtocolMobile\""
+config *.groundStation[*].protocolGround "\"SimpleProtocolGround\""
+config *.sensors[*].protocolSensor "\"SimpleProtocolSensor\""
+config *.quads[0].app[0].destAddresses "\"quads[1] sensors[0] sensors[1] sensors[2] groundStation\""
+config *.quads[1].app[0].destAddresses "\"quads[0] sensors[0] sensors[1] sensors[2] groundStation\""
+config *.quads[0].mobility.waypointFile "\"paths/voo_sensor1.waypoints\""
+config *.quads[1].mobility.waypointFile "\"paths/voo_sensor2.waypoints\""
+config *.quads[*].protocol.typename PythonDroneProtocol
+config *.quads[0].app[*].startTime "normal(1s, 1s)"
+config *.quads[1].app[*].startTime "normal(1s, 1s)"
+config *.sensors[*].app[*].destAddresses "\"quads[0] quads[1]\""
+config *.sensors[0..2].protocol.typename PythonSensorProtocol
+config *.groundStation.app[0].typename UdpCommunicationApp
+config *.groundStation.app[*].destAddresses "\"quads[0] quads[1]\""
+config *.groundStation.app[0].startTime 0s
+config *.groundStation.protocol.typename PythonGroundProtocol
+config network GradysNetwork
+config description "Configure quads, ground stations and sensors for wifi only communication"
+config *.quads[*].numApps 1
+config *.quads[*].app[0].typename UdpCommunicationApp
+config *.quads[*].app[0].localPort 1000
+config *.quads[*].app[0].destPort 1000
+config *.quads[*].app[0].sendInterval 1s
+config *.quads[*].app[0].startTime 1s
+config *.quads[*].app[0].stopTime -1s
+config *.quads[*].app[0].messageLength 1454Byte
+config *.quads[*].protocol.typename PythonDroneProtocol
+config *.quads[*].mobility.typename DroneMobility
+config *.quads[*].mobility.coordinateSystemModule "\"coordinateSystem\""
+config *.quads[*].mobility.waypointProximity 1m
+config *.quads[*].mobility.speed 10mps
+config *.quads[*].mobility.homeLatitude -15.840068deg
+config *.quads[*].mobility.homeLongitude -47.926633deg
+config *.groundStation.numApps 1
+config *.groundStation.app[0].typename UdpCommunicationApp
+config *.groundStation.app[0].destPort 1000
+config *.groundStation.app[0].localPort 1000
+config *.groundStation.app[0].sendInterval 1s
+config *.groundStation.app[0].messageLength 1454Byte
+config *.groundStation.app[0].startTime 1s
+config *.groundStation.protocol.typename SimpleGroundProtocol
+config *.groundStation.mobility.typename StationaryMobility
+config *.groundStation.mobility.coordinateSystemModule "\"coordinateSystem\""
+config *.groundStation.mobility.initialAltitude 0m
+config *.groundStation.mobility.initialLatitude -15.840068deg
+config *.groundStation.mobility.initialLongitude -47.926633deg
+config *.numSensors 8
+config *.sensors[*].numApps 1
+config *.sensors[*].app[0].typename UdpCommunicationApp
+config *.sensors[*].app[0].destPort 1000
+config *.sensors[*].app[0].localPort 1000
+config *.sensors[*].app[0].sendInterval 8s
+config *.sensors[*].app[0].startTime exponential(1s)
+config *.sensors[*].app[0].messageLength 1454Byte
+config *.sensors[0..2].protocol.typename SimpleProtocolSensor
+config *.sensors[*].mobility.typename StationaryMobility
+config *.sensors[*].mobility.coordinateSystemModule "\"coordinateSystem\""
+config *.sensors[*].mobility.initialAltitude 0m
+config *.sensors[0].mobility.initialLatitude -15.84245230deg
+config *.sensors[0].mobility.initialLongitude -47.92948720deg
+config *.sensors[1].mobility.initialLatitude -15.84262780deg
+config *.sensors[1].mobility.initialLongitude -47.92650460deg
+config *.sensors[2].mobility.initialLatitude -15.84161630deg
+config *.sensors[2].mobility.initialLongitude -47.92395110deg
+config *.sensors[3].mobility.initialLatitude -15.8436264deg
+config *.sensors[3].mobility.initialLongitude -47.9270250deg
+config *.sensors[4].mobility.initialLatitude -15.8406461deg
+config *.sensors[4].mobility.initialLongitude -47.9240263deg
+config *.sensors[5].mobility.initialLatitude -15.8416370deg
+config *.sensors[5].mobility.initialLongitude -47.9227066deg
+config *.sensors[6].mobility.initialLatitude -15.8437115deg
+config *.sensors[6].mobility.initialLongitude -47.9259145deg
+config *.sensors[7].mobility.initialLatitude -15.8437425deg
+config *.sensors[7].mobility.initialLongitude -47.9246378deg
+config description "Setup visualisation, scene origin, sensors"
+config cmdenv-status-frequency 10s
+config cmdenv-output-file results/0.out
+config allow-object-stealing-on-deletion true
+config *.visualizer.osgVisualizer.typename IntegratedOsgVisualizer
+config *.visualizer.osgVisualizer.sceneVisualizer.typename SceneOsgEarthVisualizer
+config *.visualizer.osgVisualizer.sceneVisualizer.mapFile "\"map.earth\""
+config *.visualizer.*.sceneVisualizer.sceneImageSize 10000m
+config *.visualizer.*.sceneVisualizer.sceneMinX -100000m
+config *.visualizer.*.sceneVisualizer.sceneMinY -10000m
+config *.visualizer.*.sceneVisualizer.sceneMinZ -10000m
+config *.visualizer.*.sceneVisualizer.sceneMaxX 10000m
+config *.visualizer.*.sceneVisualizer.sceneMaxY 10000m
+config *.visualizer.*.sceneVisualizer.sceneMaxZ 10000m
+config *.visualizer.*.physicalLinkVisualizer.lineShift 0
+config *.visualizer.*.dataLinkVisualizer.lineShift 0
+config *.visualizer.*.networkRouteVisualizer.lineShift 0
+config *.visualizer.*.networkNodeVisualizer.displayModuleName true
+config *.visualizer.*.statisticVisualizer.signalName "\"dataLoad\""
+config *.visualizer.*.statisticVisualizer.format "\"(%v)\""
+config *.visualizer.*.statisticVisualizer.textColor "\"red\""
+config *.visualizer.*.statisticVisualizer.font "\"Courier New, 12px, bold\""
+config *.visualizer.*.statisticVisualizer.opacity 1
+config *.visualizer.*.mobilityVisualizer.displayMobility true
+config *.visualizer.*.mobilityVisualizer.displayPositions true
+config *.visualizer.*.mobilityVisualizer.displayOrientations true
+config *.visualizer.*.mobilityVisualizer.displayVelocities true
+config *.visualizer.*.mobilityVisualizer.displayMovementTrails true
+config *.visualizer.*.mobilityVisualizer.animationSpeed 10
+config *.environment.ground.typename FlatGround
+config *.quads[*].osgModel "\"3d/drone.ive.10.scale.0,0,90.rot\""
+config **.mobility.initFromDisplayString false
+config *.coordinateSystem.sceneLongitude -47.926634deg
+config *.coordinateSystem.sceneLatitude -15.840075deg
+config *.coordinateSystem.sceneHeading 0deg
+config *.*[*].mobility.constraintAreaMinX -10000m
+config *.*[*].mobility.constraintAreaMinY -10000m
+config *.*[*].mobility.constraintAreaMinZ -10000m
+config *.*[*].mobility.constraintAreaMaxX 10000m
+config *.*[*].mobility.constraintAreaMaxY 10000m
+config *.*[*].mobility.constraintAreaMaxZ 10000m
+config *.*[*].wlan[*].radio.displayCommunicationRange true
+config *.*[*].wlan[0].radio.displayInterferenceRange false
+config *.sensor*.wlan[0].radio.energyConsumer.typename SensorStateBasedEpEnergyConsumer
+config *.sensor*.wlan[0].radio.energyConsumer.offPowerConsumption 0mW
+config *.sensor*.wlan[0].radio.energyConsumer.sleepPowerConsumption 1mW
+config *.sensor*.wlan[0].radio.energyConsumer.switchingPowerConsumption 1mW
+config *.sensor*.wlan[0].radio.energyConsumer.receiverIdlePowerConsumption 2mW
+config *.sensor*.wlan[0].radio.energyConsumer.receiverBusyPowerConsumption 5mW
+config *.sensor*.wlan[0].radio.energyConsumer.receiverReceivingPowerConsumption 10mW
+config *.sensor*.wlan[0].radio.energyConsumer.transmitterIdlePowerConsumption 2mW
+config *.sensor*.wlan[0].radio.energyConsumer.transmitterTransmittingPowerConsumption 100mW
+config *.sensor*.energyStorage.typename IdealEpEnergyStorage
+
+vector 0 GradysNetwork.quads[0].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 1 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 2 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 3 GradysNetwork.quads[0].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 4 GradysNetwork.quads[0].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 5 GradysNetwork.quads[0].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 6 GradysNetwork.quads[1].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 7 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 8 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 9 GradysNetwork.quads[1].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 10 GradysNetwork.quads[1].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 11 GradysNetwork.quads[1].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 12 GradysNetwork.sensors[0].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 13 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 14 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 15 GradysNetwork.sensors[0].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 16 GradysNetwork.sensors[0].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 17 GradysNetwork.sensors[0].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 18 GradysNetwork.sensors[1].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 19 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 20 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 21 GradysNetwork.sensors[1].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 22 GradysNetwork.sensors[1].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 23 GradysNetwork.sensors[1].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 24 GradysNetwork.sensors[2].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 25 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 26 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 27 GradysNetwork.sensors[2].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 28 GradysNetwork.sensors[2].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 29 GradysNetwork.sensors[2].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 30 GradysNetwork.sensors[3].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 31 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 32 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 33 GradysNetwork.sensors[3].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 34 GradysNetwork.sensors[3].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 35 GradysNetwork.sensors[3].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 36 GradysNetwork.sensors[4].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 37 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 38 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 39 GradysNetwork.sensors[4].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 40 GradysNetwork.sensors[4].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 41 GradysNetwork.sensors[4].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 42 GradysNetwork.sensors[5].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 43 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 44 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 45 GradysNetwork.sensors[5].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 46 GradysNetwork.sensors[5].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 47 GradysNetwork.sensors[5].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 48 GradysNetwork.sensors[6].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 49 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 50 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 51 GradysNetwork.sensors[6].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 52 GradysNetwork.sensors[6].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 53 GradysNetwork.sensors[6].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 54 GradysNetwork.sensors[7].wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 55 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 56 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 57 GradysNetwork.sensors[7].udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 58 GradysNetwork.sensors[7].udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 59 GradysNetwork.sensors[7].udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 60 GradysNetwork.groundStation.wlan[0].mac.dcf frameSequenceActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
+attr title "frame sequence active"
+vector 61 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
+attr title "queue length"
+vector 62 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source warmup(count(backoffStarted)-count(backoffStopped))
+attr title "backoff active"
+vector 63 GradysNetwork.groundStation.udp passedUpPk:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetSentToUpper
+attr title "packets passed up, count"
+vector 64 GradysNetwork.groundStation.udp droppedPkWrongPort:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsNoPortFound(packetDropped)
+attr title "packets dropped (wrong port), count"
+vector 65 GradysNetwork.groundStation.udp droppedPkBadChecksum:vector(count) ETV
+attr interpolationmode none
+attr recordingmode vector(count)
+attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
+attr title "packets dropped (checksum error), count"
+vector 66 GradysNetwork.sensors[0].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 67 GradysNetwork.sensors[1].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 68 GradysNetwork.sensors[2].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 69 GradysNetwork.sensors[3].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 70 GradysNetwork.sensors[4].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 71 GradysNetwork.sensors[5].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 72 GradysNetwork.sensors[6].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 73 GradysNetwork.sensors[7].energyStorage powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 74 GradysNetwork.quads[0].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 75 GradysNetwork.quads[0].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 76 GradysNetwork.quads[1].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 77 GradysNetwork.quads[1].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 78 GradysNetwork.sensors[0].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 79 GradysNetwork.sensors[0].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 80 GradysNetwork.sensors[0].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 81 GradysNetwork.sensors[1].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 82 GradysNetwork.sensors[1].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 83 GradysNetwork.sensors[1].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 84 GradysNetwork.sensors[2].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 85 GradysNetwork.sensors[2].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 86 GradysNetwork.sensors[2].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 87 GradysNetwork.sensors[3].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 88 GradysNetwork.sensors[3].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 89 GradysNetwork.sensors[3].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 90 GradysNetwork.sensors[4].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 91 GradysNetwork.sensors[4].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 92 GradysNetwork.sensors[4].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 93 GradysNetwork.sensors[5].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 94 GradysNetwork.sensors[5].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 95 GradysNetwork.sensors[5].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 96 GradysNetwork.sensors[6].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 97 GradysNetwork.sensors[6].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 98 GradysNetwork.sensors[6].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 99 GradysNetwork.sensors[7].wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 100 GradysNetwork.sensors[7].wlan[0].radio.energyConsumer powerConsumption:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source powerConsumptionChanged
+attr title "Power consumption"
+attr unit W
+vector 101 GradysNetwork.sensors[7].wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 102 GradysNetwork.groundStation.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioModeChanged
+attr title "Radio mode"
+vector 103 GradysNetwork.groundStation.wlan[0].radio radioChannel:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source radioChannelChanged
+attr title "Radio channel"
+vector 104 GradysNetwork.quads[0].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 105 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 106 GradysNetwork.quads[1].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 107 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 108 GradysNetwork.sensors[0].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 109 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 110 GradysNetwork.sensors[1].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 111 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 112 GradysNetwork.sensors[2].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 113 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 114 GradysNetwork.sensors[3].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 115 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 116 GradysNetwork.sensors[4].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 117 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 118 GradysNetwork.sensors[5].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 119 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 120 GradysNetwork.sensors[6].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 121 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 122 GradysNetwork.sensors[7].wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 123 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 124 GradysNetwork.groundStation.wlan[0].radio receptionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source receptionStateChanged
+attr title "Radio reception state"
+vector 125 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
+attr enum IDLE,DEFER,IFS_AND_BACKOFF
+attr interpolationmode none
+attr recordingmode vector
+attr title "contention state changed"
+attr type enum
+vector 126 GradysNetwork.quads[0].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 127 GradysNetwork.quads[1].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 128 GradysNetwork.sensors[0].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 129 GradysNetwork.sensors[1].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 130 GradysNetwork.sensors[2].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 131 GradysNetwork.sensors[3].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 132 GradysNetwork.sensors[4].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 133 GradysNetwork.sensors[5].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 134 GradysNetwork.sensors[6].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 135 GradysNetwork.sensors[7].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 136 GradysNetwork.groundStation.wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr title "contention window"
+vector 137 GradysNetwork.quads[0].app[0] packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 138 GradysNetwork.quads[0].udp packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 139 GradysNetwork.quads[0].lo[0].lo rcvdPkFromHl:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, packetBytes"
+vector 140 GradysNetwork.quads[0].lo[0].lo passedUpPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, packetBytes"
+vector 141 GradysNetwork.quads[0].wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from upper layer, packetBytes"
+vector 142 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 143 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 144 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 145 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "backoff periods"
+vector 146 GradysNetwork.quads[0].udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 147 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 148 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 149 GradysNetwork.quads[0].wlan[0].mac.dcf datarateSelected:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "datarates selected"
+vector 150 GradysNetwork.quads[0].wlan[0].mac packetSentToLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to lower layer, packetBytes"
+vector 151 GradysNetwork.quads[0].wlan[0].radio transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "Radio transmission state"
+vector 152 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent, packetBytes"
+vector 153 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, packetBytes"
+vector 154 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, packetBytes"
+vector 155 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetDequeued)
+attr title "queueing times"
+vector 156 GradysNetwork.quads[1].wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from lower layer, packetBytes"
+vector 157 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received, packetBytes"
+vector 158 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, packetBytes"
+vector 159 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, packetBytes"
+vector 160 GradysNetwork.quads[1].wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to upper layer, packetBytes"
+vector 161 GradysNetwork.groundStation.wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from lower layer, packetBytes"
+vector 162 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received, packetBytes"
+vector 163 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, packetBytes"
+vector 164 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, packetBytes"
+vector 165 GradysNetwork.groundStation.wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to upper layer, packetBytes"
+vector 166 GradysNetwork.groundStation.udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 167 GradysNetwork.groundStation.app[0] packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 168 GradysNetwork.groundStation.app[0] rcvdPkLifetime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source dataAge(packetReceived)
+attr title "received packet lifetime"
+attr unit s
+vector 169 GradysNetwork.groundStation.app[0] packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 170 GradysNetwork.groundStation.udp packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 171 GradysNetwork.groundStation.lo[0].lo rcvdPkFromHl:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, packetBytes"
+vector 172 GradysNetwork.groundStation.lo[0].lo passedUpPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, packetBytes"
+vector 173 GradysNetwork.groundStation.wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from upper layer, packetBytes"
+vector 174 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 175 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 176 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 177 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "backoff periods"
+vector 178 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 179 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 180 GradysNetwork.groundStation.wlan[0].mac.dcf datarateSelected:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "datarates selected"
+vector 181 GradysNetwork.groundStation.wlan[0].mac packetSentToLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to lower layer, packetBytes"
+vector 182 GradysNetwork.groundStation.wlan[0].radio transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "Radio transmission state"
+vector 183 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent, packetBytes"
+vector 184 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, packetBytes"
+vector 185 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, packetBytes"
+vector 186 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetDequeued)
+attr title "queueing times"
+vector 187 GradysNetwork.quads[0].wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from lower layer, packetBytes"
+vector 188 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received, packetBytes"
+vector 189 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetReceivedFromPeer)
+attr title "packets received: multicast, packetBytes"
+vector 190 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetReceivedFromPeer)
+attr title "packets received: without retry, packetBytes"
+vector 191 GradysNetwork.quads[0].wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to upper layer, packetBytes"
+vector 192 GradysNetwork.quads[0].app[0] packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 193 GradysNetwork.quads[0].app[0] rcvdPkLifetime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source dataAge(packetReceived)
+attr title "received packet lifetime"
+attr unit s
+vector 194 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 195 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 196 GradysNetwork.quads[1].udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 197 GradysNetwork.quads[1].app[0] packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+vector 198 GradysNetwork.quads[1].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 199 GradysNetwork.quads[1].app[0] rcvdPkLifetime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source dataAge(packetReceived)
+attr title "received packet lifetime"
+attr unit s
+vector 200 GradysNetwork.groundStation.app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 201 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 202 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 203 GradysNetwork.quads[0].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 204 GradysNetwork.quads[1].app[0] packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 205 GradysNetwork.quads[1].udp packetSent:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSent
+attr title "packets sent, packetBytes"
+vector 206 GradysNetwork.quads[1].lo[0].lo rcvdPkFromHl:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceivedFromUpper
+attr title "packets received from higher layer, packetBytes"
+vector 207 GradysNetwork.quads[1].lo[0].lo passedUpPk:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetSentToUpper
+attr title "packets passed to higher layer, packetBytes"
+vector 208 GradysNetwork.quads[1].wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets received from upper layer, packetBytes"
+vector 209 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPushStarted)
+attr title "incoming packet lengths"
+attr unit b
+vector 210 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 211 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
+attr title "queue length"
+attr unit pk
+vector 212 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
+attr autoWarmupFilter false
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
+attr title "queue bit length"
+attr unit b
+vector 213 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "backoff periods"
+vector 214 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetPulled)
+attr title "queueing times"
+attr unit s
+vector 215 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source packetLength(packetPulled)
+attr title "outgoing packet lengths"
+attr unit b
+vector 216 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 217 GradysNetwork.quads[1].wlan[0].mac.dcf datarateSelected:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr title "datarates selected"
+vector 218 GradysNetwork.quads[1].wlan[0].mac packetSentToLower:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent to lower layer, packetBytes"
+vector 219 GradysNetwork.quads[1].wlan[0].radio transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr recordingmode vector
+attr source transmissionStateChanged
+attr title "Radio transmission state"
+vector 220 GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr title "packets sent, packetBytes"
+vector 221 GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Multicast(packetSentToPeer)
+attr title "packets sent: multicast, packetBytes"
+vector 222 GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211NotRetry(packetSentToPeer)
+attr title "packets sent: without retry, packetBytes"
+vector 223 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source queueingTime(packetDequeued)
+attr title "queueing times"
+0	0	0	0
+0	0	0	0
+0	24	0.038356200584	1
+0	37	0.038410200584	0
+0	202	2.038356200584	1
+0	215	2.038410200584	0
+0	455	4.038356200584	1
+0	468	4.038410200584	0
+0	706	6.038356200584	1
+0	719	6.038410200584	0
+0	957	8.038356200584	1
+0	970	8.038410200584	0
+1	0	0	0
+1	0	0	0
+1	24	0.038356200584	1
+1	37	0.038410200584	0
+1	202	2.038356200584	1
+1	215	2.038410200584	0
+1	455	4.038356200584	1
+1	468	4.038410200584	0
+1	706	6.038356200584	1
+1	719	6.038410200584	0
+1	957	8.038356200584	1
+1	970	8.038410200584	0
+2	0	0	0
+2	0	0	0
+2	20	0.038356200584	1
+2	23	0.038356200584	0
+2	198	2.038356200584	1
+2	201	2.038356200584	0
+2	451	4.038356200584	1
+2	454	4.038356200584	0
+2	702	6.038356200584	1
+2	705	6.038356200584	0
+2	953	8.038356200584	1
+2	956	8.038356200584	0
+3	0	0	0
+3	21	0.038356200584	1
+3	91	0.038894200584	2
+3	199	2.038356200584	3
+3	272	2.038794269869	4
+3	323	2.218445814291	5
+3	374	2.218549895577	6
+3	452	4.038356200584	7
+3	525	4.038694349519	8
+3	576	4.218445848435	9
+3	627	4.219169968945	10
+3	703	6.038356200584	11
+3	776	6.039134440686	12
+3	827	6.218445906709	13
+3	878	6.218950064461	14
+3	954	8.038356200584	15
+3	1027	8.038574559341	16
+3	1079	8.218445964983	17
+3	1130	8.218770184229	18
+4	0	0	0
+5	0	0	0
+6	0	0	0
+6	0	0	0
+6	304	2.218391814291	1
+6	317	2.218445814291	0
+6	557	4.218391814291	1
+6	570	4.218445814291	0
+6	808	6.218391814291	1
+6	821	6.218445814291	0
+6	1060	8.218391814291	1
+6	1073	8.218445814291	0
+7	0	0	0
+7	0	0	0
+7	304	2.218391814291	1
+7	317	2.218445814291	0
+7	557	4.218391814291	1
+7	570	4.218445814291	0
+7	808	6.218391814291	1
+7	821	6.218445814291	0
+7	1060	8.218391814291	1
+7	1073	8.218445814291	0
+8	0	0	0
+8	0	0	0
+8	300	2.218391814291	1
+8	303	2.218391814291	0
+8	553	4.218391814291	1
+8	556	4.218391814291	0
+8	804	6.218391814291	1
+8	807	6.218391814291	0
+8	1056	8.218391814291	1
+8	1059	8.218391814291	0
+9	0	0	0
+9	221	2.038410200584	1
+9	273	2.038794269869	2
+9	301	2.218391814291	3
+9	375	2.218549895577	4
+9	474	4.038410229482	5
+9	526	4.038694349519	6
+9	554	4.218391814291	7
+9	628	4.219169968945	8
+9	725	6.038410287756	9
+9	777	6.039134440686	10
+9	805	6.218391814291	11
+9	879	6.218950064461	12
+9	976	8.03841034603	13
+9	1028	8.038574559341	14
+9	1057	8.218391814291	15
+9	1131	8.218770184229	16
+10	0	0	0
+11	0	0	0
+12	0	0	0
+12	0	0	0
+13	0	0	0
+13	0	0	0
+14	0	0	0
+14	0	0	0
+15	0	0	0
+16	0	0	0
+17	0	0	0
+18	0	0	0
+18	0	0	0
+19	0	0	0
+19	0	0	0
+20	0	0	0
+20	0	0	0
+21	0	0	0
+22	0	0	0
+23	0	0	0
+24	0	0	0
+24	0	0	0
+25	0	0	0
+25	0	0	0
+26	0	0	0
+26	0	0	0
+27	0	0	0
+28	0	0	0
+29	0	0	0
+30	0	0	0
+30	0	0	0
+31	0	0	0
+31	0	0	0
+32	0	0	0
+32	0	0	0
+33	0	0	0
+34	0	0	0
+35	0	0	0
+36	0	0	0
+36	0	0	0
+37	0	0	0
+37	0	0	0
+38	0	0	0
+38	0	0	0
+39	0	0	0
+40	0	0	0
+41	0	0	0
+42	0	0	0
+42	0	0	0
+43	0	0	0
+43	0	0	0
+44	0	0	0
+44	0	0	0
+45	0	0	0
+46	0	0	0
+47	0	0	0
+48	0	0	0
+48	0	0	0
+49	0	0	0
+49	0	0	0
+50	0	0	0
+50	0	0	0
+51	0	0	0
+52	0	0	0
+53	0	0	0
+54	0	0	0
+54	0	0	0
+55	0	0	0
+55	0	0	0
+56	0	0	0
+56	0	0	0
+57	0	0	0
+58	0	0	0
+59	0	0	0
+60	0	0	0
+60	0	0	0
+60	68	0.038840200584	1
+60	81	0.038894200584	0
+60	249	2.03874023522	1
+60	262	2.03879423522	0
+60	351	2.218495854932	1
+60	364	2.218549854932	0
+60	502	4.038640275049	1
+60	515	4.038694275049	0
+60	604	4.219115891612	1
+60	617	4.219169891612	0
+60	753	6.039080320625	1
+60	766	6.039134320625	0
+60	855	6.218895939369	1
+60	868	6.218949939369	0
+60	1004	8.03852037996	1
+60	1017	8.03857437996	0
+60	1107	8.218715999255	1
+60	1120	8.218769999255	0
+61	0	0	0
+61	0	0	0
+61	68	0.038840200584	1
+61	81	0.038894200584	0
+61	249	2.03874023522	1
+61	262	2.03879423522	0
+61	351	2.218495854932	1
+61	364	2.218549854932	0
+61	502	4.038640275049	1
+61	515	4.038694275049	0
+61	604	4.219115891612	1
+61	617	4.219169891612	0
+61	753	6.039080320625	1
+61	766	6.039134320625	0
+61	855	6.218895939369	1
+61	868	6.218949939369	0
+61	1004	8.03852037996	1
+61	1017	8.03857437996	0
+61	1107	8.218715999255	1
+61	1120	8.218769999255	0
+62	0	0	0
+62	0	0	0
+62	56	0.038410200584	1
+62	67	0.038840200584	0
+62	237	2.03841023522	1
+62	248	2.03874023522	0
+62	339	2.218445854932	1
+62	350	2.218495854932	0
+62	490	4.038410275049	1
+62	501	4.038640275049	0
+62	592	4.218445891612	1
+62	603	4.219115891612	0
+62	741	6.038410320625	1
+62	752	6.039080320625	0
+62	843	6.218445939369	1
+62	854	6.218895939369	0
+62	992	8.03841037996	1
+62	1003	8.03852037996	0
+62	1095	8.218445999255	1
+62	1106	8.218715999255	0
+63	0	0	0
+63	47	0.038410200584	1
+63	57	0.038410200584	2
+63	228	2.03841023522	3
+63	238	2.03841023522	4
+63	330	2.218445854932	5
+63	340	2.218445854932	6
+63	481	4.038410275049	7
+63	491	4.038410275049	8
+63	583	4.218445891612	9
+63	593	4.218445891612	10
+63	732	6.038410320625	11
+63	742	6.038410320625	12
+63	834	6.218445939369	13
+63	844	6.218445939369	14
+63	983	8.03841037996	15
+63	993	8.03841037996	16
+63	1086	8.218445999255	17
+63	1096	8.218445999255	18
+64	0	0	0
+65	0	0	0
+66	0	0	0
+66	0	0	0
+66	0	0	0
+66	0	0	0
+66	0	0	0.002
+67	0	0	0
+67	0	0	0
+67	0	0	0
+67	0	0	0
+67	0	0	0.002
+68	0	0	0
+68	0	0	0
+68	0	0	0
+68	0	0	0
+68	0	0	0.002
+69	0	0	0
+69	0	0	0
+69	0	0	0
+69	0	0	0
+69	0	0	0.002
+70	0	0	0
+70	0	0	0
+70	0	0	0
+70	0	0	0
+70	0	0	0.002
+71	0	0	0
+71	0	0	0
+71	0	0	0
+71	0	0	0
+71	0	0	0.002
+72	0	0	0
+72	0	0	0
+72	0	0	0
+72	0	0	0
+72	0	0	0.002
+73	0	0	0
+73	0	0	0
+73	0	0	0
+73	0	0	0
+73	0	0	0.002
+74	0	0	0
+74	0	0	0
+74	0	0	2
+74	25	0.038356200584	3
+74	40	0.038410200584	2
+74	203	2.038356200584	3
+74	217	2.038410200584	2
+74	456	4.038356200584	3
+74	469	4.038410200584	2
+74	707	6.038356200584	3
+74	720	6.038410200584	2
+74	958	8.038356200584	3
+74	971	8.038410200584	2
+75	0	0	0
+76	0	0	0
+76	0	0	0
+76	0	0	2
+76	305	2.218391814291	3
+76	319	2.218445814291	2
+76	558	4.218391814291	3
+76	571	4.218445814291	2
+76	809	6.218391814291	3
+76	822	6.218445814291	2
+76	1061	8.218391814291	3
+76	1074	8.218445814291	2
+77	0	0	0
+78	0	0	0
+78	0	0	0
+78	0	0	2
+79	0	0	0
+79	0	0	0
+79	0	0	0
+79	0	0	0.002
+80	0	0	0
+81	0	0	0
+81	0	0	0
+81	0	0	2
+82	0	0	0
+82	0	0	0
+82	0	0	0
+82	0	0	0.002
+83	0	0	0
+84	0	0	0
+84	0	0	0
+84	0	0	2
+85	0	0	0
+85	0	0	0
+85	0	0	0
+85	0	0	0.002
+86	0	0	0
+87	0	0	0
+87	0	0	0
+87	0	0	2
+88	0	0	0
+88	0	0	0
+88	0	0	0
+88	0	0	0.002
+89	0	0	0
+90	0	0	0
+90	0	0	0
+90	0	0	2
+91	0	0	0
+91	0	0	0
+91	0	0	0
+91	0	0	0.002
+92	0	0	0
+93	0	0	0
+93	0	0	0
+93	0	0	2
+94	0	0	0
+94	0	0	0
+94	0	0	0
+94	0	0	0.002
+95	0	0	0
+96	0	0	0
+96	0	0	0
+96	0	0	2
+97	0	0	0
+97	0	0	0
+97	0	0	0
+97	0	0	0.002
+98	0	0	0
+99	0	0	0
+99	0	0	0
+99	0	0	2
+100	0	0	0
+100	0	0	0
+100	0	0	0
+100	0	0	0.002
+101	0	0	0
+102	0	0	0
+102	0	0	0
+102	0	0	2
+102	69	0.038840200584	3
+102	84	0.038894200584	2
+102	250	2.03874023522	3
+102	263	2.03879423522	2
+102	352	2.218495854932	3
+102	365	2.218549854932	2
+102	503	4.038640275049	3
+102	516	4.038694275049	2
+102	605	4.219115891612	3
+102	618	4.219169891612	2
+102	754	6.039080320625	3
+102	767	6.039134320625	2
+102	856	6.218895939369	3
+102	869	6.218949939369	2
+102	1005	8.03852037996	3
+102	1018	8.03857437996	2
+102	1108	8.218715999255	3
+102	1121	8.218769999255	2
+103	0	0	0
+104	0	0	1
+104	25	0.038356200584	0
+104	40	0.038410200584	1
+104	71	0.038840200584	3
+104	82	0.038894200584	1
+104	203	2.038356200584	0
+104	217	2.038410200584	1
+104	252	2.038740269869	3
+104	264	2.038794269869	1
+104	307	2.218391814291	3
+104	318	2.218445814291	1
+104	354	2.218495895577	3
+104	366	2.218549895577	1
+104	456	4.038356200584	0
+104	469	4.038410200584	1
+104	505	4.038640349519	3
+104	517	4.038694349519	1
+104	560	4.218391848435	3
+104	572	4.218445848435	1
+104	607	4.219115968945	3
+104	619	4.219169968945	1
+104	707	6.038356200584	0
+104	720	6.038410200584	1
+104	756	6.039080440686	3
+104	768	6.039134440686	1
+104	811	6.218391906709	3
+104	823	6.218445906709	1
+104	858	6.218896064461	3
+104	870	6.218950064461	1
+104	958	8.038356200584	0
+104	971	8.038410200584	1
+104	1007	8.038520559341	3
+104	1019	8.038574559341	1
+104	1063	8.218391964983	3
+104	1075	8.218445964983	1
+104	1110	8.218716184229	3
+104	1122	8.218770184229	1
+105	0	0	0
+105	0	0	0
+105	20	0.038356200584	0
+105	20	0.038356200584	2
+105	23	0.038356200584	2
+105	23	0.038356200584	0
+105	25	0.038356200584	0
+105	25	0.038356200584	0
+105	40	0.038410200584	0
+105	40	0.038410200584	0
+105	71	0.038840200584	0
+105	71	0.038840200584	0
+105	82	0.038894200584	0
+105	82	0.038894200584	0
+105	198	2.038356200584	0
+105	198	2.038356200584	2
+105	201	2.038356200584	2
+105	201	2.038356200584	0
+105	203	2.038356200584	0
+105	203	2.038356200584	0
+105	217	2.038410200584	0
+105	217	2.038410200584	0
+105	252	2.038740269869	0
+105	252	2.038740269869	0
+105	264	2.038794269869	0
+105	264	2.038794269869	0
+105	307	2.218391814291	0
+105	307	2.218391814291	0
+105	318	2.218445814291	0
+105	318	2.218445814291	0
+105	354	2.218495895577	0
+105	354	2.218495895577	0
+105	366	2.218549895577	0
+105	366	2.218549895577	0
+105	451	4.038356200584	0
+105	451	4.038356200584	2
+105	454	4.038356200584	2
+105	454	4.038356200584	0
+105	456	4.038356200584	0
+105	456	4.038356200584	0
+105	469	4.038410200584	0
+105	469	4.038410200584	0
+105	505	4.038640349519	0
+105	505	4.038640349519	0
+105	517	4.038694349519	0
+105	517	4.038694349519	0
+105	560	4.218391848435	0
+105	560	4.218391848435	0
+105	572	4.218445848435	0
+105	572	4.218445848435	0
+105	607	4.219115968945	0
+105	607	4.219115968945	0
+105	619	4.219169968945	0
+105	619	4.219169968945	0
+105	702	6.038356200584	0
+105	702	6.038356200584	2
+105	705	6.038356200584	2
+105	705	6.038356200584	0
+105	707	6.038356200584	0
+105	707	6.038356200584	0
+105	720	6.038410200584	0
+105	720	6.038410200584	0
+105	756	6.039080440686	0
+105	756	6.039080440686	0
+105	768	6.039134440686	0
+105	768	6.039134440686	0
+105	811	6.218391906709	0
+105	811	6.218391906709	0
+105	823	6.218445906709	0
+105	823	6.218445906709	0
+105	858	6.218896064461	0
+105	858	6.218896064461	0
+105	870	6.218950064461	0
+105	870	6.218950064461	0
+105	953	8.038356200584	0
+105	953	8.038356200584	2
+105	956	8.038356200584	2
+105	956	8.038356200584	0
+105	958	8.038356200584	0
+105	958	8.038356200584	0
+105	971	8.038410200584	0
+105	971	8.038410200584	0
+105	1007	8.038520559341	0
+105	1007	8.038520559341	0
+105	1019	8.038574559341	0
+105	1019	8.038574559341	0
+105	1063	8.218391964983	0
+105	1063	8.218391964983	0
+105	1075	8.218445964983	0
+105	1075	8.218445964983	0
+105	1110	8.218716184229	0
+105	1110	8.218716184229	0
+105	1122	8.218770184229	0
+105	1122	8.218770184229	0
+106	0	0	1
+106	27	0.038356200584	3
+106	38	0.038410200584	1
+106	72	0.038840200584	3
+106	83	0.038894200584	1
+106	205	2.038356200584	3
+106	216	2.038410200584	1
+106	253	2.038740269869	3
+106	265	2.038794269869	1
+106	305	2.218391814291	0
+106	319	2.218445814291	1
+106	355	2.218495895577	3
+106	367	2.218549895577	1
+106	458	4.038356229482	3
+106	470	4.038410229482	1
+106	506	4.038640349519	3
+106	518	4.038694349519	1
+106	558	4.218391814291	0
+106	571	4.218445814291	1
+106	608	4.219115968945	3
+106	620	4.219169968945	1
+106	709	6.038356287756	3
+106	721	6.038410287756	1
+106	757	6.039080440686	3
+106	769	6.039134440686	1
+106	809	6.218391814291	0
+106	822	6.218445814291	1
+106	859	6.218896064461	3
+106	871	6.218950064461	1
+106	960	8.03835634603	3
+106	972	8.03841034603	1
+106	1008	8.038520559341	3
+106	1020	8.038574559341	1
+106	1061	8.218391814291	0
+106	1074	8.218445814291	1
+106	1111	8.218716184229	3
+106	1123	8.218770184229	1
+107	0	0	0
+107	0	0	0
+107	27	0.038356200584	0
+107	27	0.038356200584	0
+107	38	0.038410200584	0
+107	38	0.038410200584	0
+107	72	0.038840200584	0
+107	72	0.038840200584	0
+107	83	0.038894200584	0
+107	83	0.038894200584	0
+107	205	2.038356200584	0
+107	205	2.038356200584	0
+107	216	2.038410200584	0
+107	216	2.038410200584	0
+107	253	2.038740269869	0
+107	253	2.038740269869	0
+107	265	2.038794269869	0
+107	265	2.038794269869	0
+107	300	2.218391814291	0
+107	300	2.218391814291	2
+107	303	2.218391814291	2
+107	303	2.218391814291	0
+107	305	2.218391814291	0
+107	305	2.218391814291	0
+107	319	2.218445814291	0
+107	319	2.218445814291	0
+107	355	2.218495895577	0
+107	355	2.218495895577	0
+107	367	2.218549895577	0
+107	367	2.218549895577	0
+107	458	4.038356229482	0
+107	458	4.038356229482	0
+107	470	4.038410229482	0
+107	470	4.038410229482	0
+107	506	4.038640349519	0
+107	506	4.038640349519	0
+107	518	4.038694349519	0
+107	518	4.038694349519	0
+107	553	4.218391814291	0
+107	553	4.218391814291	2
+107	556	4.218391814291	2
+107	556	4.218391814291	0
+107	558	4.218391814291	0
+107	558	4.218391814291	0
+107	571	4.218445814291	0
+107	571	4.218445814291	0
+107	608	4.219115968945	0
+107	608	4.219115968945	0
+107	620	4.219169968945	0
+107	620	4.219169968945	0
+107	709	6.038356287756	0
+107	709	6.038356287756	0
+107	721	6.038410287756	0
+107	721	6.038410287756	0
+107	757	6.039080440686	0
+107	757	6.039080440686	0
+107	769	6.039134440686	0
+107	769	6.039134440686	0
+107	804	6.218391814291	0
+107	804	6.218391814291	2
+107	807	6.218391814291	2
+107	807	6.218391814291	0
+107	809	6.218391814291	0
+107	809	6.218391814291	0
+107	822	6.218445814291	0
+107	822	6.218445814291	0
+107	859	6.218896064461	0
+107	859	6.218896064461	0
+107	871	6.218950064461	0
+107	871	6.218950064461	0
+107	960	8.03835634603	0
+107	960	8.03835634603	0
+107	972	8.03841034603	0
+107	972	8.03841034603	0
+107	1008	8.038520559341	0
+107	1008	8.038520559341	0
+107	1020	8.038574559341	0
+107	1020	8.038574559341	0
+107	1056	8.218391814291	0
+107	1056	8.218391814291	2
+107	1059	8.218391814291	2
+107	1059	8.218391814291	0
+107	1061	8.218391814291	0
+107	1061	8.218391814291	0
+107	1074	8.218445814291	0
+107	1074	8.218445814291	0
+107	1111	8.218716184229	0
+107	1111	8.218716184229	0
+107	1123	8.218770184229	0
+107	1123	8.218770184229	0
+108	0	0	1
+109	0	0	0
+109	0	0	0
+110	0	0	1
+111	0	0	0
+111	0	0	0
+112	0	0	1
+113	0	0	0
+113	0	0	0
+114	0	0	1
+115	0	0	0
+115	0	0	0
+116	0	0	1
+117	0	0	0
+117	0	0	0
+118	0	0	1
+119	0	0	0
+119	0	0	0
+120	0	0	1
+121	0	0	0
+121	0	0	0
+122	0	0	1
+123	0	0	0
+123	0	0	0
+124	0	0	1
+124	28	0.038356200584	3
+124	39	0.038410200584	1
+124	69	0.038840200584	0
+124	84	0.038894200584	1
+124	206	2.03835623522	3
+124	224	2.03841023522	1
+124	250	2.03874023522	0
+124	263	2.03879423522	1
+124	308	2.218391854932	3
+124	326	2.218445854932	1
+124	352	2.218495854932	0
+124	365	2.218549854932	1
+124	459	4.038356275049	3
+124	477	4.038410275049	1
+124	503	4.038640275049	0
+124	516	4.038694275049	1
+124	561	4.218391891612	3
+124	579	4.218445891612	1
+124	605	4.219115891612	0
+124	618	4.219169891612	1
+124	710	6.038356320625	3
+124	728	6.038410320625	1
+124	754	6.039080320625	0
+124	767	6.039134320625	1
+124	812	6.218391939369	3
+124	830	6.218445939369	1
+124	856	6.218895939369	0
+124	869	6.218949939369	1
+124	961	8.03835637996	3
+124	979	8.03841037996	1
+124	1005	8.03852037996	0
+124	1018	8.03857437996	1
+124	1064	8.218391999255	3
+124	1082	8.218445999255	1
+124	1108	8.218715999255	0
+124	1121	8.218769999255	1
+125	0	0	0
+125	0	0	0
+125	28	0.038356200584	0
+125	28	0.038356200584	0
+125	39	0.038410200584	0
+125	39	0.038410200584	0
+125	56	0.038410200584	0
+125	56	0.038410200584	2
+125	67	0.038840200584	2
+125	67	0.038840200584	0
+125	69	0.038840200584	0
+125	69	0.038840200584	0
+125	84	0.038894200584	0
+125	84	0.038894200584	0
+125	206	2.03835623522	0
+125	206	2.03835623522	0
+125	224	2.03841023522	0
+125	224	2.03841023522	0
+125	237	2.03841023522	0
+125	237	2.03841023522	2
+125	248	2.03874023522	2
+125	248	2.03874023522	0
+125	250	2.03874023522	0
+125	250	2.03874023522	0
+125	263	2.03879423522	0
+125	263	2.03879423522	0
+125	308	2.218391854932	0
+125	308	2.218391854932	0
+125	326	2.218445854932	0
+125	326	2.218445854932	0
+125	339	2.218445854932	0
+125	339	2.218445854932	2
+125	350	2.218495854932	2
+125	350	2.218495854932	0
+125	352	2.218495854932	0
+125	352	2.218495854932	0
+125	365	2.218549854932	0
+125	365	2.218549854932	0
+125	459	4.038356275049	0
+125	459	4.038356275049	0
+125	477	4.038410275049	0
+125	477	4.038410275049	0
+125	490	4.038410275049	0
+125	490	4.038410275049	2
+125	501	4.038640275049	2
+125	501	4.038640275049	0
+125	503	4.038640275049	0
+125	503	4.038640275049	0
+125	516	4.038694275049	0
+125	516	4.038694275049	0
+125	561	4.218391891612	0
+125	561	4.218391891612	0
+125	579	4.218445891612	0
+125	579	4.218445891612	0
+125	592	4.218445891612	0
+125	592	4.218445891612	2
+125	603	4.219115891612	2
+125	603	4.219115891612	0
+125	605	4.219115891612	0
+125	605	4.219115891612	0
+125	618	4.219169891612	0
+125	618	4.219169891612	0
+125	710	6.038356320625	0
+125	710	6.038356320625	0
+125	728	6.038410320625	0
+125	728	6.038410320625	0
+125	741	6.038410320625	0
+125	741	6.038410320625	2
+125	752	6.039080320625	2
+125	752	6.039080320625	0
+125	754	6.039080320625	0
+125	754	6.039080320625	0
+125	767	6.039134320625	0
+125	767	6.039134320625	0
+125	812	6.218391939369	0
+125	812	6.218391939369	0
+125	830	6.218445939369	0
+125	830	6.218445939369	0
+125	843	6.218445939369	0
+125	843	6.218445939369	2
+125	854	6.218895939369	2
+125	854	6.218895939369	0
+125	856	6.218895939369	0
+125	856	6.218895939369	0
+125	869	6.218949939369	0
+125	869	6.218949939369	0
+125	961	8.03835637996	0
+125	961	8.03835637996	0
+125	979	8.03841037996	0
+125	979	8.03841037996	0
+125	992	8.03841037996	0
+125	992	8.03841037996	2
+125	1003	8.03852037996	2
+125	1003	8.03852037996	0
+125	1005	8.03852037996	0
+125	1005	8.03852037996	0
+125	1018	8.03857437996	0
+125	1018	8.03857437996	0
+125	1064	8.218391999255	0
+125	1064	8.218391999255	0
+125	1082	8.218445999255	0
+125	1082	8.218445999255	0
+125	1095	8.218445999255	0
+125	1095	8.218445999255	2
+125	1106	8.218715999255	2
+125	1106	8.218715999255	0
+125	1108	8.218715999255	0
+125	1108	8.218715999255	0
+125	1121	8.218769999255	0
+125	1121	8.218769999255	0
+126	0	0	31
+127	0	0	31
+128	0	0	31
+129	0	0	31
+130	0	0	31
+131	0	0	31
+132	0	0	31
+133	0	0	31
+134	0	0	31
+135	0	0	31
+136	0	0	31
+137	14	0.038356200584	7
+137	192	2.038356200584	7
+137	445	4.038356200584	7
+137	696	6.038356200584	7
+137	947	8.038356200584	7
+138	15	0.038356200584	15
+138	193	2.038356200584	15
+138	446	4.038356200584	15
+138	697	6.038356200584	15
+138	948	8.038356200584	15
+139	17	0.038356200584	35
+139	195	2.038356200584	35
+139	448	4.038356200584	35
+139	699	6.038356200584	35
+139	950	8.038356200584	35
+140	17	0.038356200584	35
+140	195	2.038356200584	35
+140	448	4.038356200584	35
+140	699	6.038356200584	35
+140	950	8.038356200584	35
+141	20	0.038356200584	43
+141	198	2.038356200584	43
+141	451	4.038356200584	43
+141	702	6.038356200584	43
+141	953	8.038356200584	43
+142	20	0.038356200584	568
+142	198	2.038356200584	568
+142	451	4.038356200584	568
+142	702	6.038356200584	568
+142	953	8.038356200584	568
+143	20	0.038356200584	1
+143	24	0.038356200584	0
+143	198	2.038356200584	1
+143	202	2.038356200584	0
+143	451	4.038356200584	1
+143	455	4.038356200584	0
+143	702	6.038356200584	1
+143	706	6.038356200584	0
+143	953	8.038356200584	1
+143	957	8.038356200584	0
+144	20	0.038356200584	568
+144	24	0.038356200584	0
+144	198	2.038356200584	568
+144	202	2.038356200584	0
+144	451	4.038356200584	568
+144	455	4.038356200584	0
+144	702	6.038356200584	568
+144	706	6.038356200584	0
+144	953	8.038356200584	568
+144	957	8.038356200584	0
+145	20	0.038356200584	29
+145	198	2.038356200584	19
+145	451	4.038356200584	1
+145	702	6.038356200584	0
+145	953	8.038356200584	23
+146	21	0.038356200584	15
+146	91	0.038894200584	15
+146	199	2.038356200584	15
+146	272	2.038794269869	15
+146	323	2.218445814291	15
+146	374	2.218549895577	15
+146	452	4.038356200584	15
+146	525	4.038694349519	15
+146	576	4.218445848435	15
+146	627	4.219169968945	15
+146	703	6.038356200584	15
+146	776	6.039134440686	15
+146	827	6.218445906709	15
+146	878	6.218950064461	15
+146	954	8.038356200584	15
+146	1027	8.038574559341	15
+146	1079	8.218445964983	15
+146	1130	8.218770184229	15
+147	24	0.038356200584	0
+147	202	2.038356200584	0
+147	455	4.038356200584	0
+147	706	6.038356200584	0
+147	957	8.038356200584	0
+148	24	0.038356200584	568
+148	202	2.038356200584	568
+148	455	4.038356200584	568
+148	706	6.038356200584	568
+148	957	8.038356200584	568
+149	24	0.038356200584	24000000
+149	202	2.038356200584	24000000
+149	455	4.038356200584	24000000
+149	706	6.038356200584	24000000
+149	957	8.038356200584	24000000
+150	24	0.038356200584	71
+150	202	2.038356200584	71
+150	455	4.038356200584	71
+150	706	6.038356200584	71
+150	957	8.038356200584	71
+151	25	0.038356200584	1
+151	26	0.038356200584	2
+151	37	0.038410200584	1
+151	40	0.038410200584	0
+151	203	2.038356200584	1
+151	204	2.038356200584	2
+151	215	2.038410200584	1
+151	217	2.038410200584	0
+151	456	4.038356200584	1
+151	457	4.038356200584	2
+151	468	4.038410200584	1
+151	469	4.038410200584	0
+151	707	6.038356200584	1
+151	708	6.038356200584	2
+151	719	6.038410200584	1
+151	720	6.038410200584	0
+151	958	8.038356200584	1
+151	959	8.038356200584	2
+151	970	8.038410200584	1
+151	971	8.038410200584	0
+152	37	0.038410200584	71
+152	215	2.038410200584	71
+152	468	4.038410200584	71
+152	719	6.038410200584	71
+152	970	8.038410200584	71
+153	37	0.038410200584	71
+153	215	2.038410200584	71
+153	468	4.038410200584	71
+153	719	6.038410200584	71
+153	970	8.038410200584	71
+154	37	0.038410200584	71
+154	215	2.038410200584	71
+154	468	4.038410200584	71
+154	719	6.038410200584	71
+154	970	8.038410200584	71
+155	37	0.038410200584	5.4e-05
+155	215	2.038410200584	5.4e-05
+155	468	4.038410200584	5.4e-05
+155	719	6.038410200584	5.4e-05
+155	970	8.038410200584	5.4e-05
+156	41	0.038410200584	71
+156	86	0.038894200584	71
+156	218	2.038410200584	71
+156	267	2.038794269869	71
+156	369	2.218549895577	71
+156	471	4.038410229482	71
+156	520	4.038694349519	71
+156	622	4.219169968945	71
+156	722	6.038410287756	71
+156	771	6.039134440686	71
+156	873	6.218950064461	71
+156	973	8.03841034603	71
+156	1022	8.038574559341	71
+156	1125	8.218770184229	71
+157	41	0.038410200584	71
+157	86	0.038894200584	71
+157	218	2.038410200584	71
+157	267	2.038794269869	71
+157	369	2.218549895577	71
+157	471	4.038410229482	71
+157	520	4.038694349519	71
+157	622	4.219169968945	71
+157	722	6.038410287756	71
+157	771	6.039134440686	71
+157	873	6.218950064461	71
+157	973	8.03841034603	71
+157	1022	8.038574559341	71
+157	1125	8.218770184229	71
+158	41	0.038410200584	71
+158	86	0.038894200584	71
+158	218	2.038410200584	71
+158	267	2.038794269869	71
+158	369	2.218549895577	71
+158	471	4.038410229482	71
+158	520	4.038694349519	71
+158	622	4.219169968945	71
+158	722	6.038410287756	71
+158	771	6.039134440686	71
+158	873	6.218950064461	71
+158	973	8.03841034603	71
+158	1022	8.038574559341	71
+158	1125	8.218770184229	71
+159	41	0.038410200584	71
+159	86	0.038894200584	71
+159	218	2.038410200584	71
+159	267	2.038794269869	71
+159	369	2.218549895577	71
+159	471	4.038410229482	71
+159	520	4.038694349519	71
+159	622	4.219169968945	71
+159	722	6.038410287756	71
+159	771	6.039134440686	71
+159	873	6.218950064461	71
+159	973	8.03841034603	71
+159	1022	8.038574559341	71
+159	1125	8.218770184229	71
+160	41	0.038410200584	43
+160	86	0.038894200584	43
+160	218	2.038410200584	43
+160	267	2.038794269869	43
+160	369	2.218549895577	43
+160	471	4.038410229482	43
+160	520	4.038694349519	43
+160	622	4.219169968945	43
+160	722	6.038410287756	43
+160	771	6.039134440686	43
+160	873	6.218950064461	43
+160	973	8.03841034603	43
+160	1022	8.038574559341	43
+160	1125	8.218770184229	43
+161	42	0.038410200584	71
+161	225	2.03841023522	71
+161	327	2.218445854932	71
+161	478	4.038410275049	71
+161	580	4.218445891612	71
+161	729	6.038410320625	71
+161	831	6.218445939369	71
+161	980	8.03841037996	71
+161	1083	8.218445999255	71
+162	42	0.038410200584	71
+162	225	2.03841023522	71
+162	327	2.218445854932	71
+162	478	4.038410275049	71
+162	580	4.218445891612	71
+162	729	6.038410320625	71
+162	831	6.218445939369	71
+162	980	8.03841037996	71
+162	1083	8.218445999255	71
+163	42	0.038410200584	71
+163	225	2.03841023522	71
+163	327	2.218445854932	71
+163	478	4.038410275049	71
+163	580	4.218445891612	71
+163	729	6.038410320625	71
+163	831	6.218445939369	71
+163	980	8.03841037996	71
+163	1083	8.218445999255	71
+164	42	0.038410200584	71
+164	225	2.03841023522	71
+164	327	2.218445854932	71
+164	478	4.038410275049	71
+164	580	4.218445891612	71
+164	729	6.038410320625	71
+164	831	6.218445939369	71
+164	980	8.03841037996	71
+164	1083	8.218445999255	71
+165	42	0.038410200584	43
+165	225	2.03841023522	43
+165	327	2.218445854932	43
+165	478	4.038410275049	43
+165	580	4.218445891612	43
+165	729	6.038410320625	43
+165	831	6.218445939369	43
+165	980	8.03841037996	43
+165	1083	8.218445999255	43
+166	47	0.038410200584	15
+166	57	0.038410200584	15
+166	228	2.03841023522	15
+166	238	2.03841023522	15
+166	330	2.218445854932	15
+166	340	2.218445854932	15
+166	481	4.038410275049	15
+166	491	4.038410275049	15
+166	583	4.218445891612	15
+166	593	4.218445891612	15
+166	732	6.038410320625	15
+166	742	6.038410320625	15
+166	834	6.218445939369	15
+166	844	6.218445939369	15
+166	983	8.03841037996	15
+166	993	8.03841037996	15
+166	1086	8.218445999255	15
+166	1096	8.218445999255	15
+167	48	0.038410200584	7
+167	229	2.03841023522	7
+167	331	2.218445854932	7
+167	482	4.038410275049	7
+167	584	4.218445891612	7
+167	733	6.038410320625	7
+167	835	6.218445939369	7
+167	984	8.03841037996	7
+167	1087	8.218445999255	7
+168	48	0.038410200584	5.4e-05
+168	229	2.03841023522	5.4034636e-05
+168	331	2.218445854932	5.4040641e-05
+168	482	4.038410275049	5.4074465e-05
+168	584	4.218445891612	5.4077321e-05
+168	733	6.038410320625	5.4120041e-05
+168	835	6.218445939369	5.4125078e-05
+168	984	8.03841037996	5.4179376e-05
+168	1087	8.218445999255	5.4184964e-05
+169	50	0.038410200584	7
+169	231	2.03841023522	7
+169	333	2.218445854932	7
+169	484	4.038410275049	7
+169	586	4.218445891612	7
+169	735	6.038410320625	7
+169	837	6.218445939369	7
+169	986	8.03841037996	7
+169	1089	8.218445999255	7
+170	51	0.038410200584	15
+170	232	2.03841023522	15
+170	334	2.218445854932	15
+170	485	4.038410275049	15
+170	587	4.218445891612	15
+170	736	6.038410320625	15
+170	838	6.218445939369	15
+170	987	8.03841037996	15
+170	1090	8.218445999255	15
+171	53	0.038410200584	35
+171	234	2.03841023522	35
+171	336	2.218445854932	35
+171	487	4.038410275049	35
+171	589	4.218445891612	35
+171	738	6.038410320625	35
+171	840	6.218445939369	35
+171	989	8.03841037996	35
+171	1092	8.218445999255	35
+172	53	0.038410200584	35
+172	234	2.03841023522	35
+172	336	2.218445854932	35
+172	487	4.038410275049	35
+172	589	4.218445891612	35
+172	738	6.038410320625	35
+172	840	6.218445939369	35
+172	989	8.03841037996	35
+172	1092	8.218445999255	35
+173	56	0.038410200584	43
+173	237	2.03841023522	43
+173	339	2.218445854932	43
+173	490	4.038410275049	43
+173	592	4.218445891612	43
+173	741	6.038410320625	43
+173	843	6.218445939369	43
+173	992	8.03841037996	43
+173	1095	8.218445999255	43
+174	56	0.038410200584	568
+174	237	2.03841023522	568
+174	339	2.218445854932	568
+174	490	4.038410275049	568
+174	592	4.218445891612	568
+174	741	6.038410320625	568
+174	843	6.218445939369	568
+174	992	8.03841037996	568
+174	1095	8.218445999255	568
+175	56	0.038410200584	1
+175	68	0.038840200584	0
+175	237	2.03841023522	1
+175	249	2.03874023522	0
+175	339	2.218445854932	1
+175	351	2.218495854932	0
+175	490	4.038410275049	1
+175	502	4.038640275049	0
+175	592	4.218445891612	1
+175	604	4.219115891612	0
+175	741	6.038410320625	1
+175	753	6.039080320625	0
+175	843	6.218445939369	1
+175	855	6.218895939369	0
+175	992	8.03841037996	1
+175	1004	8.03852037996	0
+175	1095	8.218445999255	1
+175	1107	8.218715999255	0
+176	56	0.038410200584	568
+176	68	0.038840200584	0
+176	237	2.03841023522	568
+176	249	2.03874023522	0
+176	339	2.218445854932	568
+176	351	2.218495854932	0
+176	490	4.038410275049	568
+176	502	4.038640275049	0
+176	592	4.218445891612	568
+176	604	4.219115891612	0
+176	741	6.038410320625	568
+176	753	6.039080320625	0
+176	843	6.218445939369	568
+176	855	6.218895939369	0
+176	992	8.03841037996	568
+176	1004	8.03852037996	0
+176	1095	8.218445999255	568
+176	1107	8.218715999255	0
+177	56	0.038410200584	19
+177	237	2.03841023522	14
+177	339	2.218445854932	0
+177	490	4.038410275049	9
+177	592	4.218445891612	31
+177	741	6.038410320625	31
+177	843	6.218445939369	20
+177	992	8.03841037996	3
+177	1095	8.218445999255	11
+178	68	0.038840200584	0.00043
+178	249	2.03874023522	0.00033
+178	351	2.218495854932	5e-05
+178	502	4.038640275049	0.00023
+178	604	4.219115891612	0.00067
+178	753	6.039080320625	0.00067
+178	855	6.218895939369	0.00045
+178	1004	8.03852037996	0.00011
+178	1107	8.218715999255	0.00027
+179	68	0.038840200584	568
+179	249	2.03874023522	568
+179	351	2.218495854932	568
+179	502	4.038640275049	568
+179	604	4.219115891612	568
+179	753	6.039080320625	568
+179	855	6.218895939369	568
+179	1004	8.03852037996	568
+179	1107	8.218715999255	568
+180	68	0.038840200584	24000000
+180	249	2.03874023522	24000000
+180	351	2.218495854932	24000000
+180	502	4.038640275049	24000000
+180	604	4.219115891612	24000000
+180	753	6.039080320625	24000000
+180	855	6.218895939369	24000000
+180	1004	8.03852037996	24000000
+180	1107	8.218715999255	24000000
+181	68	0.038840200584	71
+181	249	2.03874023522	71
+181	351	2.218495854932	71
+181	502	4.038640275049	71
+181	604	4.219115891612	71
+181	753	6.039080320625	71
+181	855	6.218895939369	71
+181	1004	8.03852037996	71
+181	1107	8.218715999255	71
+182	69	0.038840200584	1
+182	70	0.038840200584	2
+182	81	0.038894200584	1
+182	84	0.038894200584	0
+182	250	2.03874023522	1
+182	251	2.03874023522	2
+182	262	2.03879423522	1
+182	263	2.03879423522	0
+182	352	2.218495854932	1
+182	353	2.218495854932	2
+182	364	2.218549854932	1
+182	365	2.218549854932	0
+182	503	4.038640275049	1
+182	504	4.038640275049	2
+182	515	4.038694275049	1
+182	516	4.038694275049	0
+182	605	4.219115891612	1
+182	606	4.219115891612	2
+182	617	4.219169891612	1
+182	618	4.219169891612	0
+182	754	6.039080320625	1
+182	755	6.039080320625	2
+182	766	6.039134320625	1
+182	767	6.039134320625	0
+182	856	6.218895939369	1
+182	857	6.218895939369	2
+182	868	6.218949939369	1
+182	869	6.218949939369	0
+182	1005	8.03852037996	1
+182	1006	8.03852037996	2
+182	1017	8.03857437996	1
+182	1018	8.03857437996	0
+182	1108	8.218715999255	1
+182	1109	8.218715999255	2
+182	1120	8.218769999255	1
+182	1121	8.218769999255	0
+183	81	0.038894200584	71
+183	262	2.03879423522	71
+183	364	2.218549854932	71
+183	515	4.038694275049	71
+183	617	4.219169891612	71
+183	766	6.039134320625	71
+183	868	6.218949939369	71
+183	1017	8.03857437996	71
+183	1120	8.218769999255	71
+184	81	0.038894200584	71
+184	262	2.03879423522	71
+184	364	2.218549854932	71
+184	515	4.038694275049	71
+184	617	4.219169891612	71
+184	766	6.039134320625	71
+184	868	6.218949939369	71
+184	1017	8.03857437996	71
+184	1120	8.218769999255	71
+185	81	0.038894200584	71
+185	262	2.03879423522	71
+185	364	2.218549854932	71
+185	515	4.038694275049	71
+185	617	4.219169891612	71
+185	766	6.039134320625	71
+185	868	6.218949939369	71
+185	1017	8.03857437996	71
+185	1120	8.218769999255	71
+186	81	0.038894200584	5.4e-05
+186	262	2.03879423522	5.4e-05
+186	364	2.218549854932	5.4e-05
+186	515	4.038694275049	5.4e-05
+186	617	4.219169891612	5.4e-05
+186	766	6.039134320625	5.4e-05
+186	868	6.218949939369	5.4e-05
+186	1017	8.03857437996	5.4e-05
+186	1120	8.218769999255	5.4e-05
+187	85	0.038894200584	71
+187	266	2.038794269869	71
+187	320	2.218445814291	71
+187	368	2.218549895577	71
+187	519	4.038694349519	71
+187	573	4.218445848435	71
+187	621	4.219169968945	71
+187	770	6.039134440686	71
+187	824	6.218445906709	71
+187	872	6.218950064461	71
+187	1021	8.038574559341	71
+187	1076	8.218445964983	71
+187	1124	8.218770184229	71
+188	85	0.038894200584	71
+188	266	2.038794269869	71
+188	320	2.218445814291	71
+188	368	2.218549895577	71
+188	519	4.038694349519	71
+188	573	4.218445848435	71
+188	621	4.219169968945	71
+188	770	6.039134440686	71
+188	824	6.218445906709	71
+188	872	6.218950064461	71
+188	1021	8.038574559341	71
+188	1076	8.218445964983	71
+188	1124	8.218770184229	71
+189	85	0.038894200584	71
+189	266	2.038794269869	71
+189	320	2.218445814291	71
+189	368	2.218549895577	71
+189	519	4.038694349519	71
+189	573	4.218445848435	71
+189	621	4.219169968945	71
+189	770	6.039134440686	71
+189	824	6.218445906709	71
+189	872	6.218950064461	71
+189	1021	8.038574559341	71
+189	1076	8.218445964983	71
+189	1124	8.218770184229	71
+190	85	0.038894200584	71
+190	266	2.038794269869	71
+190	320	2.218445814291	71
+190	368	2.218549895577	71
+190	519	4.038694349519	71
+190	573	4.218445848435	71
+190	621	4.219169968945	71
+190	770	6.039134440686	71
+190	824	6.218445906709	71
+190	872	6.218950064461	71
+190	1021	8.038574559341	71
+190	1076	8.218445964983	71
+190	1124	8.218770184229	71
+191	85	0.038894200584	43
+191	266	2.038794269869	43
+191	320	2.218445814291	43
+191	368	2.218549895577	43
+191	519	4.038694349519	43
+191	573	4.218445848435	43
+191	621	4.219169968945	43
+191	770	6.039134440686	43
+191	824	6.218445906709	43
+191	872	6.218950064461	43
+191	1021	8.038574559341	43
+191	1076	8.218445964983	43
+191	1124	8.218770184229	43
+192	92	0.038894200584	7
+192	274	2.038794269869	7
+192	324	2.218445814291	7
+192	376	2.218549895577	7
+192	527	4.038694349519	7
+192	577	4.218445848435	7
+192	629	4.219169968945	7
+192	778	6.039134440686	7
+192	828	6.218445906709	7
+192	880	6.218950064461	7
+192	1029	8.038574559341	7
+192	1080	8.218445964983	7
+192	1132	8.218770184229	7
+193	92	0.038894200584	0.000484
+193	274	2.038794269869	0.000384034649
+193	324	2.218445814291	5.4e-05
+193	376	2.218549895577	0.000104040645
+193	527	4.038694349519	0.00028407447
+193	577	4.218445848435	5.4034144e-05
+193	629	4.219169968945	0.000724077333
+193	778	6.039134440686	0.000724120061
+193	828	6.218445906709	5.4092418e-05
+193	880	6.218950064461	0.000504125092
+193	1029	8.038574559341	0.000164179381
+193	1080	8.218445964983	5.4150692e-05
+193	1132	8.218770184229	0.000324184974
+194	198	0.1	5680
+194	198	0.2	0
+194	198	0.3	0
+194	198	0.4	0
+194	198	0.5	0
+194	198	0.6	0
+194	198	0.7	0
+194	198	0.8	0
+194	198	0.9	0
+194	198	1	0
+194	198	1.1	0
+194	198	1.2	0
+194	198	1.3	0
+194	198	1.4	0
+194	198	1.5	0
+194	198	1.6	0
+194	198	1.7	0
+194	198	1.8	0
+194	198	1.9	0
+194	198	2	0
+194	451	2.1	5680
+194	451	2.2	0
+194	451	2.3	0
+194	451	2.4	0
+194	451	2.5	0
+194	451	2.6	0
+194	451	2.7	0
+194	451	2.8	0
+194	451	2.9	0
+194	451	3	0
+194	451	3.1	0
+194	451	3.2	0
+194	451	3.3	0
+194	451	3.4	0
+194	451	3.5	0
+194	451	3.6	0
+194	451	3.7	0
+194	451	3.8	0
+194	451	3.9	0
+194	451	4	0
+194	702	4.1	5680
+194	702	4.2	0
+194	702	4.3	0
+194	702	4.4	0
+194	702	4.5	0
+194	702	4.6	0
+194	702	4.7	0
+194	702	4.8	0
+194	702	4.9	0
+194	702	5	0
+194	702	5.1	0
+194	702	5.2	0
+194	702	5.3	0
+194	702	5.4	0
+194	702	5.5	0
+194	702	5.6	0
+194	702	5.7	0
+194	702	5.8	0
+194	702	5.9	0
+194	702	6	0
+194	953	6.1	5680
+194	953	6.2	0
+194	953	6.3	0
+194	953	6.4	0
+194	953	6.5	0
+194	953	6.6	0
+194	953	6.7	0
+194	953	6.8	0
+194	953	6.9	0
+194	953	7	0
+194	953	7.1	0
+194	953	7.2	0
+194	953	7.3	0
+194	953	7.4	0
+194	953	7.5	0
+194	953	7.6	0
+194	953	7.7	0
+194	953	7.8	0
+194	953	7.9	0
+194	953	8	0
+195	202	0.1	5680
+195	202	0.2	0
+195	202	0.3	0
+195	202	0.4	0
+195	202	0.5	0
+195	202	0.6	0
+195	202	0.7	0
+195	202	0.8	0
+195	202	0.9	0
+195	202	1	0
+195	202	1.1	0
+195	202	1.2	0
+195	202	1.3	0
+195	202	1.4	0
+195	202	1.5	0
+195	202	1.6	0
+195	202	1.7	0
+195	202	1.8	0
+195	202	1.9	0
+195	202	2	0
+195	455	2.1	5680
+195	455	2.2	0
+195	455	2.3	0
+195	455	2.4	0
+195	455	2.5	0
+195	455	2.6	0
+195	455	2.7	0
+195	455	2.8	0
+195	455	2.9	0
+195	455	3	0
+195	455	3.1	0
+195	455	3.2	0
+195	455	3.3	0
+195	455	3.4	0
+195	455	3.5	0
+195	455	3.6	0
+195	455	3.7	0
+195	455	3.8	0
+195	455	3.9	0
+195	455	4	0
+195	706	4.1	5680
+195	706	4.2	0
+195	706	4.3	0
+195	706	4.4	0
+195	706	4.5	0
+195	706	4.6	0
+195	706	4.7	0
+195	706	4.8	0
+195	706	4.9	0
+195	706	5	0
+195	706	5.1	0
+195	706	5.2	0
+195	706	5.3	0
+195	706	5.4	0
+195	706	5.5	0
+195	706	5.6	0
+195	706	5.7	0
+195	706	5.8	0
+195	706	5.9	0
+195	706	6	0
+195	957	6.1	5680
+195	957	6.2	0
+195	957	6.3	0
+195	957	6.4	0
+195	957	6.5	0
+195	957	6.6	0
+195	957	6.7	0
+195	957	6.8	0
+195	957	6.9	0
+195	957	7	0
+195	957	7.1	0
+195	957	7.2	0
+195	957	7.3	0
+195	957	7.4	0
+195	957	7.5	0
+195	957	7.6	0
+195	957	7.7	0
+195	957	7.8	0
+195	957	7.9	0
+195	957	8	0
+196	221	2.038410200584	15
+196	273	2.038794269869	15
+196	301	2.218391814291	15
+196	375	2.218549895577	15
+196	474	4.038410229482	15
+196	526	4.038694349519	15
+196	554	4.218391814291	15
+196	628	4.219169968945	15
+196	725	6.038410287756	15
+196	777	6.039134440686	15
+196	805	6.218391814291	15
+196	879	6.218950064461	15
+196	976	8.03841034603	15
+196	1028	8.038574559341	15
+196	1057	8.218391814291	15
+196	1131	8.218770184229	15
+197	222	2.038410200584	7
+197	275	2.038794269869	7
+197	377	2.218549895577	7
+197	475	4.038410229482	7
+197	528	4.038694349519	7
+197	630	4.219169968945	7
+197	726	6.038410287756	7
+197	779	6.039134440686	7
+197	881	6.218950064461	7
+197	977	8.03841034603	7
+197	1030	8.038574559341	7
+197	1133	8.218770184229	7
+198	222	0.1	0
+198	222	0.2	0
+198	222	0.3	0
+198	222	0.4	0
+198	222	0.5	0
+198	222	0.6	0
+198	222	0.7	0
+198	222	0.8	0
+198	222	0.9	0
+198	222	1	0
+198	222	1.1	0
+198	222	1.2	0
+198	222	1.3	0
+198	222	1.4	0
+198	222	1.5	0
+198	222	1.6	0
+198	222	1.7	0
+198	222	1.8	0
+198	222	1.9	0
+198	222	2	0
+198	377	2.1	1120
+198	377	2.2	0
+198	475	2.3	560
+198	475	2.4	0
+198	475	2.5	0
+198	475	2.6	0
+198	475	2.7	0
+198	475	2.8	0
+198	475	2.9	0
+198	475	3	0
+198	475	3.1	0
+198	475	3.2	0
+198	475	3.3	0
+198	475	3.4	0
+198	475	3.5	0
+198	475	3.6	0
+198	475	3.7	0
+198	475	3.8	0
+198	475	3.9	0
+198	475	4	0
+198	630	4.1	1120
+198	630	4.2	0
+198	726	4.3	560
+198	726	4.4	0
+198	726	4.5	0
+198	726	4.6	0
+198	726	4.7	0
+198	726	4.8	0
+198	726	4.9	0
+198	726	5	0
+198	726	5.1	0
+198	726	5.2	0
+198	726	5.3	0
+198	726	5.4	0
+198	726	5.5	0
+198	726	5.6	0
+198	726	5.7	0
+198	726	5.8	0
+198	726	5.9	0
+198	726	6	0
+198	881	6.1	1120
+198	881	6.2	0
+198	977	6.3	560
+198	977	6.4	0
+198	977	6.5	0
+198	977	6.6	0
+198	977	6.7	0
+198	977	6.8	0
+198	977	6.9	0
+198	977	7	0
+198	977	7.1	0
+198	977	7.2	0
+198	977	7.3	0
+198	977	7.4	0
+198	977	7.5	0
+198	977	7.6	0
+198	977	7.7	0
+198	977	7.8	0
+198	977	7.9	0
+198	977	8	0
+198	1133	8.1	1120
+198	1133	8.2	0
+199	222	2.038410200584	5.4e-05
+199	275	2.038794269869	0.000384034649
+199	377	2.218549895577	0.000104040645
+199	475	4.038410229482	5.4028898e-05
+199	528	4.038694349519	0.00028407447
+199	630	4.219169968945	0.000724077333
+199	726	6.038410287756	5.4087172e-05
+199	779	6.039134440686	0.000724120061
+199	881	6.218950064461	0.000504125092
+199	977	8.03841034603	5.4145446e-05
+199	1030	8.038574559341	0.000164179381
+199	1133	8.218770184229	0.000324184974
+200	229	0.1	560
+200	229	0.2	0
+200	229	0.3	0
+200	229	0.4	0
+200	229	0.5	0
+200	229	0.6	0
+200	229	0.7	0
+200	229	0.8	0
+200	229	0.9	0
+200	229	1	0
+200	229	1.1	0
+200	229	1.2	0
+200	229	1.3	0
+200	229	1.4	0
+200	229	1.5	0
+200	229	1.6	0
+200	229	1.7	0
+200	229	1.8	0
+200	229	1.9	0
+200	229	2	0
+200	331	2.1	560
+200	331	2.2	0
+200	482	2.3	560
+200	482	2.4	0
+200	482	2.5	0
+200	482	2.6	0
+200	482	2.7	0
+200	482	2.8	0
+200	482	2.9	0
+200	482	3	0
+200	482	3.1	0
+200	482	3.2	0
+200	482	3.3	0
+200	482	3.4	0
+200	482	3.5	0
+200	482	3.6	0
+200	482	3.7	0
+200	482	3.8	0
+200	482	3.9	0
+200	482	4	0
+200	584	4.1	560
+200	584	4.2	0
+200	733	4.3	560
+200	733	4.4	0
+200	733	4.5	0
+200	733	4.6	0
+200	733	4.7	0
+200	733	4.8	0
+200	733	4.9	0
+200	733	5	0
+200	733	5.1	0
+200	733	5.2	0
+200	733	5.3	0
+200	733	5.4	0
+200	733	5.5	0
+200	733	5.6	0
+200	733	5.7	0
+200	733	5.8	0
+200	733	5.9	0
+200	733	6	0
+200	835	6.1	560
+200	835	6.2	0
+200	984	6.3	560
+200	984	6.4	0
+200	984	6.5	0
+200	984	6.6	0
+200	984	6.7	0
+200	984	6.8	0
+200	984	6.9	0
+200	984	7	0
+200	984	7.1	0
+200	984	7.2	0
+200	984	7.3	0
+200	984	7.4	0
+200	984	7.5	0
+200	984	7.6	0
+200	984	7.7	0
+200	984	7.8	0
+200	984	7.9	0
+200	984	8	0
+200	1087	8.1	560
+200	1087	8.2	0
+201	237	0.1	5680
+201	237	0.2	0
+201	237	0.3	0
+201	237	0.4	0
+201	237	0.5	0
+201	237	0.6	0
+201	237	0.7	0
+201	237	0.8	0
+201	237	0.9	0
+201	237	1	0
+201	237	1.1	0
+201	237	1.2	0
+201	237	1.3	0
+201	237	1.4	0
+201	237	1.5	0
+201	237	1.6	0
+201	237	1.7	0
+201	237	1.8	0
+201	237	1.9	0
+201	237	2	0
+201	339	2.1	5680
+201	339	2.2	0
+201	490	2.3	5680
+201	490	2.4	0
+201	490	2.5	0
+201	490	2.6	0
+201	490	2.7	0
+201	490	2.8	0
+201	490	2.9	0
+201	490	3	0
+201	490	3.1	0
+201	490	3.2	0
+201	490	3.3	0
+201	490	3.4	0
+201	490	3.5	0
+201	490	3.6	0
+201	490	3.7	0
+201	490	3.8	0
+201	490	3.9	0
+201	490	4	0
+201	592	4.1	5680
+201	592	4.2	0
+201	741	4.3	5680
+201	741	4.4	0
+201	741	4.5	0
+201	741	4.6	0
+201	741	4.7	0
+201	741	4.8	0
+201	741	4.9	0
+201	741	5	0
+201	741	5.1	0
+201	741	5.2	0
+201	741	5.3	0
+201	741	5.4	0
+201	741	5.5	0
+201	741	5.6	0
+201	741	5.7	0
+201	741	5.8	0
+201	741	5.9	0
+201	741	6	0
+201	843	6.1	5680
+201	843	6.2	0
+201	992	6.3	5680
+201	992	6.4	0
+201	992	6.5	0
+201	992	6.6	0
+201	992	6.7	0
+201	992	6.8	0
+201	992	6.9	0
+201	992	7	0
+201	992	7.1	0
+201	992	7.2	0
+201	992	7.3	0
+201	992	7.4	0
+201	992	7.5	0
+201	992	7.6	0
+201	992	7.7	0
+201	992	7.8	0
+201	992	7.9	0
+201	992	8	0
+201	1095	8.1	5680
+201	1095	8.2	0
+202	249	0.1	5680
+202	249	0.2	0
+202	249	0.3	0
+202	249	0.4	0
+202	249	0.5	0
+202	249	0.6	0
+202	249	0.7	0
+202	249	0.8	0
+202	249	0.9	0
+202	249	1	0
+202	249	1.1	0
+202	249	1.2	0
+202	249	1.3	0
+202	249	1.4	0
+202	249	1.5	0
+202	249	1.6	0
+202	249	1.7	0
+202	249	1.8	0
+202	249	1.9	0
+202	249	2	0
+202	351	2.1	5680
+202	351	2.2	0
+202	502	2.3	5680
+202	502	2.4	0
+202	502	2.5	0
+202	502	2.6	0
+202	502	2.7	0
+202	502	2.8	0
+202	502	2.9	0
+202	502	3	0
+202	502	3.1	0
+202	502	3.2	0
+202	502	3.3	0
+202	502	3.4	0
+202	502	3.5	0
+202	502	3.6	0
+202	502	3.7	0
+202	502	3.8	0
+202	502	3.9	0
+202	502	4	0
+202	604	4.1	5680
+202	604	4.2	0
+202	753	4.3	5680
+202	753	4.4	0
+202	753	4.5	0
+202	753	4.6	0
+202	753	4.7	0
+202	753	4.8	0
+202	753	4.9	0
+202	753	5	0
+202	753	5.1	0
+202	753	5.2	0
+202	753	5.3	0
+202	753	5.4	0
+202	753	5.5	0
+202	753	5.6	0
+202	753	5.7	0
+202	753	5.8	0
+202	753	5.9	0
+202	753	6	0
+202	855	6.1	5680
+202	855	6.2	0
+202	1004	6.3	5680
+202	1004	6.4	0
+202	1004	6.5	0
+202	1004	6.6	0
+202	1004	6.7	0
+202	1004	6.8	0
+202	1004	6.9	0
+202	1004	7	0
+202	1004	7.1	0
+202	1004	7.2	0
+202	1004	7.3	0
+202	1004	7.4	0
+202	1004	7.5	0
+202	1004	7.6	0
+202	1004	7.7	0
+202	1004	7.8	0
+202	1004	7.9	0
+202	1004	8	0
+202	1107	8.1	5680
+202	1107	8.2	0
+203	274	0.1	560
+203	274	0.2	0
+203	274	0.3	0
+203	274	0.4	0
+203	274	0.5	0
+203	274	0.6	0
+203	274	0.7	0
+203	274	0.8	0
+203	274	0.9	0
+203	274	1	0
+203	274	1.1	0
+203	274	1.2	0
+203	274	1.3	0
+203	274	1.4	0
+203	274	1.5	0
+203	274	1.6	0
+203	274	1.7	0
+203	274	1.8	0
+203	274	1.9	0
+203	274	2	0
+203	324	2.1	560
+203	324	2.2	0
+203	527	2.3	1120
+203	527	2.4	0
+203	527	2.5	0
+203	527	2.6	0
+203	527	2.7	0
+203	527	2.8	0
+203	527	2.9	0
+203	527	3	0
+203	527	3.1	0
+203	527	3.2	0
+203	527	3.3	0
+203	527	3.4	0
+203	527	3.5	0
+203	527	3.6	0
+203	527	3.7	0
+203	527	3.8	0
+203	527	3.9	0
+203	527	4	0
+203	577	4.1	560
+203	577	4.2	0
+203	778	4.3	1120
+203	778	4.4	0
+203	778	4.5	0
+203	778	4.6	0
+203	778	4.7	0
+203	778	4.8	0
+203	778	4.9	0
+203	778	5	0
+203	778	5.1	0
+203	778	5.2	0
+203	778	5.3	0
+203	778	5.4	0
+203	778	5.5	0
+203	778	5.6	0
+203	778	5.7	0
+203	778	5.8	0
+203	778	5.9	0
+203	778	6	0
+203	828	6.1	560
+203	828	6.2	0
+203	1029	6.3	1120
+203	1029	6.4	0
+203	1029	6.5	0
+203	1029	6.6	0
+203	1029	6.7	0
+203	1029	6.8	0
+203	1029	6.9	0
+203	1029	7	0
+203	1029	7.1	0
+203	1029	7.2	0
+203	1029	7.3	0
+203	1029	7.4	0
+203	1029	7.5	0
+203	1029	7.6	0
+203	1029	7.7	0
+203	1029	7.8	0
+203	1029	7.9	0
+203	1029	8	0
+203	1080	8.1	560
+203	1080	8.2	0
+204	294	2.218391814291	7
+204	547	4.218391814291	7
+204	798	6.218391814291	7
+204	1050	8.218391814291	7
+205	295	2.218391814291	15
+205	548	4.218391814291	15
+205	799	6.218391814291	15
+205	1051	8.218391814291	15
+206	297	2.218391814291	35
+206	550	4.218391814291	35
+206	801	6.218391814291	35
+206	1053	8.218391814291	35
+207	297	2.218391814291	35
+207	550	4.218391814291	35
+207	801	6.218391814291	35
+207	1053	8.218391814291	35
+208	300	2.218391814291	43
+208	553	4.218391814291	43
+208	804	6.218391814291	43
+208	1056	8.218391814291	43
+209	300	2.218391814291	568
+209	553	4.218391814291	568
+209	804	6.218391814291	568
+209	1056	8.218391814291	568
+210	300	0.1	0
+210	300	0.2	0
+210	300	0.3	0
+210	300	0.4	0
+210	300	0.5	0
+210	300	0.6	0
+210	300	0.7	0
+210	300	0.8	0
+210	300	0.9	0
+210	300	1	0
+210	300	1.1	0
+210	300	1.2	0
+210	300	1.3	0
+210	300	1.4	0
+210	300	1.5	0
+210	300	1.6	0
+210	300	1.7	0
+210	300	1.8	0
+210	300	1.9	0
+210	300	2	0
+210	300	2.1	0
+210	300	2.2	0
+210	553	2.3	5680
+210	553	2.4	0
+210	553	2.5	0
+210	553	2.6	0
+210	553	2.7	0
+210	553	2.8	0
+210	553	2.9	0
+210	553	3	0
+210	553	3.1	0
+210	553	3.2	0
+210	553	3.3	0
+210	553	3.4	0
+210	553	3.5	0
+210	553	3.6	0
+210	553	3.7	0
+210	553	3.8	0
+210	553	3.9	0
+210	553	4	0
+210	553	4.1	0
+210	553	4.2	0
+210	804	4.3	5680
+210	804	4.4	0
+210	804	4.5	0
+210	804	4.6	0
+210	804	4.7	0
+210	804	4.8	0
+210	804	4.9	0
+210	804	5	0
+210	804	5.1	0
+210	804	5.2	0
+210	804	5.3	0
+210	804	5.4	0
+210	804	5.5	0
+210	804	5.6	0
+210	804	5.7	0
+210	804	5.8	0
+210	804	5.9	0
+210	804	6	0
+210	804	6.1	0
+210	804	6.2	0
+210	1056	6.3	5680
+210	1056	6.4	0
+210	1056	6.5	0
+210	1056	6.6	0
+210	1056	6.7	0
+210	1056	6.8	0
+210	1056	6.9	0
+210	1056	7	0
+210	1056	7.1	0
+210	1056	7.2	0
+210	1056	7.3	0
+210	1056	7.4	0
+210	1056	7.5	0
+210	1056	7.6	0
+210	1056	7.7	0
+210	1056	7.8	0
+210	1056	7.9	0
+210	1056	8	0
+210	1056	8.1	0
+210	1056	8.2	0
+211	300	2.218391814291	1
+211	304	2.218391814291	0
+211	553	4.218391814291	1
+211	557	4.218391814291	0
+211	804	6.218391814291	1
+211	808	6.218391814291	0
+211	1056	8.218391814291	1
+211	1060	8.218391814291	0
+212	300	2.218391814291	568
+212	304	2.218391814291	0
+212	553	4.218391814291	568
+212	557	4.218391814291	0
+212	804	6.218391814291	568
+212	808	6.218391814291	0
+212	1056	8.218391814291	568
+212	1060	8.218391814291	0
+213	300	2.218391814291	7
+213	553	4.218391814291	25
+213	804	6.218391814291	10
+213	1056	8.218391814291	30
+214	304	2.218391814291	0
+214	557	4.218391814291	0
+214	808	6.218391814291	0
+214	1060	8.218391814291	0
+215	304	2.218391814291	568
+215	557	4.218391814291	568
+215	808	6.218391814291	568
+215	1060	8.218391814291	568
+216	304	0.1	0
+216	304	0.2	0
+216	304	0.3	0
+216	304	0.4	0
+216	304	0.5	0
+216	304	0.6	0
+216	304	0.7	0
+216	304	0.8	0
+216	304	0.9	0
+216	304	1	0
+216	304	1.1	0
+216	304	1.2	0
+216	304	1.3	0
+216	304	1.4	0
+216	304	1.5	0
+216	304	1.6	0
+216	304	1.7	0
+216	304	1.8	0
+216	304	1.9	0
+216	304	2	0
+216	304	2.1	0
+216	304	2.2	0
+216	557	2.3	5680
+216	557	2.4	0
+216	557	2.5	0
+216	557	2.6	0
+216	557	2.7	0
+216	557	2.8	0
+216	557	2.9	0
+216	557	3	0
+216	557	3.1	0
+216	557	3.2	0
+216	557	3.3	0
+216	557	3.4	0
+216	557	3.5	0
+216	557	3.6	0
+216	557	3.7	0
+216	557	3.8	0
+216	557	3.9	0
+216	557	4	0
+216	557	4.1	0
+216	557	4.2	0
+216	808	4.3	5680
+216	808	4.4	0
+216	808	4.5	0
+216	808	4.6	0
+216	808	4.7	0
+216	808	4.8	0
+216	808	4.9	0
+216	808	5	0
+216	808	5.1	0
+216	808	5.2	0
+216	808	5.3	0
+216	808	5.4	0
+216	808	5.5	0
+216	808	5.6	0
+216	808	5.7	0
+216	808	5.8	0
+216	808	5.9	0
+216	808	6	0
+216	808	6.1	0
+216	808	6.2	0
+216	1060	6.3	5680
+216	1060	6.4	0
+216	1060	6.5	0
+216	1060	6.6	0
+216	1060	6.7	0
+216	1060	6.8	0
+216	1060	6.9	0
+216	1060	7	0
+216	1060	7.1	0
+216	1060	7.2	0
+216	1060	7.3	0
+216	1060	7.4	0
+216	1060	7.5	0
+216	1060	7.6	0
+216	1060	7.7	0
+216	1060	7.8	0
+216	1060	7.9	0
+216	1060	8	0
+216	1060	8.1	0
+216	1060	8.2	0
+217	304	2.218391814291	24000000
+217	557	4.218391814291	24000000
+217	808	6.218391814291	24000000
+217	1060	8.218391814291	24000000
+218	304	2.218391814291	71
+218	557	4.218391814291	71
+218	808	6.218391814291	71
+218	1060	8.218391814291	71
+219	305	2.218391814291	1
+219	306	2.218391814291	2
+219	317	2.218445814291	1
+219	319	2.218445814291	0
+219	558	4.218391814291	1
+219	559	4.218391814291	2
+219	570	4.218445814291	1
+219	571	4.218445814291	0
+219	809	6.218391814291	1
+219	810	6.218391814291	2
+219	821	6.218445814291	1
+219	822	6.218445814291	0
+219	1061	8.218391814291	1
+219	1062	8.218391814291	2
+219	1073	8.218445814291	1
+219	1074	8.218445814291	0
+220	317	2.218445814291	71
+220	570	4.218445814291	71
+220	821	6.218445814291	71
+220	1073	8.218445814291	71
+221	317	2.218445814291	71
+221	570	4.218445814291	71
+221	821	6.218445814291	71
+221	1073	8.218445814291	71
+222	317	2.218445814291	71
+222	570	4.218445814291	71
+222	821	6.218445814291	71
+222	1073	8.218445814291	71
+223	317	2.218445814291	5.4e-05
+223	570	4.218445814291	5.4e-05
+223	821	6.218445814291	5.4e-05
+223	1073	8.218445814291	5.4e-05
+vector 224 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 225 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 226 GradysNetwork.sensors[0].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 227 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 228 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 229 GradysNetwork.sensors[1].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 230 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 231 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 232 GradysNetwork.sensors[2].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 233 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 234 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 235 GradysNetwork.sensors[3].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 236 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 237 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 238 GradysNetwork.sensors[4].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 239 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 240 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 241 GradysNetwork.sensors[5].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 242 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 243 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 244 GradysNetwork.sensors[6].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+vector 245 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+vector 246 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+vector 247 GradysNetwork.sensors[7].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+194	1137	8.1	5680
+194	1137	8.2	0
+194	1137	8.218770954852	0
+195	1137	8.1	5680
+195	1137	8.2	0
+195	1137	8.218770954852	0
+198	1137	8.218770954852	2983.3325177932
+200	1137	8.218770954852	2983.3325177932
+201	1137	8.218770954852	30259.515537617
+202	1137	8.218770954852	30259.515537617
+203	1137	8.218770954852	5966.6650355864
+210	1137	8.218770954852	30259.515537617
+216	1137	8.218770954852	30259.515537617
+224	1137	0.1	0
+224	1137	0.2	0
+224	1137	0.3	0
+224	1137	0.4	0
+224	1137	0.5	0
+224	1137	0.6	0
+224	1137	0.7	0
+224	1137	0.8	0
+224	1137	0.9	0
+224	1137	1	0
+224	1137	1.1	0
+224	1137	1.2	0
+224	1137	1.3	0
+224	1137	1.4	0
+224	1137	1.5	0
+224	1137	1.6	0
+224	1137	1.7	0
+224	1137	1.8	0
+224	1137	1.9	0
+224	1137	2	0
+224	1137	2.1	0
+224	1137	2.2	0
+224	1137	2.3	0
+224	1137	2.4	0
+224	1137	2.5	0
+224	1137	2.6	0
+224	1137	2.7	0
+224	1137	2.8	0
+224	1137	2.9	0
+224	1137	3	0
+224	1137	3.1	0
+224	1137	3.2	0
+224	1137	3.3	0
+224	1137	3.4	0
+224	1137	3.5	0
+224	1137	3.6	0
+224	1137	3.7	0
+224	1137	3.8	0
+224	1137	3.9	0
+224	1137	4	0
+224	1137	4.1	0
+224	1137	4.2	0
+224	1137	4.3	0
+224	1137	4.4	0
+224	1137	4.5	0
+224	1137	4.6	0
+224	1137	4.7	0
+224	1137	4.8	0
+224	1137	4.9	0
+224	1137	5	0
+224	1137	5.1	0
+224	1137	5.2	0
+224	1137	5.3	0
+224	1137	5.4	0
+224	1137	5.5	0
+224	1137	5.6	0
+224	1137	5.7	0
+224	1137	5.8	0
+224	1137	5.9	0
+224	1137	6	0
+224	1137	6.1	0
+224	1137	6.2	0
+224	1137	6.3	0
+224	1137	6.4	0
+224	1137	6.5	0
+224	1137	6.6	0
+224	1137	6.7	0
+224	1137	6.8	0
+224	1137	6.9	0
+224	1137	7	0
+224	1137	7.1	0
+224	1137	7.2	0
+224	1137	7.3	0
+224	1137	7.4	0
+224	1137	7.5	0
+224	1137	7.6	0
+224	1137	7.7	0
+224	1137	7.8	0
+224	1137	7.9	0
+224	1137	8	0
+224	1137	8.1	0
+224	1137	8.2	0
+224	1137	8.218770954852	0
+225	1137	0.1	0
+225	1137	0.2	0
+225	1137	0.3	0
+225	1137	0.4	0
+225	1137	0.5	0
+225	1137	0.6	0
+225	1137	0.7	0
+225	1137	0.8	0
+225	1137	0.9	0
+225	1137	1	0
+225	1137	1.1	0
+225	1137	1.2	0
+225	1137	1.3	0
+225	1137	1.4	0
+225	1137	1.5	0
+225	1137	1.6	0
+225	1137	1.7	0
+225	1137	1.8	0
+225	1137	1.9	0
+225	1137	2	0
+225	1137	2.1	0
+225	1137	2.2	0
+225	1137	2.3	0
+225	1137	2.4	0
+225	1137	2.5	0
+225	1137	2.6	0
+225	1137	2.7	0
+225	1137	2.8	0
+225	1137	2.9	0
+225	1137	3	0
+225	1137	3.1	0
+225	1137	3.2	0
+225	1137	3.3	0
+225	1137	3.4	0
+225	1137	3.5	0
+225	1137	3.6	0
+225	1137	3.7	0
+225	1137	3.8	0
+225	1137	3.9	0
+225	1137	4	0
+225	1137	4.1	0
+225	1137	4.2	0
+225	1137	4.3	0
+225	1137	4.4	0
+225	1137	4.5	0
+225	1137	4.6	0
+225	1137	4.7	0
+225	1137	4.8	0
+225	1137	4.9	0
+225	1137	5	0
+225	1137	5.1	0
+225	1137	5.2	0
+225	1137	5.3	0
+225	1137	5.4	0
+225	1137	5.5	0
+225	1137	5.6	0
+225	1137	5.7	0
+225	1137	5.8	0
+225	1137	5.9	0
+225	1137	6	0
+225	1137	6.1	0
+225	1137	6.2	0
+225	1137	6.3	0
+225	1137	6.4	0
+225	1137	6.5	0
+225	1137	6.6	0
+225	1137	6.7	0
+225	1137	6.8	0
+225	1137	6.9	0
+225	1137	7	0
+225	1137	7.1	0
+225	1137	7.2	0
+225	1137	7.3	0
+225	1137	7.4	0
+225	1137	7.5	0
+225	1137	7.6	0
+225	1137	7.7	0
+225	1137	7.8	0
+225	1137	7.9	0
+225	1137	8	0
+225	1137	8.1	0
+225	1137	8.2	0
+225	1137	8.218770954852	0
+226	1137	0.1	0
+226	1137	0.2	0
+226	1137	0.3	0
+226	1137	0.4	0
+226	1137	0.5	0
+226	1137	0.6	0
+226	1137	0.7	0
+226	1137	0.8	0
+226	1137	0.9	0
+226	1137	1	0
+226	1137	1.1	0
+226	1137	1.2	0
+226	1137	1.3	0
+226	1137	1.4	0
+226	1137	1.5	0
+226	1137	1.6	0
+226	1137	1.7	0
+226	1137	1.8	0
+226	1137	1.9	0
+226	1137	2	0
+226	1137	2.1	0
+226	1137	2.2	0
+226	1137	2.3	0
+226	1137	2.4	0
+226	1137	2.5	0
+226	1137	2.6	0
+226	1137	2.7	0
+226	1137	2.8	0
+226	1137	2.9	0
+226	1137	3	0
+226	1137	3.1	0
+226	1137	3.2	0
+226	1137	3.3	0
+226	1137	3.4	0
+226	1137	3.5	0
+226	1137	3.6	0
+226	1137	3.7	0
+226	1137	3.8	0
+226	1137	3.9	0
+226	1137	4	0
+226	1137	4.1	0
+226	1137	4.2	0
+226	1137	4.3	0
+226	1137	4.4	0
+226	1137	4.5	0
+226	1137	4.6	0
+226	1137	4.7	0
+226	1137	4.8	0
+226	1137	4.9	0
+226	1137	5	0
+226	1137	5.1	0
+226	1137	5.2	0
+226	1137	5.3	0
+226	1137	5.4	0
+226	1137	5.5	0
+226	1137	5.6	0
+226	1137	5.7	0
+226	1137	5.8	0
+226	1137	5.9	0
+226	1137	6	0
+226	1137	6.1	0
+226	1137	6.2	0
+226	1137	6.3	0
+226	1137	6.4	0
+226	1137	6.5	0
+226	1137	6.6	0
+226	1137	6.7	0
+226	1137	6.8	0
+226	1137	6.9	0
+226	1137	7	0
+226	1137	7.1	0
+226	1137	7.2	0
+226	1137	7.3	0
+226	1137	7.4	0
+226	1137	7.5	0
+226	1137	7.6	0
+226	1137	7.7	0
+226	1137	7.8	0
+226	1137	7.9	0
+226	1137	8	0
+226	1137	8.1	0
+226	1137	8.2	0
+226	1137	8.218770954852	0
+227	1137	0.1	0
+227	1137	0.2	0
+227	1137	0.3	0
+227	1137	0.4	0
+227	1137	0.5	0
+227	1137	0.6	0
+227	1137	0.7	0
+227	1137	0.8	0
+227	1137	0.9	0
+227	1137	1	0
+227	1137	1.1	0
+227	1137	1.2	0
+227	1137	1.3	0
+227	1137	1.4	0
+227	1137	1.5	0
+227	1137	1.6	0
+227	1137	1.7	0
+227	1137	1.8	0
+227	1137	1.9	0
+227	1137	2	0
+227	1137	2.1	0
+227	1137	2.2	0
+227	1137	2.3	0
+227	1137	2.4	0
+227	1137	2.5	0
+227	1137	2.6	0
+227	1137	2.7	0
+227	1137	2.8	0
+227	1137	2.9	0
+227	1137	3	0
+227	1137	3.1	0
+227	1137	3.2	0
+227	1137	3.3	0
+227	1137	3.4	0
+227	1137	3.5	0
+227	1137	3.6	0
+227	1137	3.7	0
+227	1137	3.8	0
+227	1137	3.9	0
+227	1137	4	0
+227	1137	4.1	0
+227	1137	4.2	0
+227	1137	4.3	0
+227	1137	4.4	0
+227	1137	4.5	0
+227	1137	4.6	0
+227	1137	4.7	0
+227	1137	4.8	0
+227	1137	4.9	0
+227	1137	5	0
+227	1137	5.1	0
+227	1137	5.2	0
+227	1137	5.3	0
+227	1137	5.4	0
+227	1137	5.5	0
+227	1137	5.6	0
+227	1137	5.7	0
+227	1137	5.8	0
+227	1137	5.9	0
+227	1137	6	0
+227	1137	6.1	0
+227	1137	6.2	0
+227	1137	6.3	0
+227	1137	6.4	0
+227	1137	6.5	0
+227	1137	6.6	0
+227	1137	6.7	0
+227	1137	6.8	0
+227	1137	6.9	0
+227	1137	7	0
+227	1137	7.1	0
+227	1137	7.2	0
+227	1137	7.3	0
+227	1137	7.4	0
+227	1137	7.5	0
+227	1137	7.6	0
+227	1137	7.7	0
+227	1137	7.8	0
+227	1137	7.9	0
+227	1137	8	0
+227	1137	8.1	0
+227	1137	8.2	0
+227	1137	8.218770954852	0
+228	1137	0.1	0
+228	1137	0.2	0
+228	1137	0.3	0
+228	1137	0.4	0
+228	1137	0.5	0
+228	1137	0.6	0
+228	1137	0.7	0
+228	1137	0.8	0
+228	1137	0.9	0
+228	1137	1	0
+228	1137	1.1	0
+228	1137	1.2	0
+228	1137	1.3	0
+228	1137	1.4	0
+228	1137	1.5	0
+228	1137	1.6	0
+228	1137	1.7	0
+228	1137	1.8	0
+228	1137	1.9	0
+228	1137	2	0
+228	1137	2.1	0
+228	1137	2.2	0
+228	1137	2.3	0
+228	1137	2.4	0
+228	1137	2.5	0
+228	1137	2.6	0
+228	1137	2.7	0
+228	1137	2.8	0
+228	1137	2.9	0
+228	1137	3	0
+228	1137	3.1	0
+228	1137	3.2	0
+228	1137	3.3	0
+228	1137	3.4	0
+228	1137	3.5	0
+228	1137	3.6	0
+228	1137	3.7	0
+228	1137	3.8	0
+228	1137	3.9	0
+228	1137	4	0
+228	1137	4.1	0
+228	1137	4.2	0
+228	1137	4.3	0
+228	1137	4.4	0
+228	1137	4.5	0
+228	1137	4.6	0
+228	1137	4.7	0
+228	1137	4.8	0
+228	1137	4.9	0
+228	1137	5	0
+228	1137	5.1	0
+228	1137	5.2	0
+228	1137	5.3	0
+228	1137	5.4	0
+228	1137	5.5	0
+228	1137	5.6	0
+228	1137	5.7	0
+228	1137	5.8	0
+228	1137	5.9	0
+228	1137	6	0
+228	1137	6.1	0
+228	1137	6.2	0
+228	1137	6.3	0
+228	1137	6.4	0
+228	1137	6.5	0
+228	1137	6.6	0
+228	1137	6.7	0
+228	1137	6.8	0
+228	1137	6.9	0
+228	1137	7	0
+228	1137	7.1	0
+228	1137	7.2	0
+228	1137	7.3	0
+228	1137	7.4	0
+228	1137	7.5	0
+228	1137	7.6	0
+228	1137	7.7	0
+228	1137	7.8	0
+228	1137	7.9	0
+228	1137	8	0
+228	1137	8.1	0
+228	1137	8.2	0
+228	1137	8.218770954852	0
+229	1137	0.1	0
+229	1137	0.2	0
+229	1137	0.3	0
+229	1137	0.4	0
+229	1137	0.5	0
+229	1137	0.6	0
+229	1137	0.7	0
+229	1137	0.8	0
+229	1137	0.9	0
+229	1137	1	0
+229	1137	1.1	0
+229	1137	1.2	0
+229	1137	1.3	0
+229	1137	1.4	0
+229	1137	1.5	0
+229	1137	1.6	0
+229	1137	1.7	0
+229	1137	1.8	0
+229	1137	1.9	0
+229	1137	2	0
+229	1137	2.1	0
+229	1137	2.2	0
+229	1137	2.3	0
+229	1137	2.4	0
+229	1137	2.5	0
+229	1137	2.6	0
+229	1137	2.7	0
+229	1137	2.8	0
+229	1137	2.9	0
+229	1137	3	0
+229	1137	3.1	0
+229	1137	3.2	0
+229	1137	3.3	0
+229	1137	3.4	0
+229	1137	3.5	0
+229	1137	3.6	0
+229	1137	3.7	0
+229	1137	3.8	0
+229	1137	3.9	0
+229	1137	4	0
+229	1137	4.1	0
+229	1137	4.2	0
+229	1137	4.3	0
+229	1137	4.4	0
+229	1137	4.5	0
+229	1137	4.6	0
+229	1137	4.7	0
+229	1137	4.8	0
+229	1137	4.9	0
+229	1137	5	0
+229	1137	5.1	0
+229	1137	5.2	0
+229	1137	5.3	0
+229	1137	5.4	0
+229	1137	5.5	0
+229	1137	5.6	0
+229	1137	5.7	0
+229	1137	5.8	0
+229	1137	5.9	0
+229	1137	6	0
+229	1137	6.1	0
+229	1137	6.2	0
+229	1137	6.3	0
+229	1137	6.4	0
+229	1137	6.5	0
+229	1137	6.6	0
+229	1137	6.7	0
+229	1137	6.8	0
+229	1137	6.9	0
+229	1137	7	0
+229	1137	7.1	0
+229	1137	7.2	0
+229	1137	7.3	0
+229	1137	7.4	0
+229	1137	7.5	0
+229	1137	7.6	0
+229	1137	7.7	0
+229	1137	7.8	0
+229	1137	7.9	0
+229	1137	8	0
+229	1137	8.1	0
+229	1137	8.2	0
+229	1137	8.218770954852	0
+230	1137	0.1	0
+230	1137	0.2	0
+230	1137	0.3	0
+230	1137	0.4	0
+230	1137	0.5	0
+230	1137	0.6	0
+230	1137	0.7	0
+230	1137	0.8	0
+230	1137	0.9	0
+230	1137	1	0
+230	1137	1.1	0
+230	1137	1.2	0
+230	1137	1.3	0
+230	1137	1.4	0
+230	1137	1.5	0
+230	1137	1.6	0
+230	1137	1.7	0
+230	1137	1.8	0
+230	1137	1.9	0
+230	1137	2	0
+230	1137	2.1	0
+230	1137	2.2	0
+230	1137	2.3	0
+230	1137	2.4	0
+230	1137	2.5	0
+230	1137	2.6	0
+230	1137	2.7	0
+230	1137	2.8	0
+230	1137	2.9	0
+230	1137	3	0
+230	1137	3.1	0
+230	1137	3.2	0
+230	1137	3.3	0
+230	1137	3.4	0
+230	1137	3.5	0
+230	1137	3.6	0
+230	1137	3.7	0
+230	1137	3.8	0
+230	1137	3.9	0
+230	1137	4	0
+230	1137	4.1	0
+230	1137	4.2	0
+230	1137	4.3	0
+230	1137	4.4	0
+230	1137	4.5	0
+230	1137	4.6	0
+230	1137	4.7	0
+230	1137	4.8	0
+230	1137	4.9	0
+230	1137	5	0
+230	1137	5.1	0
+230	1137	5.2	0
+230	1137	5.3	0
+230	1137	5.4	0
+230	1137	5.5	0
+230	1137	5.6	0
+230	1137	5.7	0
+230	1137	5.8	0
+230	1137	5.9	0
+230	1137	6	0
+230	1137	6.1	0
+230	1137	6.2	0
+230	1137	6.3	0
+230	1137	6.4	0
+230	1137	6.5	0
+230	1137	6.6	0
+230	1137	6.7	0
+230	1137	6.8	0
+230	1137	6.9	0
+230	1137	7	0
+230	1137	7.1	0
+230	1137	7.2	0
+230	1137	7.3	0
+230	1137	7.4	0
+230	1137	7.5	0
+230	1137	7.6	0
+230	1137	7.7	0
+230	1137	7.8	0
+230	1137	7.9	0
+230	1137	8	0
+230	1137	8.1	0
+230	1137	8.2	0
+230	1137	8.218770954852	0
+231	1137	0.1	0
+231	1137	0.2	0
+231	1137	0.3	0
+231	1137	0.4	0
+231	1137	0.5	0
+231	1137	0.6	0
+231	1137	0.7	0
+231	1137	0.8	0
+231	1137	0.9	0
+231	1137	1	0
+231	1137	1.1	0
+231	1137	1.2	0
+231	1137	1.3	0
+231	1137	1.4	0
+231	1137	1.5	0
+231	1137	1.6	0
+231	1137	1.7	0
+231	1137	1.8	0
+231	1137	1.9	0
+231	1137	2	0
+231	1137	2.1	0
+231	1137	2.2	0
+231	1137	2.3	0
+231	1137	2.4	0
+231	1137	2.5	0
+231	1137	2.6	0
+231	1137	2.7	0
+231	1137	2.8	0
+231	1137	2.9	0
+231	1137	3	0
+231	1137	3.1	0
+231	1137	3.2	0
+231	1137	3.3	0
+231	1137	3.4	0
+231	1137	3.5	0
+231	1137	3.6	0
+231	1137	3.7	0
+231	1137	3.8	0
+231	1137	3.9	0
+231	1137	4	0
+231	1137	4.1	0
+231	1137	4.2	0
+231	1137	4.3	0
+231	1137	4.4	0
+231	1137	4.5	0
+231	1137	4.6	0
+231	1137	4.7	0
+231	1137	4.8	0
+231	1137	4.9	0
+231	1137	5	0
+231	1137	5.1	0
+231	1137	5.2	0
+231	1137	5.3	0
+231	1137	5.4	0
+231	1137	5.5	0
+231	1137	5.6	0
+231	1137	5.7	0
+231	1137	5.8	0
+231	1137	5.9	0
+231	1137	6	0
+231	1137	6.1	0
+231	1137	6.2	0
+231	1137	6.3	0
+231	1137	6.4	0
+231	1137	6.5	0
+231	1137	6.6	0
+231	1137	6.7	0
+231	1137	6.8	0
+231	1137	6.9	0
+231	1137	7	0
+231	1137	7.1	0
+231	1137	7.2	0
+231	1137	7.3	0
+231	1137	7.4	0
+231	1137	7.5	0
+231	1137	7.6	0
+231	1137	7.7	0
+231	1137	7.8	0
+231	1137	7.9	0
+231	1137	8	0
+231	1137	8.1	0
+231	1137	8.2	0
+231	1137	8.218770954852	0
+232	1137	0.1	0
+232	1137	0.2	0
+232	1137	0.3	0
+232	1137	0.4	0
+232	1137	0.5	0
+232	1137	0.6	0
+232	1137	0.7	0
+232	1137	0.8	0
+232	1137	0.9	0
+232	1137	1	0
+232	1137	1.1	0
+232	1137	1.2	0
+232	1137	1.3	0
+232	1137	1.4	0
+232	1137	1.5	0
+232	1137	1.6	0
+232	1137	1.7	0
+232	1137	1.8	0
+232	1137	1.9	0
+232	1137	2	0
+232	1137	2.1	0
+232	1137	2.2	0
+232	1137	2.3	0
+232	1137	2.4	0
+232	1137	2.5	0
+232	1137	2.6	0
+232	1137	2.7	0
+232	1137	2.8	0
+232	1137	2.9	0
+232	1137	3	0
+232	1137	3.1	0
+232	1137	3.2	0
+232	1137	3.3	0
+232	1137	3.4	0
+232	1137	3.5	0
+232	1137	3.6	0
+232	1137	3.7	0
+232	1137	3.8	0
+232	1137	3.9	0
+232	1137	4	0
+232	1137	4.1	0
+232	1137	4.2	0
+232	1137	4.3	0
+232	1137	4.4	0
+232	1137	4.5	0
+232	1137	4.6	0
+232	1137	4.7	0
+232	1137	4.8	0
+232	1137	4.9	0
+232	1137	5	0
+232	1137	5.1	0
+232	1137	5.2	0
+232	1137	5.3	0
+232	1137	5.4	0
+232	1137	5.5	0
+232	1137	5.6	0
+232	1137	5.7	0
+232	1137	5.8	0
+232	1137	5.9	0
+232	1137	6	0
+232	1137	6.1	0
+232	1137	6.2	0
+232	1137	6.3	0
+232	1137	6.4	0
+232	1137	6.5	0
+232	1137	6.6	0
+232	1137	6.7	0
+232	1137	6.8	0
+232	1137	6.9	0
+232	1137	7	0
+232	1137	7.1	0
+232	1137	7.2	0
+232	1137	7.3	0
+232	1137	7.4	0
+232	1137	7.5	0
+232	1137	7.6	0
+232	1137	7.7	0
+232	1137	7.8	0
+232	1137	7.9	0
+232	1137	8	0
+232	1137	8.1	0
+232	1137	8.2	0
+232	1137	8.218770954852	0
+233	1137	0.1	0
+233	1137	0.2	0
+233	1137	0.3	0
+233	1137	0.4	0
+233	1137	0.5	0
+233	1137	0.6	0
+233	1137	0.7	0
+233	1137	0.8	0
+233	1137	0.9	0
+233	1137	1	0
+233	1137	1.1	0
+233	1137	1.2	0
+233	1137	1.3	0
+233	1137	1.4	0
+233	1137	1.5	0
+233	1137	1.6	0
+233	1137	1.7	0
+233	1137	1.8	0
+233	1137	1.9	0
+233	1137	2	0
+233	1137	2.1	0
+233	1137	2.2	0
+233	1137	2.3	0
+233	1137	2.4	0
+233	1137	2.5	0
+233	1137	2.6	0
+233	1137	2.7	0
+233	1137	2.8	0
+233	1137	2.9	0
+233	1137	3	0
+233	1137	3.1	0
+233	1137	3.2	0
+233	1137	3.3	0
+233	1137	3.4	0
+233	1137	3.5	0
+233	1137	3.6	0
+233	1137	3.7	0
+233	1137	3.8	0
+233	1137	3.9	0
+233	1137	4	0
+233	1137	4.1	0
+233	1137	4.2	0
+233	1137	4.3	0
+233	1137	4.4	0
+233	1137	4.5	0
+233	1137	4.6	0
+233	1137	4.7	0
+233	1137	4.8	0
+233	1137	4.9	0
+233	1137	5	0
+233	1137	5.1	0
+233	1137	5.2	0
+233	1137	5.3	0
+233	1137	5.4	0
+233	1137	5.5	0
+233	1137	5.6	0
+233	1137	5.7	0
+233	1137	5.8	0
+233	1137	5.9	0
+233	1137	6	0
+233	1137	6.1	0
+233	1137	6.2	0
+233	1137	6.3	0
+233	1137	6.4	0
+233	1137	6.5	0
+233	1137	6.6	0
+233	1137	6.7	0
+233	1137	6.8	0
+233	1137	6.9	0
+233	1137	7	0
+233	1137	7.1	0
+233	1137	7.2	0
+233	1137	7.3	0
+233	1137	7.4	0
+233	1137	7.5	0
+233	1137	7.6	0
+233	1137	7.7	0
+233	1137	7.8	0
+233	1137	7.9	0
+233	1137	8	0
+233	1137	8.1	0
+233	1137	8.2	0
+233	1137	8.218770954852	0
+234	1137	0.1	0
+234	1137	0.2	0
+234	1137	0.3	0
+234	1137	0.4	0
+234	1137	0.5	0
+234	1137	0.6	0
+234	1137	0.7	0
+234	1137	0.8	0
+234	1137	0.9	0
+234	1137	1	0
+234	1137	1.1	0
+234	1137	1.2	0
+234	1137	1.3	0
+234	1137	1.4	0
+234	1137	1.5	0
+234	1137	1.6	0
+234	1137	1.7	0
+234	1137	1.8	0
+234	1137	1.9	0
+234	1137	2	0
+234	1137	2.1	0
+234	1137	2.2	0
+234	1137	2.3	0
+234	1137	2.4	0
+234	1137	2.5	0
+234	1137	2.6	0
+234	1137	2.7	0
+234	1137	2.8	0
+234	1137	2.9	0
+234	1137	3	0
+234	1137	3.1	0
+234	1137	3.2	0
+234	1137	3.3	0
+234	1137	3.4	0
+234	1137	3.5	0
+234	1137	3.6	0
+234	1137	3.7	0
+234	1137	3.8	0
+234	1137	3.9	0
+234	1137	4	0
+234	1137	4.1	0
+234	1137	4.2	0
+234	1137	4.3	0
+234	1137	4.4	0
+234	1137	4.5	0
+234	1137	4.6	0
+234	1137	4.7	0
+234	1137	4.8	0
+234	1137	4.9	0
+234	1137	5	0
+234	1137	5.1	0
+234	1137	5.2	0
+234	1137	5.3	0
+234	1137	5.4	0
+234	1137	5.5	0
+234	1137	5.6	0
+234	1137	5.7	0
+234	1137	5.8	0
+234	1137	5.9	0
+234	1137	6	0
+234	1137	6.1	0
+234	1137	6.2	0
+234	1137	6.3	0
+234	1137	6.4	0
+234	1137	6.5	0
+234	1137	6.6	0
+234	1137	6.7	0
+234	1137	6.8	0
+234	1137	6.9	0
+234	1137	7	0
+234	1137	7.1	0
+234	1137	7.2	0
+234	1137	7.3	0
+234	1137	7.4	0
+234	1137	7.5	0
+234	1137	7.6	0
+234	1137	7.7	0
+234	1137	7.8	0
+234	1137	7.9	0
+234	1137	8	0
+234	1137	8.1	0
+234	1137	8.2	0
+234	1137	8.218770954852	0
+235	1137	0.1	0
+235	1137	0.2	0
+235	1137	0.3	0
+235	1137	0.4	0
+235	1137	0.5	0
+235	1137	0.6	0
+235	1137	0.7	0
+235	1137	0.8	0
+235	1137	0.9	0
+235	1137	1	0
+235	1137	1.1	0
+235	1137	1.2	0
+235	1137	1.3	0
+235	1137	1.4	0
+235	1137	1.5	0
+235	1137	1.6	0
+235	1137	1.7	0
+235	1137	1.8	0
+235	1137	1.9	0
+235	1137	2	0
+235	1137	2.1	0
+235	1137	2.2	0
+235	1137	2.3	0
+235	1137	2.4	0
+235	1137	2.5	0
+235	1137	2.6	0
+235	1137	2.7	0
+235	1137	2.8	0
+235	1137	2.9	0
+235	1137	3	0
+235	1137	3.1	0
+235	1137	3.2	0
+235	1137	3.3	0
+235	1137	3.4	0
+235	1137	3.5	0
+235	1137	3.6	0
+235	1137	3.7	0
+235	1137	3.8	0
+235	1137	3.9	0
+235	1137	4	0
+235	1137	4.1	0
+235	1137	4.2	0
+235	1137	4.3	0
+235	1137	4.4	0
+235	1137	4.5	0
+235	1137	4.6	0
+235	1137	4.7	0
+235	1137	4.8	0
+235	1137	4.9	0
+235	1137	5	0
+235	1137	5.1	0
+235	1137	5.2	0
+235	1137	5.3	0
+235	1137	5.4	0
+235	1137	5.5	0
+235	1137	5.6	0
+235	1137	5.7	0
+235	1137	5.8	0
+235	1137	5.9	0
+235	1137	6	0
+235	1137	6.1	0
+235	1137	6.2	0
+235	1137	6.3	0
+235	1137	6.4	0
+235	1137	6.5	0
+235	1137	6.6	0
+235	1137	6.7	0
+235	1137	6.8	0
+235	1137	6.9	0
+235	1137	7	0
+235	1137	7.1	0
+235	1137	7.2	0
+235	1137	7.3	0
+235	1137	7.4	0
+235	1137	7.5	0
+235	1137	7.6	0
+235	1137	7.7	0
+235	1137	7.8	0
+235	1137	7.9	0
+235	1137	8	0
+235	1137	8.1	0
+235	1137	8.2	0
+235	1137	8.218770954852	0
+236	1137	0.1	0
+236	1137	0.2	0
+236	1137	0.3	0
+236	1137	0.4	0
+236	1137	0.5	0
+236	1137	0.6	0
+236	1137	0.7	0
+236	1137	0.8	0
+236	1137	0.9	0
+236	1137	1	0
+236	1137	1.1	0
+236	1137	1.2	0
+236	1137	1.3	0
+236	1137	1.4	0
+236	1137	1.5	0
+236	1137	1.6	0
+236	1137	1.7	0
+236	1137	1.8	0
+236	1137	1.9	0
+236	1137	2	0
+236	1137	2.1	0
+236	1137	2.2	0
+236	1137	2.3	0
+236	1137	2.4	0
+236	1137	2.5	0
+236	1137	2.6	0
+236	1137	2.7	0
+236	1137	2.8	0
+236	1137	2.9	0
+236	1137	3	0
+236	1137	3.1	0
+236	1137	3.2	0
+236	1137	3.3	0
+236	1137	3.4	0
+236	1137	3.5	0
+236	1137	3.6	0
+236	1137	3.7	0
+236	1137	3.8	0
+236	1137	3.9	0
+236	1137	4	0
+236	1137	4.1	0
+236	1137	4.2	0
+236	1137	4.3	0
+236	1137	4.4	0
+236	1137	4.5	0
+236	1137	4.6	0
+236	1137	4.7	0
+236	1137	4.8	0
+236	1137	4.9	0
+236	1137	5	0
+236	1137	5.1	0
+236	1137	5.2	0
+236	1137	5.3	0
+236	1137	5.4	0
+236	1137	5.5	0
+236	1137	5.6	0
+236	1137	5.7	0
+236	1137	5.8	0
+236	1137	5.9	0
+236	1137	6	0
+236	1137	6.1	0
+236	1137	6.2	0
+236	1137	6.3	0
+236	1137	6.4	0
+236	1137	6.5	0
+236	1137	6.6	0
+236	1137	6.7	0
+236	1137	6.8	0
+236	1137	6.9	0
+236	1137	7	0
+236	1137	7.1	0
+236	1137	7.2	0
+236	1137	7.3	0
+236	1137	7.4	0
+236	1137	7.5	0
+236	1137	7.6	0
+236	1137	7.7	0
+236	1137	7.8	0
+236	1137	7.9	0
+236	1137	8	0
+236	1137	8.1	0
+236	1137	8.2	0
+236	1137	8.218770954852	0
+237	1137	0.1	0
+237	1137	0.2	0
+237	1137	0.3	0
+237	1137	0.4	0
+237	1137	0.5	0
+237	1137	0.6	0
+237	1137	0.7	0
+237	1137	0.8	0
+237	1137	0.9	0
+237	1137	1	0
+237	1137	1.1	0
+237	1137	1.2	0
+237	1137	1.3	0
+237	1137	1.4	0
+237	1137	1.5	0
+237	1137	1.6	0
+237	1137	1.7	0
+237	1137	1.8	0
+237	1137	1.9	0
+237	1137	2	0
+237	1137	2.1	0
+237	1137	2.2	0
+237	1137	2.3	0
+237	1137	2.4	0
+237	1137	2.5	0
+237	1137	2.6	0
+237	1137	2.7	0
+237	1137	2.8	0
+237	1137	2.9	0
+237	1137	3	0
+237	1137	3.1	0
+237	1137	3.2	0
+237	1137	3.3	0
+237	1137	3.4	0
+237	1137	3.5	0
+237	1137	3.6	0
+237	1137	3.7	0
+237	1137	3.8	0
+237	1137	3.9	0
+237	1137	4	0
+237	1137	4.1	0
+237	1137	4.2	0
+237	1137	4.3	0
+237	1137	4.4	0
+237	1137	4.5	0
+237	1137	4.6	0
+237	1137	4.7	0
+237	1137	4.8	0
+237	1137	4.9	0
+237	1137	5	0
+237	1137	5.1	0
+237	1137	5.2	0
+237	1137	5.3	0
+237	1137	5.4	0
+237	1137	5.5	0
+237	1137	5.6	0
+237	1137	5.7	0
+237	1137	5.8	0
+237	1137	5.9	0
+237	1137	6	0
+237	1137	6.1	0
+237	1137	6.2	0
+237	1137	6.3	0
+237	1137	6.4	0
+237	1137	6.5	0
+237	1137	6.6	0
+237	1137	6.7	0
+237	1137	6.8	0
+237	1137	6.9	0
+237	1137	7	0
+237	1137	7.1	0
+237	1137	7.2	0
+237	1137	7.3	0
+237	1137	7.4	0
+237	1137	7.5	0
+237	1137	7.6	0
+237	1137	7.7	0
+237	1137	7.8	0
+237	1137	7.9	0
+237	1137	8	0
+237	1137	8.1	0
+237	1137	8.2	0
+237	1137	8.218770954852	0
+238	1137	0.1	0
+238	1137	0.2	0
+238	1137	0.3	0
+238	1137	0.4	0
+238	1137	0.5	0
+238	1137	0.6	0
+238	1137	0.7	0
+238	1137	0.8	0
+238	1137	0.9	0
+238	1137	1	0
+238	1137	1.1	0
+238	1137	1.2	0
+238	1137	1.3	0
+238	1137	1.4	0
+238	1137	1.5	0
+238	1137	1.6	0
+238	1137	1.7	0
+238	1137	1.8	0
+238	1137	1.9	0
+238	1137	2	0
+238	1137	2.1	0
+238	1137	2.2	0
+238	1137	2.3	0
+238	1137	2.4	0
+238	1137	2.5	0
+238	1137	2.6	0
+238	1137	2.7	0
+238	1137	2.8	0
+238	1137	2.9	0
+238	1137	3	0
+238	1137	3.1	0
+238	1137	3.2	0
+238	1137	3.3	0
+238	1137	3.4	0
+238	1137	3.5	0
+238	1137	3.6	0
+238	1137	3.7	0
+238	1137	3.8	0
+238	1137	3.9	0
+238	1137	4	0
+238	1137	4.1	0
+238	1137	4.2	0
+238	1137	4.3	0
+238	1137	4.4	0
+238	1137	4.5	0
+238	1137	4.6	0
+238	1137	4.7	0
+238	1137	4.8	0
+238	1137	4.9	0
+238	1137	5	0
+238	1137	5.1	0
+238	1137	5.2	0
+238	1137	5.3	0
+238	1137	5.4	0
+238	1137	5.5	0
+238	1137	5.6	0
+238	1137	5.7	0
+238	1137	5.8	0
+238	1137	5.9	0
+238	1137	6	0
+238	1137	6.1	0
+238	1137	6.2	0
+238	1137	6.3	0
+238	1137	6.4	0
+238	1137	6.5	0
+238	1137	6.6	0
+238	1137	6.7	0
+238	1137	6.8	0
+238	1137	6.9	0
+238	1137	7	0
+238	1137	7.1	0
+238	1137	7.2	0
+238	1137	7.3	0
+238	1137	7.4	0
+238	1137	7.5	0
+238	1137	7.6	0
+238	1137	7.7	0
+238	1137	7.8	0
+238	1137	7.9	0
+238	1137	8	0
+238	1137	8.1	0
+238	1137	8.2	0
+238	1137	8.218770954852	0
+239	1137	0.1	0
+239	1137	0.2	0
+239	1137	0.3	0
+239	1137	0.4	0
+239	1137	0.5	0
+239	1137	0.6	0
+239	1137	0.7	0
+239	1137	0.8	0
+239	1137	0.9	0
+239	1137	1	0
+239	1137	1.1	0
+239	1137	1.2	0
+239	1137	1.3	0
+239	1137	1.4	0
+239	1137	1.5	0
+239	1137	1.6	0
+239	1137	1.7	0
+239	1137	1.8	0
+239	1137	1.9	0
+239	1137	2	0
+239	1137	2.1	0
+239	1137	2.2	0
+239	1137	2.3	0
+239	1137	2.4	0
+239	1137	2.5	0
+239	1137	2.6	0
+239	1137	2.7	0
+239	1137	2.8	0
+239	1137	2.9	0
+239	1137	3	0
+239	1137	3.1	0
+239	1137	3.2	0
+239	1137	3.3	0
+239	1137	3.4	0
+239	1137	3.5	0
+239	1137	3.6	0
+239	1137	3.7	0
+239	1137	3.8	0
+239	1137	3.9	0
+239	1137	4	0
+239	1137	4.1	0
+239	1137	4.2	0
+239	1137	4.3	0
+239	1137	4.4	0
+239	1137	4.5	0
+239	1137	4.6	0
+239	1137	4.7	0
+239	1137	4.8	0
+239	1137	4.9	0
+239	1137	5	0
+239	1137	5.1	0
+239	1137	5.2	0
+239	1137	5.3	0
+239	1137	5.4	0
+239	1137	5.5	0
+239	1137	5.6	0
+239	1137	5.7	0
+239	1137	5.8	0
+239	1137	5.9	0
+239	1137	6	0
+239	1137	6.1	0
+239	1137	6.2	0
+239	1137	6.3	0
+239	1137	6.4	0
+239	1137	6.5	0
+239	1137	6.6	0
+239	1137	6.7	0
+239	1137	6.8	0
+239	1137	6.9	0
+239	1137	7	0
+239	1137	7.1	0
+239	1137	7.2	0
+239	1137	7.3	0
+239	1137	7.4	0
+239	1137	7.5	0
+239	1137	7.6	0
+239	1137	7.7	0
+239	1137	7.8	0
+239	1137	7.9	0
+239	1137	8	0
+239	1137	8.1	0
+239	1137	8.2	0
+239	1137	8.218770954852	0
+240	1137	0.1	0
+240	1137	0.2	0
+240	1137	0.3	0
+240	1137	0.4	0
+240	1137	0.5	0
+240	1137	0.6	0
+240	1137	0.7	0
+240	1137	0.8	0
+240	1137	0.9	0
+240	1137	1	0
+240	1137	1.1	0
+240	1137	1.2	0
+240	1137	1.3	0
+240	1137	1.4	0
+240	1137	1.5	0
+240	1137	1.6	0
+240	1137	1.7	0
+240	1137	1.8	0
+240	1137	1.9	0
+240	1137	2	0
+240	1137	2.1	0
+240	1137	2.2	0
+240	1137	2.3	0
+240	1137	2.4	0
+240	1137	2.5	0
+240	1137	2.6	0
+240	1137	2.7	0
+240	1137	2.8	0
+240	1137	2.9	0
+240	1137	3	0
+240	1137	3.1	0
+240	1137	3.2	0
+240	1137	3.3	0
+240	1137	3.4	0
+240	1137	3.5	0
+240	1137	3.6	0
+240	1137	3.7	0
+240	1137	3.8	0
+240	1137	3.9	0
+240	1137	4	0
+240	1137	4.1	0
+240	1137	4.2	0
+240	1137	4.3	0
+240	1137	4.4	0
+240	1137	4.5	0
+240	1137	4.6	0
+240	1137	4.7	0
+240	1137	4.8	0
+240	1137	4.9	0
+240	1137	5	0
+240	1137	5.1	0
+240	1137	5.2	0
+240	1137	5.3	0
+240	1137	5.4	0
+240	1137	5.5	0
+240	1137	5.6	0
+240	1137	5.7	0
+240	1137	5.8	0
+240	1137	5.9	0
+240	1137	6	0
+240	1137	6.1	0
+240	1137	6.2	0
+240	1137	6.3	0
+240	1137	6.4	0
+240	1137	6.5	0
+240	1137	6.6	0
+240	1137	6.7	0
+240	1137	6.8	0
+240	1137	6.9	0
+240	1137	7	0
+240	1137	7.1	0
+240	1137	7.2	0
+240	1137	7.3	0
+240	1137	7.4	0
+240	1137	7.5	0
+240	1137	7.6	0
+240	1137	7.7	0
+240	1137	7.8	0
+240	1137	7.9	0
+240	1137	8	0
+240	1137	8.1	0
+240	1137	8.2	0
+240	1137	8.218770954852	0
+241	1137	0.1	0
+241	1137	0.2	0
+241	1137	0.3	0
+241	1137	0.4	0
+241	1137	0.5	0
+241	1137	0.6	0
+241	1137	0.7	0
+241	1137	0.8	0
+241	1137	0.9	0
+241	1137	1	0
+241	1137	1.1	0
+241	1137	1.2	0
+241	1137	1.3	0
+241	1137	1.4	0
+241	1137	1.5	0
+241	1137	1.6	0
+241	1137	1.7	0
+241	1137	1.8	0
+241	1137	1.9	0
+241	1137	2	0
+241	1137	2.1	0
+241	1137	2.2	0
+241	1137	2.3	0
+241	1137	2.4	0
+241	1137	2.5	0
+241	1137	2.6	0
+241	1137	2.7	0
+241	1137	2.8	0
+241	1137	2.9	0
+241	1137	3	0
+241	1137	3.1	0
+241	1137	3.2	0
+241	1137	3.3	0
+241	1137	3.4	0
+241	1137	3.5	0
+241	1137	3.6	0
+241	1137	3.7	0
+241	1137	3.8	0
+241	1137	3.9	0
+241	1137	4	0
+241	1137	4.1	0
+241	1137	4.2	0
+241	1137	4.3	0
+241	1137	4.4	0
+241	1137	4.5	0
+241	1137	4.6	0
+241	1137	4.7	0
+241	1137	4.8	0
+241	1137	4.9	0
+241	1137	5	0
+241	1137	5.1	0
+241	1137	5.2	0
+241	1137	5.3	0
+241	1137	5.4	0
+241	1137	5.5	0
+241	1137	5.6	0
+241	1137	5.7	0
+241	1137	5.8	0
+241	1137	5.9	0
+241	1137	6	0
+241	1137	6.1	0
+241	1137	6.2	0
+241	1137	6.3	0
+241	1137	6.4	0
+241	1137	6.5	0
+241	1137	6.6	0
+241	1137	6.7	0
+241	1137	6.8	0
+241	1137	6.9	0
+241	1137	7	0
+241	1137	7.1	0
+241	1137	7.2	0
+241	1137	7.3	0
+241	1137	7.4	0
+241	1137	7.5	0
+241	1137	7.6	0
+241	1137	7.7	0
+241	1137	7.8	0
+241	1137	7.9	0
+241	1137	8	0
+241	1137	8.1	0
+241	1137	8.2	0
+241	1137	8.218770954852	0
+242	1137	0.1	0
+242	1137	0.2	0
+242	1137	0.3	0
+242	1137	0.4	0
+242	1137	0.5	0
+242	1137	0.6	0
+242	1137	0.7	0
+242	1137	0.8	0
+242	1137	0.9	0
+242	1137	1	0
+242	1137	1.1	0
+242	1137	1.2	0
+242	1137	1.3	0
+242	1137	1.4	0
+242	1137	1.5	0
+242	1137	1.6	0
+242	1137	1.7	0
+242	1137	1.8	0
+242	1137	1.9	0
+242	1137	2	0
+242	1137	2.1	0
+242	1137	2.2	0
+242	1137	2.3	0
+242	1137	2.4	0
+242	1137	2.5	0
+242	1137	2.6	0
+242	1137	2.7	0
+242	1137	2.8	0
+242	1137	2.9	0
+242	1137	3	0
+242	1137	3.1	0
+242	1137	3.2	0
+242	1137	3.3	0
+242	1137	3.4	0
+242	1137	3.5	0
+242	1137	3.6	0
+242	1137	3.7	0
+242	1137	3.8	0
+242	1137	3.9	0
+242	1137	4	0
+242	1137	4.1	0
+242	1137	4.2	0
+242	1137	4.3	0
+242	1137	4.4	0
+242	1137	4.5	0
+242	1137	4.6	0
+242	1137	4.7	0
+242	1137	4.8	0
+242	1137	4.9	0
+242	1137	5	0
+242	1137	5.1	0
+242	1137	5.2	0
+242	1137	5.3	0
+242	1137	5.4	0
+242	1137	5.5	0
+242	1137	5.6	0
+242	1137	5.7	0
+242	1137	5.8	0
+242	1137	5.9	0
+242	1137	6	0
+242	1137	6.1	0
+242	1137	6.2	0
+242	1137	6.3	0
+242	1137	6.4	0
+242	1137	6.5	0
+242	1137	6.6	0
+242	1137	6.7	0
+242	1137	6.8	0
+242	1137	6.9	0
+242	1137	7	0
+242	1137	7.1	0
+242	1137	7.2	0
+242	1137	7.3	0
+242	1137	7.4	0
+242	1137	7.5	0
+242	1137	7.6	0
+242	1137	7.7	0
+242	1137	7.8	0
+242	1137	7.9	0
+242	1137	8	0
+242	1137	8.1	0
+242	1137	8.2	0
+242	1137	8.218770954852	0
+243	1137	0.1	0
+243	1137	0.2	0
+243	1137	0.3	0
+243	1137	0.4	0
+243	1137	0.5	0
+243	1137	0.6	0
+243	1137	0.7	0
+243	1137	0.8	0
+243	1137	0.9	0
+243	1137	1	0
+243	1137	1.1	0
+243	1137	1.2	0
+243	1137	1.3	0
+243	1137	1.4	0
+243	1137	1.5	0
+243	1137	1.6	0
+243	1137	1.7	0
+243	1137	1.8	0
+243	1137	1.9	0
+243	1137	2	0
+243	1137	2.1	0
+243	1137	2.2	0
+243	1137	2.3	0
+243	1137	2.4	0
+243	1137	2.5	0
+243	1137	2.6	0
+243	1137	2.7	0
+243	1137	2.8	0
+243	1137	2.9	0
+243	1137	3	0
+243	1137	3.1	0
+243	1137	3.2	0
+243	1137	3.3	0
+243	1137	3.4	0
+243	1137	3.5	0
+243	1137	3.6	0
+243	1137	3.7	0
+243	1137	3.8	0
+243	1137	3.9	0
+243	1137	4	0
+243	1137	4.1	0
+243	1137	4.2	0
+243	1137	4.3	0
+243	1137	4.4	0
+243	1137	4.5	0
+243	1137	4.6	0
+243	1137	4.7	0
+243	1137	4.8	0
+243	1137	4.9	0
+243	1137	5	0
+243	1137	5.1	0
+243	1137	5.2	0
+243	1137	5.3	0
+243	1137	5.4	0
+243	1137	5.5	0
+243	1137	5.6	0
+243	1137	5.7	0
+243	1137	5.8	0
+243	1137	5.9	0
+243	1137	6	0
+243	1137	6.1	0
+243	1137	6.2	0
+243	1137	6.3	0
+243	1137	6.4	0
+243	1137	6.5	0
+243	1137	6.6	0
+243	1137	6.7	0
+243	1137	6.8	0
+243	1137	6.9	0
+243	1137	7	0
+243	1137	7.1	0
+243	1137	7.2	0
+243	1137	7.3	0
+243	1137	7.4	0
+243	1137	7.5	0
+243	1137	7.6	0
+243	1137	7.7	0
+243	1137	7.8	0
+243	1137	7.9	0
+243	1137	8	0
+243	1137	8.1	0
+243	1137	8.2	0
+243	1137	8.218770954852	0
+244	1137	0.1	0
+244	1137	0.2	0
+244	1137	0.3	0
+244	1137	0.4	0
+244	1137	0.5	0
+244	1137	0.6	0
+244	1137	0.7	0
+244	1137	0.8	0
+244	1137	0.9	0
+244	1137	1	0
+244	1137	1.1	0
+244	1137	1.2	0
+244	1137	1.3	0
+244	1137	1.4	0
+244	1137	1.5	0
+244	1137	1.6	0
+244	1137	1.7	0
+244	1137	1.8	0
+244	1137	1.9	0
+244	1137	2	0
+244	1137	2.1	0
+244	1137	2.2	0
+244	1137	2.3	0
+244	1137	2.4	0
+244	1137	2.5	0
+244	1137	2.6	0
+244	1137	2.7	0
+244	1137	2.8	0
+244	1137	2.9	0
+244	1137	3	0
+244	1137	3.1	0
+244	1137	3.2	0
+244	1137	3.3	0
+244	1137	3.4	0
+244	1137	3.5	0
+244	1137	3.6	0
+244	1137	3.7	0
+244	1137	3.8	0
+244	1137	3.9	0
+244	1137	4	0
+244	1137	4.1	0
+244	1137	4.2	0
+244	1137	4.3	0
+244	1137	4.4	0
+244	1137	4.5	0
+244	1137	4.6	0
+244	1137	4.7	0
+244	1137	4.8	0
+244	1137	4.9	0
+244	1137	5	0
+244	1137	5.1	0
+244	1137	5.2	0
+244	1137	5.3	0
+244	1137	5.4	0
+244	1137	5.5	0
+244	1137	5.6	0
+244	1137	5.7	0
+244	1137	5.8	0
+244	1137	5.9	0
+244	1137	6	0
+244	1137	6.1	0
+244	1137	6.2	0
+244	1137	6.3	0
+244	1137	6.4	0
+244	1137	6.5	0
+244	1137	6.6	0
+244	1137	6.7	0
+244	1137	6.8	0
+244	1137	6.9	0
+244	1137	7	0
+244	1137	7.1	0
+244	1137	7.2	0
+244	1137	7.3	0
+244	1137	7.4	0
+244	1137	7.5	0
+244	1137	7.6	0
+244	1137	7.7	0
+244	1137	7.8	0
+244	1137	7.9	0
+244	1137	8	0
+244	1137	8.1	0
+244	1137	8.2	0
+244	1137	8.218770954852	0
+245	1137	0.1	0
+245	1137	0.2	0
+245	1137	0.3	0
+245	1137	0.4	0
+245	1137	0.5	0
+245	1137	0.6	0
+245	1137	0.7	0
+245	1137	0.8	0
+245	1137	0.9	0
+245	1137	1	0
+245	1137	1.1	0
+245	1137	1.2	0
+245	1137	1.3	0
+245	1137	1.4	0
+245	1137	1.5	0
+245	1137	1.6	0
+245	1137	1.7	0
+245	1137	1.8	0
+245	1137	1.9	0
+245	1137	2	0
+245	1137	2.1	0
+245	1137	2.2	0
+245	1137	2.3	0
+245	1137	2.4	0
+245	1137	2.5	0
+245	1137	2.6	0
+245	1137	2.7	0
+245	1137	2.8	0
+245	1137	2.9	0
+245	1137	3	0
+245	1137	3.1	0
+245	1137	3.2	0
+245	1137	3.3	0
+245	1137	3.4	0
+245	1137	3.5	0
+245	1137	3.6	0
+245	1137	3.7	0
+245	1137	3.8	0
+245	1137	3.9	0
+245	1137	4	0
+245	1137	4.1	0
+245	1137	4.2	0
+245	1137	4.3	0
+245	1137	4.4	0
+245	1137	4.5	0
+245	1137	4.6	0
+245	1137	4.7	0
+245	1137	4.8	0
+245	1137	4.9	0
+245	1137	5	0
+245	1137	5.1	0
+245	1137	5.2	0
+245	1137	5.3	0
+245	1137	5.4	0
+245	1137	5.5	0
+245	1137	5.6	0
+245	1137	5.7	0
+245	1137	5.8	0
+245	1137	5.9	0
+245	1137	6	0
+245	1137	6.1	0
+245	1137	6.2	0
+245	1137	6.3	0
+245	1137	6.4	0
+245	1137	6.5	0
+245	1137	6.6	0
+245	1137	6.7	0
+245	1137	6.8	0
+245	1137	6.9	0
+245	1137	7	0
+245	1137	7.1	0
+245	1137	7.2	0
+245	1137	7.3	0
+245	1137	7.4	0
+245	1137	7.5	0
+245	1137	7.6	0
+245	1137	7.7	0
+245	1137	7.8	0
+245	1137	7.9	0
+245	1137	8	0
+245	1137	8.1	0
+245	1137	8.2	0
+245	1137	8.218770954852	0
+246	1137	0.1	0
+246	1137	0.2	0
+246	1137	0.3	0
+246	1137	0.4	0
+246	1137	0.5	0
+246	1137	0.6	0
+246	1137	0.7	0
+246	1137	0.8	0
+246	1137	0.9	0
+246	1137	1	0
+246	1137	1.1	0
+246	1137	1.2	0
+246	1137	1.3	0
+246	1137	1.4	0
+246	1137	1.5	0
+246	1137	1.6	0
+246	1137	1.7	0
+246	1137	1.8	0
+246	1137	1.9	0
+246	1137	2	0
+246	1137	2.1	0
+246	1137	2.2	0
+246	1137	2.3	0
+246	1137	2.4	0
+246	1137	2.5	0
+246	1137	2.6	0
+246	1137	2.7	0
+246	1137	2.8	0
+246	1137	2.9	0
+246	1137	3	0
+246	1137	3.1	0
+246	1137	3.2	0
+246	1137	3.3	0
+246	1137	3.4	0
+246	1137	3.5	0
+246	1137	3.6	0
+246	1137	3.7	0
+246	1137	3.8	0
+246	1137	3.9	0
+246	1137	4	0
+246	1137	4.1	0
+246	1137	4.2	0
+246	1137	4.3	0
+246	1137	4.4	0
+246	1137	4.5	0
+246	1137	4.6	0
+246	1137	4.7	0
+246	1137	4.8	0
+246	1137	4.9	0
+246	1137	5	0
+246	1137	5.1	0
+246	1137	5.2	0
+246	1137	5.3	0
+246	1137	5.4	0
+246	1137	5.5	0
+246	1137	5.6	0
+246	1137	5.7	0
+246	1137	5.8	0
+246	1137	5.9	0
+246	1137	6	0
+246	1137	6.1	0
+246	1137	6.2	0
+246	1137	6.3	0
+246	1137	6.4	0
+246	1137	6.5	0
+246	1137	6.6	0
+246	1137	6.7	0
+246	1137	6.8	0
+246	1137	6.9	0
+246	1137	7	0
+246	1137	7.1	0
+246	1137	7.2	0
+246	1137	7.3	0
+246	1137	7.4	0
+246	1137	7.5	0
+246	1137	7.6	0
+246	1137	7.7	0
+246	1137	7.8	0
+246	1137	7.9	0
+246	1137	8	0
+246	1137	8.1	0
+246	1137	8.2	0
+246	1137	8.218770954852	0
+247	1137	0.1	0
+247	1137	0.2	0
+247	1137	0.3	0
+247	1137	0.4	0
+247	1137	0.5	0
+247	1137	0.6	0
+247	1137	0.7	0
+247	1137	0.8	0
+247	1137	0.9	0
+247	1137	1	0
+247	1137	1.1	0
+247	1137	1.2	0
+247	1137	1.3	0
+247	1137	1.4	0
+247	1137	1.5	0
+247	1137	1.6	0
+247	1137	1.7	0
+247	1137	1.8	0
+247	1137	1.9	0
+247	1137	2	0
+247	1137	2.1	0
+247	1137	2.2	0
+247	1137	2.3	0
+247	1137	2.4	0
+247	1137	2.5	0
+247	1137	2.6	0
+247	1137	2.7	0
+247	1137	2.8	0
+247	1137	2.9	0
+247	1137	3	0
+247	1137	3.1	0
+247	1137	3.2	0
+247	1137	3.3	0
+247	1137	3.4	0
+247	1137	3.5	0
+247	1137	3.6	0
+247	1137	3.7	0
+247	1137	3.8	0
+247	1137	3.9	0
+247	1137	4	0
+247	1137	4.1	0
+247	1137	4.2	0
+247	1137	4.3	0
+247	1137	4.4	0
+247	1137	4.5	0
+247	1137	4.6	0
+247	1137	4.7	0
+247	1137	4.8	0
+247	1137	4.9	0
+247	1137	5	0
+247	1137	5.1	0
+247	1137	5.2	0
+247	1137	5.3	0
+247	1137	5.4	0
+247	1137	5.5	0
+247	1137	5.6	0
+247	1137	5.7	0
+247	1137	5.8	0
+247	1137	5.9	0
+247	1137	6	0
+247	1137	6.1	0
+247	1137	6.2	0
+247	1137	6.3	0
+247	1137	6.4	0
+247	1137	6.5	0
+247	1137	6.6	0
+247	1137	6.7	0
+247	1137	6.8	0
+247	1137	6.9	0
+247	1137	7	0
+247	1137	7.1	0
+247	1137	7.2	0
+247	1137	7.3	0
+247	1137	7.4	0
+247	1137	7.5	0
+247	1137	7.6	0
+247	1137	7.7	0
+247	1137	7.8	0
+247	1137	7.9	0
+247	1137	8	0
+247	1137	8.1	0
+247	1137	8.2	0
+247	1137	8.218770954852	0
+
