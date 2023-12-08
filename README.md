@@ -95,10 +95,23 @@ If you want to store the information executed in docker in a local directory, yo
       
       docker run -v <mapping_dir>:<mapping_dir> -ti -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix kamysek/gradys-simulations bash      
 
-In the docker image, execute:
+### Starting a farm simulator...
+Once you have installed omnet++ locally or in a docker image, you can open the program by double-clicking on the icon or by using the command line.
 
       omnetpp &
 
+With omnet++ open, clone the farm module project from GitHub by right-clicking on the Project Explorer view. Then select _Import_ from the menu bar, followed by _Git_and _Project_ from _Git_. Enter the repository address for the project. 
+
+        https://github.com/milliandrade/herd_identification.git
+
+The cloned project consists of GrADyS-SIM and simulation files for the farm module.
+
+
+    Note: on the first use, INET++ will be installed in OMNeT++.
+}
 
 ## Documentation
-More information can be found on the [project's official documentation](link)
+More information can be found on the [HMT - Technical Document]([link](https://github.com/milliandrade/herd_identification/blob/main/HMT-technical_document.pdf)https://github.com/milliandrade/herd_identification/blob/main/HMT-technical_document.pdf)
+
+## HMT Application
+The application module can be used and is avaliable at [HMT](https://github.com/milliandrade/hmt_sw) github.
