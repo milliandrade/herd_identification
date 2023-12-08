@@ -111,7 +111,7 @@ The cloned project consists of GrADyS-SIM and simulation files for the farm modu
 }
 
 ## Documentation
-More information can be found on the [HMT - Technical Document]([link](https://github.com/milliandrade/herd_identification/blob/main/HMT-technical_document.pdf)https://github.com/milliandrade/herd_identification/blob/main/HMT-technical_document.pdf)
+More information can be found on the [HMT - Technical Document](https://github.com/milliandrade/herd_identification/blob/main/HMT-technical_document.pdf)
 
 ## HMT Application
 The application module can be used and is avaliable at [HMT](https://github.com/milliandrade/hmt_sw) github.
