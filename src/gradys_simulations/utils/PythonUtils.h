@@ -6,6 +6,7 @@
 #include "gradys_simulations/protocols/messages/network/PythonMessage_m.h"
 #include "pybind11_json/pybind11_json.hpp"
 #include "nlohmann/json.hpp"
+#include "gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h"
 
 using namespace pybind11::literals;
 
@@ -14,7 +15,7 @@ namespace py = pybind11;
 namespace gradys_simulations {
 
 static CommunicationCommand* transformToCommunicationCommandPython(
-        py::object comm_command) {
+        py::object comm_command, const char * target) {
 
     nlohmann::json jsonMessage = nlohmann::json::parse(
             comm_command.attr("message").cast<std::string>());
@@ -23,18 +24,22 @@ static CommunicationCommand* transformToCommunicationCommandPython(
     CommunicationCommand *command = new CommunicationCommand();
 
     py::object CommunicationCommandTypePython = py::module_::import(
-            "simulator.messages.communication").attr(
+            "gradysim.protocol.messages.communication").attr(
             "CommunicationCommandType");
 
     py::object ctl = CommunicationCommandTypePython(
-            comm_command.attr("command").cast<int>());
+            comm_command.attr("command_type").cast<int>());
 
     if (ctl.is(CommunicationCommandTypePython.attr("SEND"))) {
         command->setCommandType(CommunicationCommandType::SEND_MESSAGE);
-
+//        int target = jsonMessage["destination"];
+//        const char* targetName = getSimulation()->getModule(target)->getName();
+        command->setTarget(target);
+//        targetCommand->setTarget(pk->getName())
     } else if (ctl.is(CommunicationCommandTypePython.attr("BROADCAST"))) {
-        command->setCommandType(CommunicationCommandType::SET_TARGET);
-
+        command->setCommandType(CommunicationCommandType::SEND_MESSAGE);
+        // Broadcast
+        command->setTarget(nullptr);
     } else {
         std::cout
                 << "Something is wrong in transformToCommunicationCommandPython"
@@ -52,28 +57,25 @@ static CommunicationCommand* transformToCommunicationCommandPython(
     return command;
 }
 
-static MobilityCommand* transformToMobilityCommandPython(
+static PythonMobilityCommand* transformToMobilityCommandPython(
         py::object mob_command) {
 
     // Create mobility command
-    MobilityCommand *command = new MobilityCommand();
+    PythonMobilityCommand *command = new PythonMobilityCommand();
 
     py::object MobilityCommandTypePython = py::module_::import(
-            "simulator.messages.mobility").attr("MobilityCommandType");
+            "gradysim.protocol.messages.mobility").attr("MobilityCommandType");
 
     py::object ctl = MobilityCommandTypePython(
-            mob_command.attr("command").cast<int>());
-    if (ctl.is(MobilityCommandTypePython.attr("SET_MODE"))) {
-        command->setCommandType(MobilityCommandType::IDLE_TIME);
+            mob_command.attr("command_type").cast<int>());
+    if (ctl.is(MobilityCommandTypePython.attr("GOTO_COORDS"))) {
+        command->setCommandType(PythonMobilityCommandType::GOTO_COORD);
 
-    } else if (ctl.is(MobilityCommandTypePython.attr("GOTO_COORDS"))) {
-        command->setCommandType(MobilityCommandType::GOTO_COORDS);
+    } else if (ctl.is(MobilityCommandTypePython.attr("GOTO_GEO_COORDS"))) {
+        command->setCommandType(PythonMobilityCommandType::GOTO_GEO_COORD);
 
-    } else if (ctl.is(MobilityCommandTypePython.attr("GOTO_WAYPOINT"))) {
-        command->setCommandType(MobilityCommandType::GOTO_WAYPOINT);
-
-    } else if (ctl.is(MobilityCommandTypePython.attr("REVERSE"))) {
-        command->setCommandType(MobilityCommandType::REVERSE);
+    } else if (ctl.is(MobilityCommandTypePython.attr("SET_SPEED"))) {
+        command->setCommandType(PythonMobilityCommandType::SET_SPEED);
 
     } else {
         std::cout << "Something is wrong in transformToMobilityCommandPython"
@@ -81,11 +83,12 @@ static MobilityCommand* transformToMobilityCommandPython(
         exit(1);
     }
 
-    command->setParam1(mob_command.attr("param_1").cast<int>());
-    command->setParam2(mob_command.attr("param_2").cast<int>());
-    command->setParam3(mob_command.attr("param_3").cast<int>());
-    command->setParam4(mob_command.attr("param_4").cast<int>());
-    command->setParam5(mob_command.attr("param_5").cast<int>());
+    command->setParam1(mob_command.attr("param_1").cast<double>());
+    command->setParam2(mob_command.attr("param_2").cast<double>());
+    command->setParam3(mob_command.attr("param_3").cast<double>());
+    command->setParam4(mob_command.attr("param_4").cast<double>());
+    command->setParam5(mob_command.attr("param_5").cast<double>());
+    command->setParam6(mob_command.attr("param_5").cast<double>());
 
     return command;
 }

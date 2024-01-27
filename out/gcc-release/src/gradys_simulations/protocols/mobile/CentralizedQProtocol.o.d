@@ -76,6 +76,7 @@
  gradys_simulations/protocols/messages/internal/MobilityCommand_m.h \
  gradys_simulations/protocols/mobile/CentralizedQProtocol.h \
  gradys_simulations/protocols/base/CommunicationProtocolBase.h \
+ gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h \
  gradys_simulations/protocols/messages/internal/Telemetry_m.h \
  gradys_simulations/protocols/auxiliary/CentralizedQLearning.h \
  gradys_simulations/protocols/messages/network/CentralizedQMessage_m.h \
@@ -234,6 +235,8 @@ gradys_simulations/protocols/messages/internal/MobilityCommand_m.h:
 gradys_simulations/protocols/mobile/CentralizedQProtocol.h:
 
 gradys_simulations/protocols/base/CommunicationProtocolBase.h:
+
+gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h:
 
 gradys_simulations/protocols/messages/internal/Telemetry_m.h:
 

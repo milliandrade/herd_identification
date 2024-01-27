@@ -1,7 +1,6 @@
 #include "MobileSensorNode.h"
 #include "stdlib.h"
 #include <time.h>
-#include "MobileSensorNode.h"
 
 using namespace inet;
 
@@ -11,7 +10,7 @@ namespace gradys_simulations {
 Define_Module(MobileSensorNode);
 
 void MobileSensorNode::initialize(){
-
+    std::cout << "Initializing sensor." << endl;
     // TO-DO: these ID shaw be UUID as in network
     internalMobNodeId = this->getId() ;//-  par("simulationIndexOfFirstNode").intValue() + 1;
     par("internalMobNodeId").setIntValue(internalMobNodeId);

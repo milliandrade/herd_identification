@@ -25,8 +25,6 @@ class PythonMessage;
 
 #include "inet/common/packet/chunk/Chunk_m.h" // import inet.common.packet.chunk.Chunk
 
-#include "gradys_simulations/protocols/messages/network/SimpleMessage_m.h" // import gradys_simulations.protocols.messages.network.SimpleMessage
-
 // cplusplus {{
        #include<string>
        typedef std::string STRING;
@@ -36,7 +34,7 @@ class PythonMessage;
 namespace inet {
 
 /**
- * Class generated from <tt>gradys_simulations/protocols/messages/network/PythonMessage.msg:32</tt> by opp_msgtool.
+ * Class generated from <tt>gradys_simulations/protocols/messages/network/PythonMessage.msg:30</tt> by opp_msgtool.
  * <pre>
  * class PythonMessage extends FieldsChunk
  * {

@@ -1,9 +1,9 @@
-file 142801 1700530790                                          
+file 981962 1706205577                                          
 version 2
-run Simple-0-20230928-13:14:15-232267
+run Simple-0-20231130-16:37:29-55945
 attr configname Simple
-attr datetime 20230928-13:14:15
-attr datetimef 20230928-131415
+attr datetime 20231130-16:37:29
+attr datetimef 20231130-163729
 attr experiment Simple
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -11,35 +11,38 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network GradysNetwork
-attr processid 232267
+attr processid 55945
 attr repetition 0
 attr replication #0
 attr resultdir results
 attr runnumber 0
 attr seedset 0
+config debug-on-errors true
 config image-path ../../../../inet4.5/images
 config extends Wifi
 config description "Sets up an experiment with the simple drone configuration"
 config *.numUAVs 2
-config *.quads[*].protocol "\"simple\""
-config *.groundStation[*].protocol "\"simple\""
-config *.sensors[*].protocol "\"simple\""
-config *.quads[*].protocolFileName "\"protocol_mobile\""
-config *.groundStation[*].protocolFileName "\"protocol_ground\""
-config *.sensors[*].protocolFileName "\"protocol_sensor\""
-config *.quads[*].protocolMobile "\"SimpleProtocolMobile\""
-config *.groundStation[*].protocolGround "\"SimpleProtocolGround\""
-config *.sensors[*].protocolSensor "\"SimpleProtocolSensor\""
+config *.groundStation.protocol.customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+config *.quads[*].protocol.customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+config *.sensors[*].protocol.customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+config *.groundStation.protocol.protocol "\"zigzag\""
+config *.quads[*].protocol.protocol "\"zigzag\""
+config *.sensors[*].protocol.protocol "\"zigzag\""
+config *.groundStation.protocol.protocolFileName "\"protocol_sensor\""
+config *.quads[*].protocol.protocolFileName "\"protocol_mobile\""
+config *.sensors[*].protocol.protocolFileName "\"protocol_sensor\""
+config *.groundStation.protocol.protocolGround "\"ZigZagProtocolSensor\""
+config *.quads[*].protocol.protocolMobile "\"ZigZagProtocolMobile\""
+config *.sensors[*].protocol.protocolSensor "\"ZigZagProtocolSensor\""
 config *.quads[0].app[0].destAddresses "\"quads[1] sensors[0] sensors[1] sensors[2] groundStation\""
 config *.quads[1].app[0].destAddresses "\"quads[0] sensors[0] sensors[1] sensors[2] groundStation\""
 config *.quads[0].mobility.waypointFile "\"paths/voo_sensor1.waypoints\""
 config *.quads[1].mobility.waypointFile "\"paths/voo_sensor2.waypoints\""
 config *.quads[*].protocol.typename PythonDroneProtocol
-config *.quads[0].app[*].startTime "normal(1s, 1s)"
-config *.quads[1].app[*].startTime "normal(1s, 1s)"
+config *.quads[0].app[*].startTime 1s
+config *.quads[1].app[*].startTime 30s
 config *.sensors[*].app[*].destAddresses "\"quads[0] quads[1]\""
-config *.sensors[0..2].protocol.typename PythonSensorProtocol
-config *.groundStation.app[0].typename UdpCommunicationApp
+config *.sensors[0..7].protocol.typename PythonSensorProtocol
 config *.groundStation.app[*].destAddresses "\"quads[0] quads[1]\""
 config *.groundStation.app[0].startTime 0s
 config *.groundStation.protocol.typename PythonGroundProtocol
@@ -54,12 +57,13 @@ config *.quads[*].app[0].startTime 1s
 config *.quads[*].app[0].stopTime -1s
 config *.quads[*].app[0].messageLength 1454Byte
 config *.quads[*].protocol.typename PythonDroneProtocol
-config *.quads[*].mobility.typename DroneMobility
+config *.quads[*].mobility.typename PythonDroneMobility
 config *.quads[*].mobility.coordinateSystemModule "\"coordinateSystem\""
 config *.quads[*].mobility.waypointProximity 1m
 config *.quads[*].mobility.speed 10mps
-config *.quads[*].mobility.homeLatitude -15.840068deg
-config *.quads[*].mobility.homeLongitude -47.926633deg
+config *.quads[*].mobility.homeX 0
+config *.quads[*].mobility.homeY 0
+config *.quads[*].mobility.homeZ 0
 config *.groundStation.numApps 1
 config *.groundStation.app[0].typename UdpCommunicationApp
 config *.groundStation.app[0].destPort 1000
@@ -67,7 +71,7 @@ config *.groundStation.app[0].localPort 1000
 config *.groundStation.app[0].sendInterval 1s
 config *.groundStation.app[0].messageLength 1454Byte
 config *.groundStation.app[0].startTime 1s
-config *.groundStation.protocol.typename SimpleGroundProtocol
+config *.groundStation.protocol.typename PythonGroundProtocol
 config *.groundStation.mobility.typename StationaryMobility
 config *.groundStation.mobility.coordinateSystemModule "\"coordinateSystem\""
 config *.groundStation.mobility.initialAltitude 0m
@@ -81,7 +85,7 @@ config *.sensors[*].app[0].localPort 1000
 config *.sensors[*].app[0].sendInterval 8s
 config *.sensors[*].app[0].startTime exponential(1s)
 config *.sensors[*].app[0].messageLength 1454Byte
-config *.sensors[0..2].protocol.typename SimpleProtocolSensor
+config *.sensors[0..2].protocol.typename PythonSensorProtocol
 config *.sensors[*].mobility.typename StationaryMobility
 config *.sensors[*].mobility.coordinateSystemModule "\"coordinateSystem\""
 config *.sensors[*].mobility.initialAltitude 0m
@@ -161,1565 +165,1729 @@ attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-0	61024 244 0 970 0 8.038410200584 12 0 1 5 5
+0	68289 4872 0 16660 0 47.119624120145 196 0 1 97 97
 vector 1 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-1	61268 244 0 970 0 8.038410200584 12 0 1 5 5
+1	73161 4872 0 16660 0 47.119624120145 196 0 1 97 97
 vector 2 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-2	61512 244 0 956 0 8.038356200584 12 0 1 5 5
+2	78033 5588 0 16646 0 47.119570120145 224 0 1 111 111
 vector 3 GradysNetwork.quads[0].udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-3	61756 432 0 1130 0 8.218770184229 19 0 18 171 2109
+3	83621 5696 0 16709 0 47.120308163206 215 0 214 23005 3289715
 vector 4 GradysNetwork.quads[0].udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-4	62188 8 0 0 0 0 1 0 0 0 0
+4	89317 8 0 0 0 0 1 0 0 0 0
 vector 5 GradysNetwork.quads[0].udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-5	62196 8 0 0 0 0 1 0 0 0 0
+5	89325 8 0 0 0 0 1 0 0 0 0
 vector 6 GradysNetwork.quads[1].wlan[0].mac.dcf frameSequenceActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-6	62204 202 0 1073 0 8.218445814291 10 0 1 4 4
+6	89333 2167 0 16527 0 46.739831253488 86 0 1 42 42
 vector 7 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-7	62406 202 0 1073 0 8.218445814291 10 0 1 4 4
+7	91500 2167 0 16527 0 46.739831253488 86 0 2 44 46
 vector 8 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-8	62608 202 0 1059 0 8.218391814291 10 0 1 4 4
+8	93667 2620 0 16513 0 46.739777253488 104 0 1 51 51
 vector 9 GradysNetwork.quads[1].udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-9	62810 385 0 1131 0 8.218770184229 17 0 16 136 1496
+9	96287 2799 0 16678 0 47.119624198679 106 0 105 5565 391405
 vector 10 GradysNetwork.quads[1].udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-10	63195 9 0 0 0 0 1 0 0 0 0
+10	99086 9 0 0 0 0 1 0 0 0 0
 vector 11 GradysNetwork.quads[1].udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-11	63204 9 0 0 0 0 1 0 0 0 0
+11	99095 9 0 0 0 0 1 0 0 0 0
 vector 12 GradysNetwork.sensors[0].wlan[0].mac.dcf frameSequenceActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-12	63213 18 0 0 0 0 2 0 0 0 0
+12	99104 18 0 0 0 0 2 0 0 0 0
 vector 13 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-13	63231 18 0 0 0 0 2 0 0 0 0
+13	99122 18 0 0 0 0 2 0 0 0 0
 vector 14 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-14	63249 18 0 0 0 0 2 0 0 0 0
+14	99140 18 0 0 0 0 2 0 0 0 0
 vector 15 GradysNetwork.sensors[0].udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-15	63267 9 0 0 0 0 1 0 0 0 0
+15	99158 9 0 0 0 0 1 0 0 0 0
 vector 16 GradysNetwork.sensors[0].udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-16	63276 9 0 0 0 0 1 0 0 0 0
+16	99167 9 0 0 0 0 1 0 0 0 0
 vector 17 GradysNetwork.sensors[0].udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-17	63285 9 0 0 0 0 1 0 0 0 0
+17	99176 9 0 0 0 0 1 0 0 0 0
 vector 18 GradysNetwork.sensors[1].wlan[0].mac.dcf frameSequenceActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-18	63294 18 0 0 0 0 2 0 0 0 0
+18	99185 18 0 0 0 0 2 0 0 0 0
 vector 19 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-19	63312 18 0 0 0 0 2 0 0 0 0
+19	99203 18 0 0 0 0 2 0 0 0 0
 vector 20 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-20	63330 18 0 0 0 0 2 0 0 0 0
+20	99221 18 0 0 0 0 2 0 0 0 0
 vector 21 GradysNetwork.sensors[1].udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-21	63348 9 0 0 0 0 1 0 0 0 0
+21	99239 9 0 0 0 0 1 0 0 0 0
 vector 22 GradysNetwork.sensors[1].udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-22	63357 9 0 0 0 0 1 0 0 0 0
+22	99248 9 0 0 0 0 1 0 0 0 0
 vector 23 GradysNetwork.sensors[1].udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-23	63366 9 0 0 0 0 1 0 0 0 0
+23	99257 9 0 0 0 0 1 0 0 0 0
 vector 24 GradysNetwork.sensors[2].wlan[0].mac.dcf frameSequenceActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-24	63375 18 0 0 0 0 2 0 0 0 0
+24	99266 18 0 0 0 0 2 0 0 0 0
 vector 25 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-25	63393 18 0 0 0 0 2 0 0 0 0
+25	99284 18 0 0 0 0 2 0 0 0 0
 vector 26 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-26	63411 18 0 0 0 0 2 0 0 0 0
+26	99302 18 0 0 0 0 2 0 0 0 0
 vector 27 GradysNetwork.sensors[2].udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-27	63429 9 0 0 0 0 1 0 0 0 0
+27	99320 9 0 0 0 0 1 0 0 0 0
 vector 28 GradysNetwork.sensors[2].udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-28	63438 9 0 0 0 0 1 0 0 0 0
+28	99329 9 0 0 0 0 1 0 0 0 0
 vector 29 GradysNetwork.sensors[2].udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-29	63447 9 0 0 0 0 1 0 0 0 0
+29	99338 9 0 0 0 0 1 0 0 0 0
 vector 30 GradysNetwork.sensors[3].wlan[0].mac.dcf frameSequenceActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-30	63456 18 0 0 0 0 2 0 0 0 0
+30	99347 18 0 0 0 0 2 0 0 0 0
 vector 31 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-31	63474 18 0 0 0 0 2 0 0 0 0
+31	99365 18 0 0 0 0 2 0 0 0 0
 vector 32 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-32	63492 18 0 0 0 0 2 0 0 0 0
+32	99383 18 0 0 0 0 2 0 0 0 0
 vector 33 GradysNetwork.sensors[3].udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-33	63510 9 0 0 0 0 1 0 0 0 0
+33	99401 9 0 0 0 0 1 0 0 0 0
 vector 34 GradysNetwork.sensors[3].udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-34	63519 9 0 0 0 0 1 0 0 0 0
+34	99410 9 0 0 0 0 1 0 0 0 0
 vector 35 GradysNetwork.sensors[3].udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-35	63528 9 0 0 0 0 1 0 0 0 0
+35	99419 9 0 0 0 0 1 0 0 0 0
 vector 36 GradysNetwork.sensors[4].wlan[0].mac.dcf frameSequenceActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-36	63537 18 0 0 0 0 2 0 0 0 0
+36	99428 18 0 0 0 0 2 0 0 0 0
 vector 37 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-37	63555 18 0 0 0 0 2 0 0 0 0
+37	99446 18 0 0 0 0 2 0 0 0 0
 vector 38 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-38	63573 18 0 0 0 0 2 0 0 0 0
+38	99464 18 0 0 0 0 2 0 0 0 0
 vector 39 GradysNetwork.sensors[4].udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-39	63591 9 0 0 0 0 1 0 0 0 0
+39	99482 9 0 0 0 0 1 0 0 0 0
 vector 40 GradysNetwork.sensors[4].udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-40	63600 9 0 0 0 0 1 0 0 0 0
+40	99491 9 0 0 0 0 1 0 0 0 0
 vector 41 GradysNetwork.sensors[4].udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-41	63609 9 0 0 0 0 1 0 0 0 0
+41	99500 9 0 0 0 0 1 0 0 0 0
 vector 42 GradysNetwork.sensors[5].wlan[0].mac.dcf frameSequenceActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-42	63618 18 0 0 0 0 2 0 0 0 0
+42	99509 18 0 0 0 0 2 0 0 0 0
 vector 43 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-43	63636 18 0 0 0 0 2 0 0 0 0
+43	99527 18 0 0 0 0 2 0 0 0 0
 vector 44 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-44	63654 18 0 0 0 0 2 0 0 0 0
+44	99545 18 0 0 0 0 2 0 0 0 0
 vector 45 GradysNetwork.sensors[5].udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-45	63672 9 0 0 0 0 1 0 0 0 0
+45	99563 9 0 0 0 0 1 0 0 0 0
 vector 46 GradysNetwork.sensors[5].udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-46	63681 9 0 0 0 0 1 0 0 0 0
+46	99572 9 0 0 0 0 1 0 0 0 0
 vector 47 GradysNetwork.sensors[5].udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-47	63690 9 0 0 0 0 1 0 0 0 0
+47	99581 9 0 0 0 0 1 0 0 0 0
 vector 48 GradysNetwork.sensors[6].wlan[0].mac.dcf frameSequenceActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-48	63699 18 0 0 0 0 2 0 0 0 0
+48	99590 18 0 0 0 0 2 0 0 0 0
 vector 49 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-49	63717 18 0 0 0 0 2 0 0 0 0
+49	99608 18 0 0 0 0 2 0 0 0 0
 vector 50 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-50	63735 18 0 0 0 0 2 0 0 0 0
+50	99626 18 0 0 0 0 2 0 0 0 0
 vector 51 GradysNetwork.sensors[6].udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-51	63753 9 0 0 0 0 1 0 0 0 0
+51	99644 9 0 0 0 0 1 0 0 0 0
 vector 52 GradysNetwork.sensors[6].udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-52	63762 9 0 0 0 0 1 0 0 0 0
+52	99653 9 0 0 0 0 1 0 0 0 0
 vector 53 GradysNetwork.sensors[6].udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-53	63771 9 0 0 0 0 1 0 0 0 0
+53	99662 9 0 0 0 0 1 0 0 0 0
 vector 54 GradysNetwork.sensors[7].wlan[0].mac.dcf frameSequenceActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-54	63780 18 0 0 0 0 2 0 0 0 0
+54	99671 18 0 0 0 0 2 0 0 0 0
 vector 55 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-55	63798 18 0 0 0 0 2 0 0 0 0
+55	99689 18 0 0 0 0 2 0 0 0 0
 vector 56 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-56	63816 18 0 0 0 0 2 0 0 0 0
+56	99707 18 0 0 0 0 2 0 0 0 0
 vector 57 GradysNetwork.sensors[7].udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-57	63834 9 0 0 0 0 1 0 0 0 0
+57	99725 9 0 0 0 0 1 0 0 0 0
 vector 58 GradysNetwork.sensors[7].udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-58	63843 9 0 0 0 0 1 0 0 0 0
+58	99734 9 0 0 0 0 1 0 0 0 0
 vector 59 GradysNetwork.sensors[7].udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-59	63852 9 0 0 0 0 1 0 0 0 0
+59	99743 9 0 0 0 0 1 0 0 0 0
 vector 60 GradysNetwork.groundStation.wlan[0].mac.dcf frameSequenceActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(frameSequenceStarted)-count(frameSequenceFinished))
 attr title "frame sequence active"
-60	63861 448 0 1120 0 8.218769999255 20 0 1 9 9
+60	99752 6332 0 16739 0 47.12035218473 244 0 1 121 121
 vector 61 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length"
-61	64309 448 0 1120 0 8.218769999255 20 0 1 9 9
+61	106084 6332 0 16739 0 47.12035218473 244 0 1 121 121
 vector 62 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention backoffActive:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source warmup(count(backoffStarted)-count(backoffStopped))
 attr title "backoff active"
-62	64757 447 0 1106 0 8.218715999255 20 0 1 9 9
+62	112416 6540 0 16689 0 47.120254141681 252 0 1 125 125
 vector 63 GradysNetwork.groundStation.udp passedUpPk:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetSentToUpper
 attr title "packets passed up, count"
-63	65204 446 0 1096 0 8.218445999255 19 0 18 171 2109
+63	118956 3248 0 16666 0 47.119624141681 120 0 119 7140 568820
 vector 64 GradysNetwork.groundStation.udp droppedPkWrongPort:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsNoPortFound(packetDropped)
 attr title "packets dropped (wrong port), count"
-64	65650 9 0 0 0 0 1 0 0 0 0
+64	122204 9 0 0 0 0 1 0 0 0 0
 vector 65 GradysNetwork.groundStation.udp droppedPkBadChecksum:vector(count) ETV
 attr interpolationmode none
 attr recordingmode vector(count)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-65	65659 9 0 0 0 0 1 0 0 0 0
+65	122213 9 0 0 0 0 1 0 0 0 0
 vector 66 GradysNetwork.sensors[0].energyStorage powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-66	65668 49 0 0 0 0 5 0 0.002 0.002 4e-06
+66	122222 49 0 0 0 0 5 0 0.002 0.002 4e-06
 vector 67 GradysNetwork.sensors[1].energyStorage powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-67	65717 49 0 0 0 0 5 0 0.002 0.002 4e-06
+67	122271 49 0 0 0 0 5 0 0.002 0.002 4e-06
 vector 68 GradysNetwork.sensors[2].energyStorage powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-68	65766 49 0 0 0 0 5 0 0.002 0.002 4e-06
+68	122320 49 0 0 0 0 5 0 0.002 0.002 4e-06
 vector 69 GradysNetwork.sensors[3].energyStorage powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-69	65815 49 0 0 0 0 5 0 0.002 0.002 4e-06
+69	122369 49 0 0 0 0 5 0 0.002 0.002 4e-06
 vector 70 GradysNetwork.sensors[4].energyStorage powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-70	65864 49 0 0 0 0 5 0 0.002 0.002 4e-06
+70	122418 49 0 0 0 0 5 0 0.002 0.002 4e-06
 vector 71 GradysNetwork.sensors[5].energyStorage powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-71	65913 49 0 0 0 0 5 0 0.002 0.002 4e-06
+71	122467 49 0 0 0 0 5 0 0.002 0.002 4e-06
 vector 72 GradysNetwork.sensors[6].energyStorage powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-72	65962 49 0 0 0 0 5 0 0.002 0.002 4e-06
+72	122516 49 0 0 0 0 5 0 0.002 0.002 4e-06
 vector 73 GradysNetwork.sensors[7].energyStorage powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-73	66011 49 0 0 0 0 5 0 0.002 0.002 4e-06
+73	122565 49 0 0 0 0 5 0 0.002 0.002 4e-06
 vector 74 GradysNetwork.quads[0].wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-74	66060 265 0 971 0 8.038410200584 13 0 3 27 69
+74	122614 10064 0 16737 0 47.120352163206 389 0 3 967 2513
 vector 75 GradysNetwork.quads[0].wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-75	66325 9 0 0 0 0 1 0 0 0 0
+75	132678 9 0 0 0 0 1 0 0 0 0
 vector 76 GradysNetwork.quads[1].wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-76	66334 221 0 1074 0 8.218445814291 11 0 3 22 56
+76	132687 4381 0 16605 0 46.740199357364 167 0 3 412 1070
 vector 77 GradysNetwork.quads[1].wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-77	66555 9 0 0 0 0 1 0 0 0 0
+77	137068 9 0 0 0 0 1 0 0 0 0
 vector 78 GradysNetwork.sensors[0].wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-78	66564 27 0 0 0 0 3 0 2 2 4
+78	137077 27 0 0 0 0 3 0 2 2 4
 vector 79 GradysNetwork.sensors[0].wlan[0].radio.energyConsumer powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-79	66591 40 0 0 0 0 4 0 0.002 0.002 4e-06
+79	137104 40 0 0 0 0 4 0 0.002 0.002 4e-06
 vector 80 GradysNetwork.sensors[0].wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-80	66631 9 0 0 0 0 1 0 0 0 0
+80	137144 9 0 0 0 0 1 0 0 0 0
 vector 81 GradysNetwork.sensors[1].wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-81	66640 27 0 0 0 0 3 0 2 2 4
+81	137153 27 0 0 0 0 3 0 2 2 4
 vector 82 GradysNetwork.sensors[1].wlan[0].radio.energyConsumer powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-82	66667 40 0 0 0 0 4 0 0.002 0.002 4e-06
+82	137180 40 0 0 0 0 4 0 0.002 0.002 4e-06
 vector 83 GradysNetwork.sensors[1].wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-83	66707 9 0 0 0 0 1 0 0 0 0
+83	137220 9 0 0 0 0 1 0 0 0 0
 vector 84 GradysNetwork.sensors[2].wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-84	66716 27 0 0 0 0 3 0 2 2 4
+84	137229 27 0 0 0 0 3 0 2 2 4
 vector 85 GradysNetwork.sensors[2].wlan[0].radio.energyConsumer powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-85	66743 40 0 0 0 0 4 0 0.002 0.002 4e-06
+85	137256 40 0 0 0 0 4 0 0.002 0.002 4e-06
 vector 86 GradysNetwork.sensors[2].wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-86	66783 9 0 0 0 0 1 0 0 0 0
+86	137296 9 0 0 0 0 1 0 0 0 0
 vector 87 GradysNetwork.sensors[3].wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-87	66792 27 0 0 0 0 3 0 2 2 4
+87	137305 27 0 0 0 0 3 0 2 2 4
 vector 88 GradysNetwork.sensors[3].wlan[0].radio.energyConsumer powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-88	66819 40 0 0 0 0 4 0 0.002 0.002 4e-06
+88	137332 40 0 0 0 0 4 0 0.002 0.002 4e-06
 vector 89 GradysNetwork.sensors[3].wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-89	66859 9 0 0 0 0 1 0 0 0 0
+89	137372 9 0 0 0 0 1 0 0 0 0
 vector 90 GradysNetwork.sensors[4].wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-90	66868 27 0 0 0 0 3 0 2 2 4
+90	137381 27 0 0 0 0 3 0 2 2 4
 vector 91 GradysNetwork.sensors[4].wlan[0].radio.energyConsumer powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-91	66895 40 0 0 0 0 4 0 0.002 0.002 4e-06
+91	137408 40 0 0 0 0 4 0 0.002 0.002 4e-06
 vector 92 GradysNetwork.sensors[4].wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-92	66935 9 0 0 0 0 1 0 0 0 0
+92	137448 9 0 0 0 0 1 0 0 0 0
 vector 93 GradysNetwork.sensors[5].wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-93	66944 27 0 0 0 0 3 0 2 2 4
+93	137457 27 0 0 0 0 3 0 2 2 4
 vector 94 GradysNetwork.sensors[5].wlan[0].radio.energyConsumer powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-94	66971 40 0 0 0 0 4 0 0.002 0.002 4e-06
+94	137484 40 0 0 0 0 4 0 0.002 0.002 4e-06
 vector 95 GradysNetwork.sensors[5].wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-95	67011 9 0 0 0 0 1 0 0 0 0
+95	137524 9 0 0 0 0 1 0 0 0 0
 vector 96 GradysNetwork.sensors[6].wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-96	67020 27 0 0 0 0 3 0 2 2 4
+96	137533 27 0 0 0 0 3 0 2 2 4
 vector 97 GradysNetwork.sensors[6].wlan[0].radio.energyConsumer powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-97	67047 40 0 0 0 0 4 0 0.002 0.002 4e-06
+97	137560 40 0 0 0 0 4 0 0.002 0.002 4e-06
 vector 98 GradysNetwork.sensors[6].wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-98	67087 9 0 0 0 0 1 0 0 0 0
+98	137600 9 0 0 0 0 1 0 0 0 0
 vector 99 GradysNetwork.sensors[7].wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-99	67096 27 0 0 0 0 3 0 2 2 4
+99	137609 27 0 0 0 0 3 0 2 2 4
 vector 100 GradysNetwork.sensors[7].wlan[0].radio.energyConsumer powerConsumption:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source powerConsumptionChanged
 attr title "Power consumption"
 attr unit W
-100	67123 44 0 0 0 0 4 0 0.002 0.002 4e-06
+100	137636 44 0 0 0 0 4 0 0.002 0.002 4e-06
 vector 101 GradysNetwork.sensors[7].wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-101	67167 10 0 0 0 0 1 0 0 0 0
+101	137680 10 0 0 0 0 1 0 0 0 0
 vector 102 GradysNetwork.groundStation.wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioModeChanged
 attr title "Radio mode"
-102	67177 478 0 1121 0 8.218769999255 21 0 3 47 121
+102	137690 6694 0 16704 0 47.120308141681 249 0 3 617 1603
 vector 103 GradysNetwork.groundStation.wlan[0].radio radioChannel:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source radioChannelChanged
 attr title "Radio channel"
-103	67655 10 0 0 0 0 1 0 0 0 0
+103	144384 10 0 0 0 0 1 0 0 0 0
 vector 104 GradysNetwork.quads[0].wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-104	67665 912 0 1122 0 8.218770184229 37 0 3 58 136
+104	144394 21619 0 16737 0 47.120352163206 797 0 3 1014 2244
 vector 105 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-105	68577 2320 0 1122 0 8.218770184229 94 0 2 20 40
+105	166013 52740 0 16737 0 47.120352163206 1946 0 2 472 916
 vector 106 GradysNetwork.quads[1].wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-106	70897 910 0 1123 0 8.218770184229 37 0 3 61 145
+106	218753 21593 0 16741 0 47.120352241739 797 0 3 1347 3243
 vector 107 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-107	71807 2224 0 1123 0 8.218770184229 90 0 2 16 32
+107	240346 46716 0 16741 0 47.120352241739 1722 0 2 222 426
 vector 108 GradysNetwork.sensors[0].wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-108	74031 10 0 0 0 0 1 1 1 1 1
+108	287062 10 0 0 0 0 1 1 1 1 1
 vector 109 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-109	74041 20 0 0 0 0 2 0 0 0 0
+109	287072 20 0 0 0 0 2 0 0 0 0
 vector 110 GradysNetwork.sensors[1].wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-110	74061 10 0 0 0 0 1 1 1 1 1
+110	287092 10 0 0 0 0 1 1 1 1 1
 vector 111 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-111	74071 20 0 0 0 0 2 0 0 0 0
+111	287102 20 0 0 0 0 2 0 0 0 0
 vector 112 GradysNetwork.sensors[2].wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-112	74091 10 0 0 0 0 1 1 1 1 1
+112	287122 10 0 0 0 0 1 1 1 1 1
 vector 113 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-113	74101 20 0 0 0 0 2 0 0 0 0
+113	287132 20 0 0 0 0 2 0 0 0 0
 vector 114 GradysNetwork.sensors[3].wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-114	74121 10 0 0 0 0 1 1 1 1 1
+114	287152 10 0 0 0 0 1 1 1 1 1
 vector 115 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-115	74131 20 0 0 0 0 2 0 0 0 0
+115	287162 20 0 0 0 0 2 0 0 0 0
 vector 116 GradysNetwork.sensors[4].wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-116	74151 10 0 0 0 0 1 1 1 1 1
+116	287182 10 0 0 0 0 1 1 1 1 1
 vector 117 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-117	74161 20 0 0 0 0 2 0 0 0 0
+117	287192 20 0 0 0 0 2 0 0 0 0
 vector 118 GradysNetwork.sensors[5].wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-118	74181 10 0 0 0 0 1 1 1 1 1
+118	287212 10 0 0 0 0 1 1 1 1 1
 vector 119 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-119	74191 20 0 0 0 0 2 0 0 0 0
+119	287222 20 0 0 0 0 2 0 0 0 0
 vector 120 GradysNetwork.sensors[6].wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-120	74211 10 0 0 0 0 1 1 1 1 1
+120	287242 10 0 0 0 0 1 1 1 1 1
 vector 121 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-121	74221 20 0 0 0 0 2 0 0 0 0
+121	287252 20 0 0 0 0 2 0 0 0 0
 vector 122 GradysNetwork.sensors[7].wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-122	74241 10 0 0 0 0 1 1 1 1 1
+122	287272 10 0 0 0 0 1 1 1 1 1
 vector 123 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-123	74251 20 0 0 0 0 2 0 0 0 0
+123	287282 20 0 0 0 0 2 0 0 0 0
 vector 124 GradysNetwork.groundStation.wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source receptionStateChanged
 attr title "Radio reception state"
-124	74271 904 0 1121 0 8.218769999255 37 0 3 46 100
+124	287302 21613 0 16738 0 47.12035218473 797 0 3 1224 2874
 vector 125 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention stateChanged:vector ETV
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode vector
 attr title "contention state changed"
 attr type enum
-125	75175 2702 0 1121 0 8.218769999255 110 0 2 36 72
+125	308915 43436 0 16738 0 47.12035218473 1602 0 2 508 1008
 vector 126 GradysNetwork.quads[0].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-126	77877 11 0 0 0 0 1 31 31 31 961
+126	352351 11 0 0 0 0 1 31 31 31 961
 vector 127 GradysNetwork.quads[1].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-127	77888 11 0 0 0 0 1 31 31 31 961
+127	352362 11 0 0 0 0 1 31 31 31 961
 vector 128 GradysNetwork.sensors[0].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-128	77899 11 0 0 0 0 1 31 31 31 961
+128	352373 11 0 0 0 0 1 31 31 31 961
 vector 129 GradysNetwork.sensors[1].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-129	77910 11 0 0 0 0 1 31 31 31 961
+129	352384 11 0 0 0 0 1 31 31 31 961
 vector 130 GradysNetwork.sensors[2].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-130	77921 11 0 0 0 0 1 31 31 31 961
+130	352395 11 0 0 0 0 1 31 31 31 961
 vector 131 GradysNetwork.sensors[3].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-131	77932 11 0 0 0 0 1 31 31 31 961
+131	352406 11 0 0 0 0 1 31 31 31 961
 vector 132 GradysNetwork.sensors[4].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-132	77943 11 0 0 0 0 1 31 31 31 961
+132	352417 11 0 0 0 0 1 31 31 31 961
 vector 133 GradysNetwork.sensors[5].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-133	77954 11 0 0 0 0 1 31 31 31 961
+133	352428 11 0 0 0 0 1 31 31 31 961
 vector 134 GradysNetwork.sensors[6].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-134	77965 11 0 0 0 0 1 31 31 31 961
+134	352439 11 0 0 0 0 1 31 31 31 961
 vector 135 GradysNetwork.sensors[7].wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-135	77976 11 0 0 0 0 1 31 31 31 961
+135	352450 11 0 0 0 0 1 31 31 31 961
 vector 136 GradysNetwork.groundStation.wlan[0].mac.dcf.recoveryProcedure contentionWindowChanged:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr title "contention window"
-136	77987 11 0 0 0 0 1 31 31 31 961
+136	352461 11 0 0 0 0 1 31 31 31 961
 vector 137 GradysNetwork.quads[0].app[0] packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetSent
 attr title "packets sent, packetBytes"
-137	77998 124 14 947 0.038356200584 8.038356200584 5 7 7 35 245
+137	352472 2570 70 16637 1.276913232552 47.119570120145 95 7 7 665 4655
 vector 138 GradysNetwork.quads[0].udp packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetSent
 attr title "packets sent, packetBytes"
-138	78122 129 15 948 0.038356200584 8.038356200584 5 15 15 75 1125
+138	355042 2665 71 16638 1.276913232552 47.119570120145 95 15 15 1425 21375
 vector 139 GradysNetwork.quads[0].lo[0].lo rcvdPkFromHl:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, packetBytes"
-139	78251 129 17 950 0.038356200584 8.038356200584 5 35 35 175 6125
+139	357707 2435 73 16640 1.276913232552 47.119570120145 87 35 35 3045 106575
 vector 140 GradysNetwork.quads[0].lo[0].lo passedUpPk:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetSentToUpper
 attr title "packets passed to higher layer, packetBytes"
-140	78380 129 17 950 0.038356200584 8.038356200584 5 35 35 175 6125
+140	360142 2435 73 16640 1.276913232552 47.119570120145 87 35 35 3045 106575
 vector 141 GradysNetwork.quads[0].wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets received from upper layer, packetBytes"
-141	78509 129 20 953 0.038356200584 8.038356200584 5 43 43 215 9245
+141	362577 2718 76 16643 1.276913232552 47.119570120145 97 36 43 4157 178247
 vector 142 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source packetLength(packetPushStarted)
 attr title "incoming packet lengths"
 attr unit b
-142	78638 134 20 953 0.038356200584 8.038356200584 5 568 568 2840 1613120
-vector 143 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
+142	365295 2815 76 16643 1.276913232552 47.119570120145 97 512 568 54984 31173568
+vector 143 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+143	368110 7684 76 16643 0.1 47.1 471 0 16480 544160 3711257600
+143	791101 99 16764 16764 47.2 47.557467959423 5 0 5680 5680 32262400
+vector 144 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
 attr title "queue length"
 attr unit pk
-143	78772 248 20 957 0.038356200584 8.038356200584 10 0 1 5 5
-vector 144 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
+144	375794 5242 76 16647 1.276913232552 47.119570120145 194 0 1 97 97
+vector 145 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
 attr title "queue bit length"
 attr unit b
-144	79020 258 20 957 0.038356200584 8.038356200584 10 0 568 2840 1613120
-vector 145 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
+145	381036 5436 76 16647 1.276913232552 47.119570120145 194 0 568 54984 31173568
+vector 146 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr title "backoff periods"
-145	79278 127 20 953 0.038356200584 8.038356200584 5 0 29 72 1732
-vector 146 GradysNetwork.quads[0].udp packetReceived:vector(packetBytes) ETV
+146	386472 2687 76 16643 1.276913232552 47.119570120145 97 0 31 1468 30644
+vector 147 GradysNetwork.quads[0].udp packetReceived:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetReceived
 attr title "packets received, packetBytes"
-146	79405 469 21 1130 0.038356200584 8.218770184229 18 15 15 270 4050
-vector 147 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
+147	389159 6010 77 16709 1.276913232552 47.120308163206 214 15 15 3210 48150
+vector 148 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source queueingTime(packetPulled)
 attr title "queueing times"
 attr unit s
-147	79874 124 24 957 0.038356200584 8.038356200584 5 0 0 0 0
-vector 148 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
+148	395169 2720 80 16647 1.276913232552 47.119570120145 97 0 0.000798069943 0.005212338395 3.079206636002e-06
+vector 149 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source packetLength(packetPulled)
 attr title "outgoing packet lengths"
 attr unit b
-148	79998 134 24 957 0.038356200584 8.038356200584 5 568 568 2840 1613120
-vector 149 GradysNetwork.quads[0].wlan[0].mac.dcf datarateSelected:vector ETV
+149	397889 2815 80 16647 1.276913232552 47.119570120145 97 512 568 54984 31173568
+vector 150 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+150	400704 7684 80 16647 0.1 47.1 471 0 16480 544160 3711257600
+150	791200 99 16764 16764 47.2 47.557467959423 5 0 5680 5680 32262400
+vector 151 GradysNetwork.quads[0].wlan[0].mac.dcf datarateSelected:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr title "datarates selected"
-149	80132 159 24 957 0.038356200584 8.038356200584 5 24000000 24000000 120000000 2.88e+15
-vector 150 GradysNetwork.quads[0].wlan[0].mac packetSentToLower:vector(packetBytes) ETV
+151	408388 6562 80 16706 1.276913232552 47.120308163206 193 24000000 24000000 4632000000 1.11168e+17
+vector 152 GradysNetwork.quads[0].wlan[0].mac packetSentToLower:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets sent to lower layer, packetBytes"
-150	80291 129 24 957 0.038356200584 8.038356200584 5 71 71 355 25205
-vector 151 GradysNetwork.quads[0].wlan[0].radio transmissionState:vector ETV
+152	414950 5404 80 16722 1.276913232552 47.120318163206 193 14 71 8217 505903
+vector 153 GradysNetwork.quads[0].wlan[0].radio transmissionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source transmissionStateChanged
 attr title "Radio transmission state"
-151	80420 496 25 971 0.038356200584 8.038410200584 20 0 2 20 30
-vector 152 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
+153	420354 20846 81 16737 1.276913232552 47.120352163206 772 0 2 772 1158
+vector 154 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets sent, packetBytes"
-152	80916 129 37 970 0.038410200584 8.038410200584 5 71 71 355 25205
-vector 153 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
+154	441200 5405 93 16736 1.276967232552 47.120352163206 193 14 71 8217 505903
+vector 155 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211Multicast(packetSentToPeer)
 attr title "packets sent: multicast, packetBytes"
-153	81045 129 37 970 0.038410200584 8.038410200584 5 71 71 355 25205
-vector 154 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
+155	446605 2464 93 16660 1.276967232552 47.119624120145 88 64 71 6241 442663
+vector 156 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211NotRetry(packetSentToPeer)
 attr title "packets sent: without retry, packetBytes"
-154	81174 129 37 970 0.038410200584 8.038410200584 5 71 71 355 25205
-vector 155 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
+156	449069 5405 93 16736 1.276967232552 47.120352163206 193 14 71 8217 505903
+vector 157 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source queueingTime(packetDequeued)
 attr title "queueing times"
-155	81303 154 37 970 0.038410200584 8.038410200584 5 5.4e-05 5.4e-05 0.00027 1.458e-08
-vector 156 GradysNetwork.quads[1].wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
+157	454474 3245 93 16660 1.276967232552 47.119624120145 97 5e-05 9.8169824e-05 0.005626724015 3.4200166862637e-07
+vector 158 GradysNetwork.quads[1].wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets received from lower layer, packetBytes"
-156	81457 363 41 1125 0.038410200584 8.218770184229 14 71 71 994 70574
-vector 157 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
+158	457719 8849 96 16742 1.276967232552 47.120352241739 316 14 71 16822 1114366
+vector 159 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets received, packetBytes"
-157	81820 363 41 1125 0.038410200584 8.218770184229 14 71 71 994 70574
-vector 158 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
+159	466568 3941 96 16675 1.276967232552 47.119624198679 140 14 71 9349 654455
+vector 160 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211Multicast(packetReceivedFromPeer)
 attr title "packets received: multicast, packetBytes"
-158	82183 363 41 1125 0.038410200584 8.218770184229 14 71 71 994 70574
-vector 159 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
+160	470509 2514 96 16675 1.276967232552 47.119624198679 90 64 71 6369 450855
+vector 161 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211NotRetry(packetReceivedFromPeer)
 attr title "packets received: without retry, packetBytes"
-159	82546 363 41 1125 0.038410200584 8.218770184229 14 71 71 994 70574
-vector 160 GradysNetwork.quads[1].wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
+161	473023 3941 96 16675 1.276967232552 47.119624198679 140 14 71 9349 654455
+vector 162 GradysNetwork.quads[1].wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets sent to upper layer, packetBytes"
-160	82909 363 41 1125 0.038410200584 8.218770184229 14 43 43 602 25886
-vector 161 GradysNetwork.groundStation.wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
+162	476964 3655 96 16675 1.276967232552 47.119624198679 130 36 43 5569 238711
+vector 163 GradysNetwork.groundStation.wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets received from lower layer, packetBytes"
-161	83272 232 42 1083 0.038410200584 8.218445999255 9 71 71 639 45369
-vector 162 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
+163	480619 7746 100 16739 1.276967254361 47.12035218473 275 14 71 11745 723575
+vector 164 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets received, packetBytes"
-162	83504 232 42 1083 0.038410200584 8.218445999255 9 71 71 639 45369
-vector 163 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
+164	488365 6772 100 16739 1.276967254361 47.12035218473 241 14 71 10307 635491
+vector 165 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211Multicast(packetReceivedFromPeer)
 attr title "packets received: multicast, packetBytes"
-163	83736 232 42 1083 0.038410200584 8.218445999255 9 71 71 639 45369
-vector 164 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
+165	495137 3375 100 16663 1.276967254361 47.119624141681 120 64 71 8513 603975
+vector 166 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211NotRetry(packetReceivedFromPeer)
 attr title "packets received: without retry, packetBytes"
-164	83968 232 42 1083 0.038410200584 8.218445999255 9 71 71 639 45369
-vector 165 GradysNetwork.groundStation.wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
+166	498512 6772 100 16739 1.276967254361 47.12035218473 241 14 71 10307 635491
+vector 167 GradysNetwork.groundStation.wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets sent to upper layer, packetBytes"
-165	84200 232 42 1083 0.038410200584 8.218445999255 9 43 43 387 16641
-vector 166 GradysNetwork.groundStation.udp packetReceived:vector(packetBytes) ETV
+167	505284 3429 100 16663 1.276967254361 47.119624141681 122 36 43 5225 223919
+vector 168 GradysNetwork.groundStation.udp packetReceived:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetReceived
 attr title "packets received, packetBytes"
-166	84432 464 47 1096 0.038410200584 8.218445999255 18 15 15 270 4050
-vector 167 GradysNetwork.groundStation.app[0] packetReceived:vector(packetBytes) ETV
+168	508713 3347 103 16666 1.276967254361 47.119624141681 119 15 15 1785 26775
+vector 169 GradysNetwork.groundStation.app[0] packetReceived:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetReceived
 attr title "packets received, packetBytes"
-167	84896 223 48 1087 0.038410200584 8.218445999255 9 7 7 63 441
-vector 168 GradysNetwork.groundStation.app[0] rcvdPkLifetime:vector ETV
+169	512060 3228 104 16667 1.276967254361 47.119624141681 119 7 7 833 5831
+vector 170 GradysNetwork.groundStation.app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+170	515288 7658 104 16667 0.1 47.1 471 0 1120 66080 42649600
+170	791299 98 16764 16764 47.2 47.557467959423 5 0 560 560 313600
+vector 171 GradysNetwork.groundStation.app[0] rcvdPkLifetime:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source dataAge(packetReceived)
 attr title "received packet lifetime"
 attr unit s
-168	85119 325 48 1087 0.038410200584 8.218445999255 9 5.4e-05 5.4184964e-05 0.000486836522 2.6334455192695e-08
-vector 169 GradysNetwork.groundStation.app[0] packetSent:vector(packetBytes) ETV
+171	522946 4648 104 16667 1.276967254361 47.119624141681 119 5.4006767e-05 5.4076815e-05 0.006430914735 3.4753503236256e-07
+vector 172 GradysNetwork.groundStation.app[0] packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetSent
 attr title "packets sent, packetBytes"
-169	85444 223 50 1089 0.038410200584 8.218445999255 9 7 7 63 441
-vector 170 GradysNetwork.groundStation.udp packetSent:vector(packetBytes) ETV
+172	527594 3228 106 16669 1.276967254361 47.119624141681 119 7 7 833 5831
+vector 173 GradysNetwork.groundStation.udp packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetSent
 attr title "packets sent, packetBytes"
-170	85667 232 51 1090 0.038410200584 8.218445999255 9 15 15 135 2025
-vector 171 GradysNetwork.groundStation.lo[0].lo rcvdPkFromHl:vector(packetBytes) ETV
-attr interpolationmode none
+173	530822 3347 107 16670 1.276967254361 47.119624141681 119 15 15 1785 26775
+vector 174 GradysNetwork.groundStation.ipv4.arp arpRequestSent:vector(packetBytes) ETV
 attr recordingmode vector(packetBytes)
-attr source packetReceivedFromUpper
-attr title "packets received from higher layer, packetBytes"
-171	85899 232 53 1092 0.038410200584 8.218445999255 9 35 35 315 11025
-vector 172 GradysNetwork.groundStation.lo[0].lo passedUpPk:vector(packetBytes) ETV
-attr interpolationmode none
-attr recordingmode vector(packetBytes)
-attr source packetSentToUpper
-attr title "packets passed to higher layer, packetBytes"
-172	86131 232 53 1092 0.038410200584 8.218445999255 9 35 35 315 11025
-vector 173 GradysNetwork.groundStation.wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
+attr source arpRequestSent
+attr title "ARP request sent, packetBytes"
+174	534169 54 108 7344 1.276967254361 30.075411344984 2 28 28 56 1568
+vector 175 GradysNetwork.groundStation.wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets received from upper layer, packetBytes"
-173	86363 232 56 1095 0.038410200584 8.218445999255 9 43 43 387 16641
-vector 174 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
+175	534223 3401 110 16673 1.276967254361 47.119624141681 121 36 43 5189 222623
+vector 176 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source packetLength(packetPushStarted)
 attr title "incoming packet lengths"
 attr unit b
-174	86595 241 56 1095 0.038410200584 8.218445999255 9 568 568 5112 2903616
-vector 175 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
+176	537624 3522 110 16673 1.276967254361 47.119624141681 121 512 568 68616 38916544
+vector 177 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPushStarted)
+attr title "incoming datarate"
+attr unit bps
+177	541146 7769 110 16673 0.1 47.1 471 0 11360 680480 4556441600
+177	791397 99 16764 16764 47.2 47.557467959423 5 0 5680 5680 32262400
+vector 178 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
 attr title "queue length"
 attr unit pk
-175	86836 447 56 1107 0.038410200584 8.218715999255 18 0 1 9 9
-vector 176 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
+178	548915 6560 110 16690 1.276967254361 47.120254141681 242 0 1 121 121
+vector 179 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
 attr title "queue bit length"
 attr unit b
-176	87283 465 56 1107 0.038410200584 8.218715999255 18 0 568 5112 2903616
-vector 177 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
+179	555475 6802 110 16690 1.276967254361 47.120254141681 242 0 568 68616 38916544
+vector 180 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr title "backoff periods"
-177	87748 229 56 1095 0.038410200584 8.218445999255 9 0 31 138 3090
-vector 178 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
+180	562277 3359 110 16673 1.276967254361 47.119624141681 121 0 31 1771 36829
+vector 181 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source queueingTime(packetPulled)
 attr title "queueing times"
 attr unit s
-178	87977 276 68 1107 0.038840200584 8.218715999255 9 5e-05 0.00067 0.00321 1.5345e-06
-vector 179 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
+181	565636 3984 120 16690 1.277497254361 47.120254141681 121 5e-05 0.000858071528 0.041702071528 1.8903262747164e-05
+vector 182 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source packetLength(packetPulled)
 attr title "outgoing packet lengths"
 attr unit b
-179	88253 242 68 1107 0.038840200584 8.218715999255 9 568 568 5112 2903616
-vector 180 GradysNetwork.groundStation.wlan[0].mac.dcf datarateSelected:vector ETV
+182	569620 3522 120 16690 1.277497254361 47.120254141681 121 512 568 68616 38916544
+vector 183 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source throughput(packetPulled)
+attr title "outgoing datarate"
+attr unit bps
+183	573142 7769 120 16690 0.1 47.1 471 0 11360 680480 4556441600
+183	791496 99 16764 16764 47.2 47.557467959423 5 0 5680 5680 32262400
+vector 184 GradysNetwork.groundStation.wlan[0].mac.dcf datarateSelected:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr title "datarates selected"
-180	88495 287 68 1107 0.038840200584 8.218715999255 9 24000000 24000000 216000000 5.184e+15
-vector 181 GradysNetwork.groundStation.wlan[0].mac packetSentToLower:vector(packetBytes) ETV
+184	580911 4193 120 16690 1.277497254361 47.120254141681 123 24000000 24000000 2952000000 7.0848e+16
+vector 185 GradysNetwork.groundStation.wlan[0].mac packetSentToLower:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets sent to lower layer, packetBytes"
-181	88782 233 68 1107 0.038840200584 8.218715999255 9 71 71 639 45369
-vector 182 GradysNetwork.groundStation.wlan[0].radio transmissionState:vector ETV
+185	585104 3455 120 16690 1.277497254361 47.120254141681 123 14 71 8605 608463
+vector 186 GradysNetwork.groundStation.wlan[0].radio transmissionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source transmissionStateChanged
 attr title "Radio transmission state"
-182	89015 896 69 1121 0.038840200584 8.218769999255 36 0 2 36 54
-vector 183 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
+186	588559 13328 121 16704 1.277497254361 47.120308141681 492 0 2 492 738
+vector 187 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets sent, packetBytes"
-183	89911 233 81 1120 0.038894200584 8.218769999255 9 71 71 639 45369
-vector 184 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
+187	601887 3455 133 16703 1.277547254361 47.120308141681 123 14 71 8605 608463
+vector 188 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211Multicast(packetSentToPeer)
 attr title "packets sent: multicast, packetBytes"
-184	90144 233 81 1120 0.038894200584 8.218769999255 9 71 71 639 45369
-vector 185 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
+188	605342 54 133 7369 1.277547254361 30.075731344984 2 64 64 128 8192
+vector 189 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetSentToPeer)
+attr title "packets sent: broadcast , packetBytes"
+189	605396 54 133 7369 1.277547254361 30.075731344984 2 64 64 128 8192
+vector 190 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211NotRetry(packetSentToPeer)
 attr title "packets sent: without retry, packetBytes"
-185	90377 233 81 1120 0.038894200584 8.218769999255 9 71 71 639 45369
-vector 186 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
+190	605450 3455 133 16703 1.277547254361 47.120308141681 123 14 71 8605 608463
+vector 191 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source queueingTime(packetDequeued)
 attr title "queueing times"
-186	90610 278 81 1120 0.038894200584 8.218769999255 9 5.4e-05 5.4e-05 0.000486 2.6244e-08
-vector 187 GradysNetwork.quads[0].wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
+191	608905 4711 133 16739 1.277547254361 47.12035218473 121 5e-05 9.8153611e-05 0.011771829404 1.149803527109e-06
+vector 192 GradysNetwork.quads[0].wlan[0].mac packetReceivedFromLower:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets received from lower layer, packetBytes"
-187	90888 340 85 1124 0.038894200584 8.218770184229 13 71 71 923 65533
-vector 188 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
+192	613616 5798 137 16706 1.27754727618 47.120308163206 205 14 71 12133 826135
+vector 193 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeer:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets received, packetBytes"
-188	91228 340 85 1124 0.038894200584 8.218770184229 13 71 71 923 65533
-vector 189 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
+193	619414 3912 137 16706 1.27754727618 47.120308163206 139 14 71 9335 654259
+vector 194 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerMulticast:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211Multicast(packetReceivedFromPeer)
 attr title "packets received: multicast, packetBytes"
-189	91568 340 85 1124 0.038894200584 8.218770184229 13 71 71 923 65533
-vector 190 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
+194	623326 970 137 16542 1.27754727618 46.739831332283 34 64 71 2400 169504
+vector 195 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetReceivedFromPeer)
+attr title "packets received: broadcast, packetBytes"
+195	624296 53 137 7373 1.27754727618 30.075731380765 2 64 64 128 8192
+vector 196 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211NotRetry(packetReceivedFromPeer)
 attr title "packets received: without retry, packetBytes"
-190	91908 340 85 1124 0.038894200584 8.218770184229 13 71 71 923 65533
-vector 191 GradysNetwork.quads[0].wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
+196	624349 3912 137 16706 1.27754727618 47.120308163206 139 14 71 9335 654259
+vector 197 GradysNetwork.quads[0].wlan[0].mac packetSentToUpper:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets sent to upper layer, packetBytes"
-191	92248 340 85 1124 0.038894200584 8.218770184229 13 43 43 559 24037
-vector 192 GradysNetwork.quads[0].app[0] packetReceived:vector(packetBytes) ETV
+197	628261 3656 137 16706 1.27754727618 47.120308163206 130 36 43 5569 238711
+vector 198 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetReceivedFromPeer)
+attr title "packets received: broadcast, packetBytes"
+198	631917 81 138 7406 1.27754727618 30.075971380765 3 64 64 192 12288
+vector 199 GradysNetwork.quads[0].ipv4.arp arpReplySent:vector(packetBytes) ETV
+attr recordingmode vector(packetBytes)
+attr source arpReplySent
+attr title "ARP replies sent, packetBytes"
+199	631998 25 141 141 1.27754727618 1.27754727618 1 28 28 28 784
+vector 200 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, packetBytes"
+200	632023 2941 167 16736 1.27798727618 47.120352163206 105 14 71 1976 63240
+vector 201 GradysNetwork.quads[0].wlan[0].mac.rx nav:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source navChanged
+attr title "network allocation vector"
+201	634964 3723 167 16603 1.27798727618 46.74019933304 126 0 4.4e-05 0.001848 8.1312e-08
+vector 202 GradysNetwork.quads[1].wlan[0].mac.rx nav:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source navChanged
+attr title "network allocation vector"
+202	638687 8502 170 16740 1.27798727618 47.120352199848 294 0 4.4e-05 0.004312 1.89728e-07
+vector 203 GradysNetwork.quads[1].wlan[0].mac.dcf packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+203	647189 4908 170 16742 1.27798727618 47.120352241739 176 14 71 7473 459911
+vector 204 GradysNetwork.quads[1].wlan[0].mac.dcf packetDropNotAddressedToUs:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, packetBytes"
+204	652097 4908 170 16742 1.27798727618 47.120352241739 176 14 71 7473 459911
+vector 205 GradysNetwork.quads[1].wlan[0].mac packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+205	657005 4908 170 16742 1.27798727618 47.120352241739 176 14 71 7473 459911
+vector 206 GradysNetwork.quads[1].wlan[0].mac packetDropNotAddressedToUs:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, packetBytes"
+206	661913 4908 170 16742 1.27798727618 47.120352241739 176 14 71 7473 459911
+vector 207 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, packetBytes"
+207	666821 3397 172 16739 1.277987298006 47.12035218473 121 14 64 1794 31516
+vector 208 GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, packetBytes"
+208	670218 3401 200 16703 1.278031298006 47.120308141681 121 14 71 8477 600271
+vector 209 GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, packetBytes"
+209	673619 2942 204 16706 1.278031319833 47.120308163206 105 14 71 6935 484755
+vector 210 GradysNetwork.groundStation.wlan[0].mac.rx nav:vector ETV
+attr interpolationmode linear
+attr recordingmode vector
+attr source navChanged
+attr title "network allocation vector"
+210	676561 11907 228 16735 1.278515298006 47.120352141681 408 0 4.4e-05 0.005984 2.63296e-07
+vector 211 GradysNetwork.quads[0].app[0] packetReceived:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetReceived
 attr title "packets received, packetBytes"
-192	92588 327 92 1132 0.038894200584 8.218770184229 13 7 7 91 637
-vector 193 GradysNetwork.quads[0].app[0] rcvdPkLifetime:vector ETV
+211	688468 3448 237 16710 1.278515319841 47.120308163206 127 7 7 889 6223
+vector 212 GradysNetwork.quads[0].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+212	691916 7662 237 16710 0.1 47.1 471 0 1680 70560 52684800
+212	791595 98 16764 16764 47.2 47.557467959423 5 0 560 560 313600
+vector 213 GradysNetwork.quads[0].app[0] rcvdPkLifetime:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source dataAge(packetReceived)
 attr title "received packet lifetime"
 attr unit s
-193	92915 479 92 1132 0.038894200584 8.218770184229 13 5.4e-05 0.000724120061 0.003913113859 1.9197860696013e-06
-vector 194 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
-attr interpolationmode linear
-attr recordingmode vector
-attr source throughput(packetPushStarted)
-attr title "incoming datarate"
-attr unit bps
-194	93394 1116 198 953 0.1 8 80 0 5680 22720 129049600
-194	112642 59 1137 1137 8.1 8.218770954852 3 0 5680 5680 32262400
-vector 195 GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
-attr interpolationmode linear
-attr recordingmode vector
-attr source throughput(packetPulled)
-attr title "outgoing datarate"
-attr unit bps
-195	94510 1116 202 957 0.1 8 80 0 5680 22720 129049600
-195	112701 59 1137 1137 8.1 8.218770954852 3 0 5680 5680 32262400
-vector 196 GradysNetwork.quads[1].udp packetReceived:vector(packetBytes) ETV
-attr interpolationmode none
-attr recordingmode vector(packetBytes)
-attr source packetReceived
-attr title "packets received, packetBytes"
-196	95626 418 221 1131 2.038410200584 8.218770184229 16 15 15 240 3600
-vector 197 GradysNetwork.quads[1].app[0] packetReceived:vector(packetBytes) ETV
-attr interpolationmode none
-attr recordingmode vector(packetBytes)
-attr source packetReceived
-attr title "packets received, packetBytes"
-197	96044 301 222 1133 2.038410200584 8.218770184229 12 7 7 84 588
-vector 198 GradysNetwork.quads[1].app[0] throughput:vector ETV
-attr recordingmode vector
-attr source throughput(packetReceived)
-attr title throughput
-attr unit bps
-198	96345 1152 222 1133 0.1 8.2 82 0 1120 6160 5958400
-198	112760 40 1137 1137 8.218770954852 8.218770954852 1 2983.3325177932 2983.3325177932 2983.3325177932 8900272.9117223
-vector 199 GradysNetwork.quads[1].app[0] rcvdPkLifetime:vector ETV
-attr interpolationmode none
-attr recordingmode vector
-attr source dataAge(packetReceived)
-attr title "received packet lifetime"
-attr unit s
-199	97497 446 222 1133 2.038410200584 8.218770184229 12 5.4e-05 0.000724120061 0.003429098121 1.6855283670709e-06
-vector 200 GradysNetwork.groundStation.app[0] throughput:vector ETV
-attr recordingmode vector
-attr source throughput(packetReceived)
-attr title throughput
-attr unit bps
-200	97943 1150 229 1087 0.1 8.2 82 0 560 4480 2508800
-200	112800 40 1137 1137 8.218770954852 8.218770954852 1 2983.3325177932 2983.3325177932 2983.3325177932 8900272.9117223
-vector 201 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
-attr interpolationmode linear
-attr recordingmode vector
-attr source throughput(packetPushStarted)
-attr title "incoming datarate"
-attr unit bps
-201	99093 1158 237 1095 0.1 8.2 82 0 5680 45440 258099200
-201	112840 40 1137 1137 8.218770954852 8.218770954852 1 30259.515537617 30259.515537617 30259.515537617 915638280.57128
-vector 202 GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
-attr interpolationmode linear
-attr recordingmode vector
-attr source throughput(packetPulled)
-attr title "outgoing datarate"
-attr unit bps
-202	100251 1176 249 1107 0.1 8.2 82 0 5680 45440 258099200
-202	112880 40 1137 1137 8.218770954852 8.218770954852 1 30259.515537617 30259.515537617 30259.515537617 915638280.57128
-vector 203 GradysNetwork.quads[0].app[0] throughput:vector ETV
-attr recordingmode vector
-attr source throughput(packetReceived)
-attr title throughput
-attr unit bps
-203	101427 1171 274 1080 0.1 8.2 82 0 1120 6160 5331200
-203	112920 40 1137 1137 8.218770954852 8.218770954852 1 5966.6650355864 5966.6650355864 5966.6650355864 35601091.646889
-vector 204 GradysNetwork.quads[1].app[0] packetSent:vector(packetBytes) ETV
+213	699578 5035 237 16710 1.278515319841 47.120308163206 127 5.4e-05 0.00154806548 0.038369580332 1.8918412971857e-05
+vector 214 GradysNetwork.quads[1].app[0] packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetSent
 attr title "packets sent, packetBytes"
-204	102598 101 294 1050 2.218391814291 8.218391814291 4 7 7 28 196
-vector 205 GradysNetwork.quads[1].udp packetSent:vector(packetBytes) ETV
+214	704613 1132 7298 16763 30.075357309197 47.557467959423 41 7 7 287 2009
+vector 215 GradysNetwork.quads[1].udp packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetSent
 attr title "packets sent, packetBytes"
-205	102699 105 295 1051 2.218391814291 8.218391814291 4 15 15 60 900
-vector 206 GradysNetwork.quads[1].lo[0].lo rcvdPkFromHl:vector(packetBytes) ETV
+215	705745 1173 7299 16764 30.075357309197 47.557467959423 41 15 15 615 9225
+vector 216 GradysNetwork.quads[1].lo[0].lo rcvdPkFromHl:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, packetBytes"
-206	102804 105 297 1053 2.218391814291 8.218391814291 4 35 35 140 4900
-vector 207 GradysNetwork.quads[1].lo[0].lo passedUpPk:vector(packetBytes) ETV
+216	706918 917 7301 16507 30.075357309197 46.739777253488 32 35 35 1120 39200
+vector 217 GradysNetwork.quads[1].lo[0].lo passedUpPk:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source packetSentToUpper
 attr title "packets passed to higher layer, packetBytes"
-207	102909 105 297 1053 2.218391814291 8.218391814291 4 35 35 140 4900
-vector 208 GradysNetwork.quads[1].wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
+217	707835 917 7301 16507 30.075357309197 46.739777253488 32 35 35 1120 39200
+vector 218 GradysNetwork.quads[1].wlan[0].mac packetReceivedFromUpper:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets received from upper layer, packetBytes"
-208	103014 105 300 1056 2.218391814291 8.218391814291 4 43 43 172 7396
-vector 209 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
+218	708752 1200 7304 16510 30.075357309197 46.739777253488 42 36 43 1792 76552
+vector 219 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source packetLength(packetPushStarted)
 attr title "incoming packet lengths"
 attr unit b
-209	103119 109 300 1056 2.218391814291 8.218391814291 4 568 568 2272 1290496
-vector 210 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+219	709952 1242 7304 16510 30.075357309197 46.739777253488 42 512 568 23744 13429248
+vector 220 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPushStarted)
 attr title "incoming datarate"
 attr unit bps
-210	103228 1161 300 1056 0.1 8.2 82 0 5680 17040 96787200
-210	112960 40 1137 1137 8.218770954852 8.218770954852 1 30259.515537617 30259.515537617 30259.515537617 915638280.57128
-vector 211 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
+220	711194 7504 7304 16510 0.1 46.7 467 0 27280 231760 2550892800
+220	791693 165 16764 16764 46.8 47.557467959423 9 0 5680 5680 32262400
+vector 221 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
 attr title "queue length"
 attr unit pk
-211	104389 202 300 1060 2.218391814291 8.218391814291 8 0 1 4 4
-vector 212 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
+221	718698 2316 7304 16514 30.075357309197 46.739777253488 84 0 2 44 46
+vector 222 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:vector ETV
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
 attr title "queue bit length"
 attr unit b
-212	104591 210 300 1060 2.218391814291 8.218391814291 8 0 568 2272 1290496
-vector 213 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
+222	721014 2403 7304 16514 30.075357309197 46.739777253488 84 0 1024 24768 14477824
+vector 223 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention backoffPeriodGenerated:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr title "backoff periods"
-213	104801 104 300 1056 2.218391814291 8.218391814291 4 7 30 72 1674
-vector 214 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
+223	723417 1186 7304 16510 30.075357309197 46.739777253488 42 0 31 611 12817
+vector 224 GradysNetwork.quads[1].udp packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+224	724603 3004 7305 16678 30.075357309197 47.119624198679 105 15 15 1575 23625
+vector 225 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source queueingTime(packetPulled)
 attr title "queueing times"
 attr unit s
-214	104905 101 304 1060 2.218391814291 8.218391814291 4 0 0 0 0
-vector 215 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
+225	727607 1226 7308 16514 30.075357309197 46.739777253488 42 0 0.000674 0.003332 1.521928e-06
+vector 226 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source packetLength(packetPulled)
 attr title "outgoing packet lengths"
 attr unit b
-215	105006 109 304 1060 2.218391814291 8.218391814291 4 568 568 2272 1290496
-vector 216 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+226	728833 1242 7308 16514 30.075357309197 46.739777253488 42 512 568 23744 13429248
+vector 227 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPulled)
 attr title "outgoing datarate"
 attr unit bps
-216	105115 1161 304 1060 0.1 8.2 82 0 5680 17040 96787200
-216	113000 40 1137 1137 8.218770954852 8.218770954852 1 30259.515537617 30259.515537617 30259.515537617 915638280.57128
-vector 217 GradysNetwork.quads[1].wlan[0].mac.dcf datarateSelected:vector ETV
+227	730075 7504 7308 16514 0.1 46.7 467 0 27280 231760 2550892800
+227	791858 165 16764 16764 46.8 47.557467959423 9 0 5680 5680 32262400
+vector 228 GradysNetwork.quads[1].wlan[0].mac.dcf datarateSelected:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr title "datarates selected"
-217	106276 129 304 1060 2.218391814291 8.218391814291 4 24000000 24000000 96000000 2.304e+15
-vector 218 GradysNetwork.quads[1].wlan[0].mac packetSentToLower:vector(packetBytes) ETV
+228	737579 2833 7308 16575 30.075357309197 46.740155357364 82 24000000 24000000 1968000000 4.7232e+16
+vector 229 GradysNetwork.quads[1].wlan[0].mac packetSentToLower:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets sent to lower layer, packetBytes"
-218	106405 105 304 1060 2.218391814291 8.218391814291 4 71 71 284 20164
-vector 219 GradysNetwork.quads[1].wlan[0].radio transmissionState:vector ETV
+229	740412 2341 7308 16589 30.075357309197 46.740165357364 82 14 71 3528 217672
+vector 230 GradysNetwork.quads[1].wlan[0].radio transmissionState:vector ETV
 attr interpolationmode sample-hold
 attr recordingmode vector
 attr source transmissionStateChanged
 attr title "Radio transmission state"
-219	106510 404 305 1074 2.218391814291 8.218445814291 16 0 2 16 24
-vector 220 GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
+230	742753 9036 7309 16605 30.075357309197 46.740199357364 328 0 2 328 492
+vector 231 GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeer:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr title "packets sent, packetBytes"
-220	106914 105 317 1073 2.218445814291 8.218445814291 4 71 71 284 20164
-vector 221 GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
+231	751789 2341 7321 16604 30.075411309197 46.740199357364 82 14 71 3528 217672
+vector 232 GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerMulticast:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211Multicast(packetSentToPeer)
 attr title "packets sent: multicast, packetBytes"
-221	107019 105 317 1073 2.218445814291 8.218445814291 4 71 71 284 20164
-vector 222 GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
+232	754130 917 7321 16527 30.075411309197 46.739831253488 32 71 71 2272 161312
+vector 233 GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerWithoutRetry:vector(packetBytes) ETV
 attr interpolationmode none
 attr recordingmode vector(packetBytes)
 attr source ieee80211NotRetry(packetSentToPeer)
 attr title "packets sent: without retry, packetBytes"
-222	107124 105 317 1073 2.218445814291 8.218445814291 4 71 71 284 20164
-vector 223 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
+233	755047 2341 7321 16604 30.075411309197 46.740199357364 82 14 71 3528 217672
+vector 234 GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:vector ETV
 attr interpolationmode none
 attr recordingmode vector
 attr source queueingTime(packetDequeued)
 attr title "queueing times"
-223	107229 5413 317 1073 2.218445814291 8.218445814291 4 5.4e-05 5.4e-05 0.000216 1.1664e-08
-vector 224 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+234	757388 1465 7321 16527 30.075411309197 46.739831253488 42 5.4e-05 0.000698071537 0.00330482348 6.6643079342303e-07
+vector 235 GradysNetwork.quads[0].ipv4.arp arpRequestSent:vector(packetBytes) ETV
+attr recordingmode vector(packetBytes)
+attr source arpRequestSent
+attr title "ARP request sent, packetBytes"
+235	758853 28 7332 7332 30.075411309197 30.075411309197 1 28 28 28 784
+vector 236 GradysNetwork.quads[1].ipv4.arp arpReplySent:vector(packetBytes) ETV
+attr recordingmode vector(packetBytes)
+attr source arpReplySent
+attr title "ARP replies sent, packetBytes"
+236	758881 56 7378 7408 30.075731380765 30.075971380765 2 28 28 56 1568
+vector 237 GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetSentToPeer)
+attr title "packets sent: broadcast , packetBytes"
+237	758937 28 7403 7403 30.075971380765 30.075971380765 1 64 64 64 4096
+vector 238 GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerBroadcast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Broadcast(packetReceivedFromPeer)
+attr title "packets received: broadcast, packetBytes"
+238	758965 28 7412 7412 30.075971416542 30.075971416542 1 64 64 64 4096
+vector 239 GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetSentToPeer)
+attr title "packets sent: unicast, packetBytes"
+239	758993 1424 7437 16604 30.076451380765 46.740199357364 50 14 71 1256 56360
+vector 240 GradysNetwork.quads[0].wlan[0].mac.dcf packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+240	760417 1886 7440 16609 30.076451380765 46.740199436158 66 14 71 2798 171876
+vector 241 GradysNetwork.quads[0].wlan[0].mac.dcf packetDropNotAddressedToUs:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, packetBytes"
+241	762303 1886 7440 16609 30.076451380765 46.740199436158 66 14 71 2798 171876
+vector 242 GradysNetwork.quads[0].wlan[0].mac packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+242	764189 1886 7440 16609 30.076451380765 46.740199436158 66 14 71 2798 171876
+vector 243 GradysNetwork.quads[0].wlan[0].mac packetDropNotAddressedToUs:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, packetBytes"
+243	766075 1886 7440 16609 30.076451380765 46.740199436158 66 14 71 2798 171876
+vector 244 GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerUnicast:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source ieee80211Unicast(packetReceivedFromPeer)
+attr title "packets received: unicast, packetBytes"
+244	767961 1427 7475 16575 30.076495452302 46.740155357364 50 14 71 2980 203600
+vector 245 GradysNetwork.groundStation.wlan[0].mac.dcf packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+245	769388 974 7507 15622 30.077055488062 45.422535104008 34 14 71 1438 88084
+vector 246 GradysNetwork.groundStation.wlan[0].mac.dcf packetDropNotAddressedToUs:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, packetBytes"
+246	770362 974 7507 15622 30.077055488062 45.422535104008 34 14 71 1438 88084
+vector 247 GradysNetwork.groundStation.wlan[0].mac packetDrop:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropped
+attr title "packet drops, packetBytes"
+247	771336 974 7507 15622 30.077055488062 45.422535104008 34 14 71 1438 88084
+vector 248 GradysNetwork.groundStation.wlan[0].mac packetDropNotAddressedToUs:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetDropReasonIsNotAddressedToUs(packetDropped)
+attr title "packet drops: not addressed to us, packetBytes"
+248	772310 974 7507 15622 30.077055488062 45.422535104008 34 14 71 1438 88084
+vector 249 GradysNetwork.quads[1].app[0] packetReceived:vector(packetBytes) ETV
+attr interpolationmode none
+attr recordingmode vector(packetBytes)
+attr source packetReceived
+attr title "packets received, packetBytes"
+249	773284 2014 7568 16679 30.077363523817 47.119624198679 73 7 7 511 3577
+vector 250 GradysNetwork.quads[1].app[0] throughput:vector ETV
+attr recordingmode vector
+attr source throughput(packetReceived)
+attr title throughput
+attr unit bps
+250	775298 7599 7568 16679 0.1 47.1 471 0 1680 40320 35123200
+250	792023 98 16764 16764 47.2 47.557467959423 5 0 560 560 313600
+vector 251 GradysNetwork.quads[1].app[0] rcvdPkLifetime:vector ETV
+attr interpolationmode none
+attr recordingmode vector
+attr source dataAge(packetReceived)
+attr title "received packet lifetime"
+attr unit s
+251	782897 8204 7568 16679 30.077363523817 47.119624198679 73 5.4001793e-05 0.00248021462 0.023590625254 1.9447657368308e-05
+vector 252 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPulled)
 attr title "outgoing datarate"
 attr unit bps
-224	113040 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 225 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+252	792121 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 253 GradysNetwork.sensors[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPushStarted)
 attr title "incoming datarate"
 attr unit bps
-225	114280 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 226 GradysNetwork.sensors[0].app[0] throughput:vector ETV
+253	800031 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 254 GradysNetwork.sensors[0].app[0] throughput:vector ETV
 attr recordingmode vector
 attr source throughput(packetReceived)
 attr title throughput
 attr unit bps
-226	115520 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 227 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+254	807941 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 255 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPulled)
 attr title "outgoing datarate"
 attr unit bps
-227	116760 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 228 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+255	815851 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 256 GradysNetwork.sensors[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPushStarted)
 attr title "incoming datarate"
 attr unit bps
-228	118000 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 229 GradysNetwork.sensors[1].app[0] throughput:vector ETV
+256	823761 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 257 GradysNetwork.sensors[1].app[0] throughput:vector ETV
 attr recordingmode vector
 attr source throughput(packetReceived)
 attr title throughput
 attr unit bps
-229	119240 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 230 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+257	831671 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 258 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPulled)
 attr title "outgoing datarate"
 attr unit bps
-230	120480 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 231 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+258	839581 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 259 GradysNetwork.sensors[2].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPushStarted)
 attr title "incoming datarate"
 attr unit bps
-231	121720 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 232 GradysNetwork.sensors[2].app[0] throughput:vector ETV
+259	847491 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 260 GradysNetwork.sensors[2].app[0] throughput:vector ETV
 attr recordingmode vector
 attr source throughput(packetReceived)
 attr title throughput
 attr unit bps
-232	122960 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 233 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+260	855401 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 261 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPulled)
 attr title "outgoing datarate"
 attr unit bps
-233	124200 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 234 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+261	863311 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 262 GradysNetwork.sensors[3].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPushStarted)
 attr title "incoming datarate"
 attr unit bps
-234	125440 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 235 GradysNetwork.sensors[3].app[0] throughput:vector ETV
+262	871221 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 263 GradysNetwork.sensors[3].app[0] throughput:vector ETV
 attr recordingmode vector
 attr source throughput(packetReceived)
 attr title throughput
 attr unit bps
-235	126680 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 236 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+263	879131 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 264 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPulled)
 attr title "outgoing datarate"
 attr unit bps
-236	127920 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 237 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+264	887041 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 265 GradysNetwork.sensors[4].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPushStarted)
 attr title "incoming datarate"
 attr unit bps
-237	129160 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 238 GradysNetwork.sensors[4].app[0] throughput:vector ETV
+265	894951 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 266 GradysNetwork.sensors[4].app[0] throughput:vector ETV
 attr recordingmode vector
 attr source throughput(packetReceived)
 attr title throughput
 attr unit bps
-238	130400 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 239 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+266	902861 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 267 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPulled)
 attr title "outgoing datarate"
 attr unit bps
-239	131640 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 240 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+267	910771 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 268 GradysNetwork.sensors[5].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPushStarted)
 attr title "incoming datarate"
 attr unit bps
-240	132880 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 241 GradysNetwork.sensors[5].app[0] throughput:vector ETV
+268	918681 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 269 GradysNetwork.sensors[5].app[0] throughput:vector ETV
 attr recordingmode vector
 attr source throughput(packetReceived)
 attr title throughput
 attr unit bps
-241	134120 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 242 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+269	926591 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 270 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPulled)
 attr title "outgoing datarate"
 attr unit bps
-242	135360 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 243 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+270	934501 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 271 GradysNetwork.sensors[6].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPushStarted)
 attr title "incoming datarate"
 attr unit bps
-243	136600 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 244 GradysNetwork.sensors[6].app[0] throughput:vector ETV
+271	942411 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 272 GradysNetwork.sensors[6].app[0] throughput:vector ETV
 attr recordingmode vector
 attr source throughput(packetReceived)
 attr title throughput
 attr unit bps
-244	137840 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 245 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
+272	950321 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 273 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPulled)
 attr title "outgoing datarate"
 attr unit bps
-245	139080 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 246 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
+273	958231 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 274 GradysNetwork.sensors[7].wlan[0].mac.dcf.channelAccess.pendingQueue incomingDataRate:vector ETV
 attr interpolationmode linear
 attr recordingmode vector
 attr source throughput(packetPushStarted)
 attr title "incoming datarate"
 attr unit bps
-246	140320 1240 1137 1137 0.1 8.218770954852 83 0 0 0 0
-vector 247 GradysNetwork.sensors[7].app[0] throughput:vector ETV
+274	966141 7910 16764 16764 0.1 47.557467959423 476 0 0 0 0
+vector 275 GradysNetwork.sensors[7].app[0] throughput:vector ETV
 attr recordingmode vector
 attr source throughput(packetReceived)
 attr title throughput
 attr unit bps
-247	141560 1241 1137 1137 0.1 8.218770954852 83 0 0 0 0
+275	974051 7911 16764 16764 0.1 47.557467959423 476 0 0 0 0

@@ -14,7 +14,7 @@
 // 
 
 #include "gradys_simulations/protocols/base/CommunicationProtocolPythonBase.h"
-
+#include "gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h"
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/TagBase_m.h"
 #include "inet/common/TimeTag_m.h"
@@ -31,6 +31,7 @@
 #include <nlohmann/json.hpp>
 #include "gradys_simulations/utils/PythonUtils.h"
 
+
 using namespace pybind11::literals;
 
 namespace py = pybind11;
@@ -41,18 +42,20 @@ Define_Module(CommunicationProtocolPythonBase);
 
 void CommunicationProtocolPythonBase::initialize(int stage,
         std::string classType) {
-    std::cout << "Initialize " << std::endl;
-
     CommunicationProtocolBase::initialize(stage);
 
-    pythonInterpreter = Singleton::GetInstance();
+    if(stage == INITSTAGE_LOCAL) {
+        std::cout << "Initialize " << std::endl;
 
-    WATCH_MAP(content);
+        pythonInterpreter = Singleton::GetInstance();
 
-    if (hasGUI()) {
-        this->classType = classType;
+        WATCH_MAP(content);
 
-        updateGUI();
+        if (hasGUI()) {
+            this->classType = classType;
+
+            updateGUI();
+        }
     }
 }
 
@@ -78,7 +81,7 @@ void CommunicationProtocolPythonBase::handlePacket(Packet *pk) {
             message->getInformation());
 
     for (auto consequence : consequences) {
-        dealWithConsequence(consequence.cast<py::object>());
+        dealWithConsequence(consequence.cast<py::object>(), pk->getName());
     }
 
 //    delete message;
@@ -91,16 +94,17 @@ void CommunicationProtocolPythonBase::handleTimer(cMessage *msg) {
 
     instance.attr("set_timestamp")(simTime().dbl());
 
-    PythonMessage *message = dynamic_cast<PythonMessage*>(msg);
+    TimerCommand *message = dynamic_cast<TimerCommand*>(msg);
     py::list consequences;
     if (message != nullptr) {
-        consequences = instance.attr("handle_timer")(message->getInformation());
+        const PythonMessage* pm = dynamic_cast<const PythonMessage*>(message->getPayloadTemplate());
+        consequences = instance.attr("handle_timer")(pm->getInformation());
     } else {
         consequences = instance.attr("handle_timer")("");
     }
 
     for (auto consequence : consequences) {
-        dealWithConsequence(consequence.cast<py::object>());
+        dealWithConsequence(consequence.cast<py::object>(), nullptr);
     }
 }
 
@@ -113,51 +117,15 @@ void CommunicationProtocolPythonBase::handleTelemetry(
     instance.attr("set_timestamp")(simTime().dbl());
 
     py::object TelemetryMessageL = py::module_::import(
-            "simulator.messages.telemetry").attr("Telemetry");
+            "gradysim.protocol.messages.telemetry").attr("Telemetry");
 
-    py::object DroneActivityPython = py::module_::import(
-            "simulator.messages.telemetry").attr("DroneActivity");
-
-    py::object droneActivity;
-    switch (telemetry->getDroneActivity()) {
-    case DroneActivity::IDLE: {
-        droneActivity = DroneActivityPython.attr("IDLE");
-        break;
-    }
-    case DroneActivity::NAVIGATING: {
-        droneActivity = DroneActivityPython.attr("NAVIGATING");
-        break;
-    }
-    case DroneActivity::REACHED_EDGE: {
-        droneActivity = DroneActivityPython.attr("REACHED_EDGE");
-        break;
-    }
-    case DroneActivity::FOLLOWING_COMMAND: {
-        droneActivity = DroneActivityPython.attr("FOLLOWING_COMMAND");
-        break;
-    }
-    case DroneActivity::RECHARGING: {
-        droneActivity = DroneActivityPython.attr("IDLE");
-        break;
-    }
-    case DroneActivity::SHUTDOWN: {
-        droneActivity = DroneActivityPython.attr("IDLE");
-        break;
-    }
-    default:
-        std::cout << "Something is wrong for " << classType << std::endl;
-        exit(1);
-    }
-
-    py::object telemetry_obj = TelemetryMessageL(telemetry->getNextWaypointID(),
-            telemetry->getLastWaypointID(), telemetry->getCurrentLat(),
-            telemetry->getCurrentLon(), telemetry->getCurrentAlt(),
-            telemetry->isReversed(), droneActivity);
+    pybind11::tuple tup = pybind11::make_tuple(telemetry->getCurrentX(), telemetry->getCurrentY(), telemetry->getCurrentZ());
+    py::object telemetry_obj = TelemetryMessageL("current_position"_a=tup);
 
     py::list consequences = instance.attr("handle_telemetry")(telemetry_obj);
 
     for (auto consequence : consequences) {
-        dealWithConsequence(consequence.cast<py::object>());
+        dealWithConsequence(consequence.cast<py::object>(), nullptr);
     }
 }
 
@@ -171,7 +139,7 @@ void CommunicationProtocolPythonBase::finish() {
     py::list consequences = instance.attr("finish")();
 
     for (auto consequence : consequences) {
-        dealWithConsequence(consequence.cast<py::object>());
+        dealWithConsequence(consequence.cast<py::object>(), nullptr);
     }
 
     pythonInterpreter->TryCloseInstance();
@@ -179,30 +147,39 @@ void CommunicationProtocolPythonBase::finish() {
 }
 
 void CommunicationProtocolPythonBase::dealWithConsequence(
-        py::object consequence) {
+        py::object consequence, const char * target) {
     std::cout << "Deal with consequences for " << classType << std::endl;
 
     py::tuple consequenceTuple = py::cast<py::tuple>(consequence);
 
     py::object ConsequenceTypePython = py::module_::import(
-            "simulator.provider.interop").attr("ConsequenceType");
+            "gradysim.encapsulator.interop").attr("ConsequenceType");
 
     py::object ctl = ConsequenceTypePython(consequenceTuple[0].cast<int>());
+
     if (ctl.is(ConsequenceTypePython.attr("COMMUNICATION"))) {
         CommunicationCommand *communicationCommand =
                 gradys_simulations::transformToCommunicationCommandPython(
-                        consequenceTuple[1].cast<py::object>());
+                        consequenceTuple[1].cast<py::object>(), target);
         sendCommand(communicationCommand);
 
     } else if (ctl.is(ConsequenceTypePython.attr("MOBILITY"))) {
-        MobilityCommand *mobilityCommand =
+        PythonMobilityCommand *mobilityCommand =
                 gradys_simulations::transformToMobilityCommandPython(
                         consequenceTuple[1].cast<py::object>());
         sendCommand(mobilityCommand);
 
     } else if (ctl.is(ConsequenceTypePython.attr("TIMER"))) {
         py::tuple infos = py::cast<py::tuple>(consequenceTuple[1].cast<py::object>());
-        scheduleAt(SimTime(py::cast<double>(infos[1])), new cMessage());
+
+        PythonMessage *payload = new PythonMessage();
+        payload->addTag<CreationTimeTag>()->setCreationTime(simTime());
+        payload->setInformation(infos[0].cast<std::string>());
+
+        TimerCommand *command = new TimerCommand();
+        command->setPayloadTemplate(payload);
+
+        scheduleAt(SimTime(py::cast<double>(infos[1])), command);
 
     } else if (ctl.is(ConsequenceTypePython.attr("TRACK_VARIABLE"))) {
         py::tuple track_variable = py::cast<py::tuple>(consequenceTuple[1]);

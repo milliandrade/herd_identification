@@ -17,10 +17,10 @@ package gradys_simulations.protocols.sensor;
 
 import gradys_simulations.protocols.base.CommunicationProtocolBase;
 
-simple QuadrantSensorProtocol extends CommunicationProtocolBase
+simple HICASensorProtocol extends CommunicationProtocolBase
 {
     parameters:
-        @class(QuadrantSensorProtocol);
+        @class(HICASensorProtocol);
         int payloadSize = default(5);
         string uuid = "";
 }

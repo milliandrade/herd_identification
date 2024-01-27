@@ -28,18 +28,19 @@
 #include <fstream>
 #include <chrono>
 #include <ctime>
-#include "QuadrantDroneProtocol.h"
+#include "HICADroneProtocol.h"
 
 namespace gradys_simulations {
-Define_Module(QuadrantDroneProtocol);
+Define_Module(HICADroneProtocol);
 
-void QuadrantDroneProtocol::initialize(int stage) {
+void HICADroneProtocol::initialize(int stage) {
 
-    CommunicationProtocolBase::initialize(stage);
-    droneUuid = this->getParentModule()->par("mobileNodeUUid").str();
-    trackUuid = this->par("trackUuid").str();
+        CommunicationProtocolBase::initialize(stage);
+        droneUuid = this->getParentModule()->par("mobileNodeUUid").str();
+        trackUuid = this->par("trackUuid").str();
 
     if (stage == INITSTAGE_LOCAL) {
+        // Loading the parameter timeoutDuration
         timeoutDuration = par("timeoutDuration");
 
         int duration = timeoutDuration.inUnit(SimTimeUnit::SIMTIME_S);
@@ -47,6 +48,7 @@ void QuadrantDroneProtocol::initialize(int stage) {
         dataLoadSignalID = registerSignal("dataLoad");
         dronesSignalID = registerSignal("dronesIDsList");
         oxSignalID = registerSignal("oxenIDsList");
+
         emit(dataLoadSignalID, currentDataLoad);
         emit(dronesSignalID, this->getdronesIDsList().c_str());
         emit(oxSignalID, this->oxenIDsList.c_str());
@@ -61,10 +63,12 @@ void QuadrantDroneProtocol::initialize(int stage) {
         WATCH(currentDataLoad);
         WATCH(dronesIDsList);
         WATCH(oxenIDsList);
+//        WATCH(content);
+//        WATCH_MAP(contentSources);
     }
 }
 
-void QuadrantDroneProtocol::handleTelemetry(gradys_simulations::Telemetry *telemetry) {
+void HICADroneProtocol::handleTelemetry(gradys_simulations::Telemetry *telemetry) {
     if (currentTelemetry.getCurrentCommand() != -1
             && telemetry->getCurrentCommand() == -1) {
         resetParameters();
@@ -104,10 +108,10 @@ void QuadrantDroneProtocol::handleTelemetry(gradys_simulations::Telemetry *telem
     updatePayload();
 }
 
-void QuadrantDroneProtocol::handlePacket(Packet *pk) {
+void HICADroneProtocol::handlePacket(Packet *pk) {
 //    this->checkMobility();
-    // Loads the QuadrantMessage from the recieved packet
-    auto payload = dynamicPtrCast<const QuadrantMessage>(pk->peekAtBack());
+    // Loads the HICAMessage from the recieved packet
+    auto payload = dynamicPtrCast<const HICAMessage>(pk->peekAtBack());
 
     if (payload != nullptr) {
         bool destinationIsGroundstation = payload->getNextWaypointID() == -1;
@@ -176,7 +180,7 @@ void QuadrantDroneProtocol::handlePacket(Packet *pk) {
     }
 }
 
-void QuadrantDroneProtocol::checkMobility(){
+void HICADroneProtocol::checkMobility(){
     bool tracking = this->isTracking();
 
     if(tracking){
@@ -196,9 +200,9 @@ void QuadrantDroneProtocol::checkMobility(){
     }
 }
 
-void QuadrantDroneProtocol::updatePayload() {
+void HICADroneProtocol::updatePayload() {
     // Creates message template with current content and correct type
-    QuadrantMessage *payload = new QuadrantMessage();
+    HICAMessage *payload = new HICAMessage();
     payload->addTag<CreationTimeTag>()->setCreationTime(simTime());
     payload->setSenderType(DRONE);
 
@@ -260,14 +264,14 @@ void QuadrantDroneProtocol::updatePayload() {
 
 }
 
-void QuadrantDroneProtocol::setTarget(const char *target) {
+void HICADroneProtocol::setTarget(const char *target) {
     CommunicationCommand *command = new CommunicationCommand();
     command->setCommandType(SET_TARGET);
     command->setTarget(target);
     sendCommand(command);
 }
 
-void QuadrantDroneProtocol::finish() {
+void HICADroneProtocol::finish() {
     CommunicationProtocolBase::finish();
 
 //    for (auto const &item : contentSources) {
@@ -275,7 +279,7 @@ void QuadrantDroneProtocol::finish() {
 //    }
 }
 
-bool QuadrantDroneProtocol::isTimedout() {
+bool HICADroneProtocol::isTimedout() {
     // Blocks the timeout if the drone is currently executing a command
     if (currentTelemetry.getCurrentCommand() != -1) {
         return true;
@@ -289,7 +293,7 @@ bool QuadrantDroneProtocol::isTimedout() {
     return value;
 }
 
-void QuadrantDroneProtocol::resetParameters() {
+void HICADroneProtocol::resetParameters() {
     timeoutSet = false;
     lastTarget = tentativeTarget;
     tentativeTarget = -1;
@@ -302,7 +306,7 @@ void QuadrantDroneProtocol::resetParameters() {
     updatePayload();
 }
 
-void QuadrantDroneProtocol::insertFoundDrone(std::string id) {
+void HICADroneProtocol::insertFoundDrone(std::string id) {
     //Checks if the current ID has already been inserted in the Drones Ids list
     bool exist = false;
     for (int i = 0; i < this->dronesIDs.size(); i++) {
@@ -317,15 +321,15 @@ void QuadrantDroneProtocol::insertFoundDrone(std::string id) {
 
 }
 
-void QuadrantDroneProtocol::insertDronesIDs(std::vector<std::string> ids) {
+void HICADroneProtocol::insertDronesIDs(std::vector<std::string> ids) {
     for (int i = 0; i < ids.size(); i++) {
         this->insertFoundDrone(ids[i]);
     }
 }
-std::vector<std::string> QuadrantDroneProtocol::getDronesIDs() {
+std::vector<std::string> HICADroneProtocol::getDronesIDs() {
     return this->dronesIDs;
 }
-std::string QuadrantDroneProtocol::getdronesIDsList() {
+std::string HICADroneProtocol::getdronesIDsList() {
 
     std::string dronesList = "";
     for (int i = 0; i < this->dronesIDs.size(); i++) {
@@ -340,7 +344,7 @@ std::string QuadrantDroneProtocol::getdronesIDsList() {
     }
     return dronesList;
 }
-void QuadrantDroneProtocol::refreshdronesIDs(std::string dronesList) {
+void HICADroneProtocol::refreshdronesIDs(std::string dronesList) {
     for (int i = 0; i < dronesList.length(); i++) {
         for (int j = i + 1; j < dronesList.length(); j++) {
             if (dronesList[j] == ';') {
@@ -360,7 +364,7 @@ void QuadrantDroneProtocol::refreshdronesIDs(std::string dronesList) {
     }
 }
 
-void QuadrantDroneProtocol::insertFoundOx(std::string id) {
+void HICADroneProtocol::insertFoundOx(std::string id) {
     //Checks if the current ID has already been inserted in the Drones Ids list
     bool exist = false;
     for (int i = 0; i < this->oxIDs.size(); i++) {
@@ -376,15 +380,15 @@ void QuadrantDroneProtocol::insertFoundOx(std::string id) {
 
 }
 
-void QuadrantDroneProtocol::insertOxIDs(std::vector<std::string> ids) {
+void HICADroneProtocol::insertOxIDs(std::vector<std::string> ids) {
     for (int i = 0; i < ids.size(); i++) {
         this->insertFoundOx(ids[i]);
     }
 }
-std::vector<std::string> QuadrantDroneProtocol::getOxIDs() {
+std::vector<std::string> HICADroneProtocol::getOxIDs() {
     return this->oxIDs;
 }
-std::string QuadrantDroneProtocol::getOxIDsList() {
+std::string HICADroneProtocol::getOxIDsList() {
 
     std::string oxList = "";
     for (int i = 0; i < this->oxIDs.size(); i++) {
@@ -399,7 +403,7 @@ std::string QuadrantDroneProtocol::getOxIDsList() {
     }
     return oxList;
 }
-void QuadrantDroneProtocol::refreshOxIDs(std::string oxList) {
+void HICADroneProtocol::refreshOxIDs(std::string oxList) {
     for (int i = 0; i < oxList.length(); i++) {
         for (int j = i + 1; j < oxList.length(); j++) {
             if (oxList[j] == ';') {
@@ -419,7 +423,7 @@ void QuadrantDroneProtocol::refreshOxIDs(std::string oxList) {
     }
 }
 
-void QuadrantDroneProtocol::sendFoundOx(std::string oxID) {
+void HICADroneProtocol::sendFoundOx(std::string oxID) {
 
     //    std::string jarFilePath = "";
 //    jarFilePath.assign("java -jar ");
@@ -464,17 +468,17 @@ void QuadrantDroneProtocol::sendFoundOx(std::string oxID) {
 //    _pclose(pipe);
 }
 
-void QuadrantDroneProtocol::sendFinish(std::string oxID) {
-    std::string cmd = "java -jar ";
-    cmd = cmd + "C:\\Users\\mille\\git\\repository2\\ICMU-T1-rastreamento-cliente\\target\\ICMU-T2-DroneNode-0.9-jar-with-dependencies.jar";
-            this->getParentModule()->par("trackingUUid") = this->getTrackIdFile();
-    cmd = cmd + " \"" + this->getParentModule()->par("mobileNodeUUid").str()  + "\" ";
+void HICADroneProtocol::sendFinish(std::string oxID) {
+//    std::string cmd = "java -jar ";
+//    cmd = cmd + "C:\\Users\\mille\\git\\repository2\\ICMU-T1-rastreamento-cliente\\target\\ICMU-T2-DroneNode-0.9-jar-with-dependencies.jar";
+//            this->getParentModule()->par("trackingUUid") = this->getTrackIdFile();
+//    cmd = cmd + " \"" + this->getParentModule()->par("mobileNodeUUid").str()  + "\" ";
 //    std::cout << "grazde ID: " << grazeId << endl;
 //    cmd = cmd + " \"" +  this->trackUuid + "\" ";
-    cmd = cmd + " \"" +  this->getParentModule()->par("trackingUUid").str() + "\" ";
-    cmd = cmd + "true ";
-    cmd = cmd + oxID;
-    std::cout << cmd <<endl;
+//    cmd = cmd + " \"" +  this->getParentModule()->par("trackingUUid").str() + "\" ";
+//    cmd = cmd + "true ";
+//    cmd = cmd + oxID;
+//    std::cout << cmd <<endl;
 
 //    char buffer[128];
 //    std::string result = "";
@@ -493,26 +497,26 @@ void QuadrantDroneProtocol::sendFinish(std::string oxID) {
 }
 
 
-std::string QuadrantDroneProtocol::getDroneUuid(){
+std::string HICADroneProtocol::getDroneUuid(){
     return this->droneUuid;
 
 }
 
-std::string QuadrantDroneProtocol::getTrackUuid(){
+std::string HICADroneProtocol::getTrackUuid(){
         return this->trackUuid;
 
 }
 
-void QuadrantDroneProtocol::setDroneUuid(std::string dUuid){
+void HICADroneProtocol::setDroneUuid(std::string dUuid){
         this->droneUuid = dUuid;
 
 }
 
-void QuadrantDroneProtocol::setTrackUuid(std::string tUuid){
+void HICADroneProtocol::setTrackUuid(std::string tUuid){
         this->trackUuid = tUuid;
 }
 
-bool QuadrantDroneProtocol::isTracking(){
+bool HICADroneProtocol::isTracking(){
     bool status = false;
     std::string grazeId = "";
         std::string track = "";
@@ -534,7 +538,7 @@ bool QuadrantDroneProtocol::isTracking(){
     return status;
 }
 
-std::string QuadrantDroneProtocol::getTrackIdFile(){
+std::string HICADroneProtocol::getTrackIdFile(){
     std::string grazeId = "";
             std::string track = "";
             std::ifstream myfile("../../../tmp_drones_uuid.txt");

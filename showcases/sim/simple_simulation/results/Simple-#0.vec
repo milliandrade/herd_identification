@@ -1,8 +1,8 @@
 version 3
-run Simple-0-20230927-10:54:20-75265
+run Simple-0-20231201-10:36:00-14582
 attr configname Simple
-attr datetime 20230927-10:54:20
-attr datetimef 20230927-105420
+attr datetime 20231201-10:36:00
+attr datetimef 20231201-103600
 attr experiment Simple
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -10,12 +10,13 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network GradysNetwork
-attr processid 75265
+attr processid 14582
 attr repetition 0
 attr replication #0
 attr resultdir results
 attr runnumber 0
 attr seedset 0
+config debug-on-errors true
 config image-path ../../../../inet4.5/images
 config extends Wifi
 config description "Sets up an experiment with the simple drone configuration"

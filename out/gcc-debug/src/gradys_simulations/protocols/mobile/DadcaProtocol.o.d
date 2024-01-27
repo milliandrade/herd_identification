@@ -35,6 +35,7 @@
  ../../inet4.5/src/inet/common/packet/tag/ITaggedObject.h \
  ../../inet4.5/src/inet/common/packet/tag/SharingTagSet.h \
  gradys_simulations/protocols/messages/internal/MobilityCommand_m.h \
+ gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h \
  gradys_simulations/protocols/messages/internal/CommunicationCommand_m.h \
  ../../inet4.5/src/inet/common/packet/chunk/Chunk_m.h \
  ../../inet4.5/src/inet/common/INETDefs_m.h \
@@ -150,6 +151,8 @@ gradys_simulations/protocols/mobile/../base/CommunicationProtocolBase.h:
 ../../inet4.5/src/inet/common/packet/tag/SharingTagSet.h:
 
 gradys_simulations/protocols/messages/internal/MobilityCommand_m.h:
+
+gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h:
 
 gradys_simulations/protocols/messages/internal/CommunicationCommand_m.h:
 

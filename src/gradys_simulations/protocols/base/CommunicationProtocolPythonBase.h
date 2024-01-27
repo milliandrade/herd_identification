@@ -22,6 +22,7 @@
 
 #include "gradys_simulations/protocols/messages/internal/MobilityCommand_m.h"
 #include "gradys_simulations/protocols/messages/internal/CommunicationCommand_m.h"
+#include "gradys_simulations/protocols/messages/internal/TimerCommand_m.h"
 #include "gradys_simulations/protocols/messages/internal/Telemetry_m.h"
 #include "gradys_simulations/utils/Singleton.h"
 
@@ -51,7 +52,8 @@ protected:
 
     py::object instance;
 
-    virtual void dealWithConsequence(py::object consequence);
+    virtual void dealWithConsequence(
+            py::object consequence, const char * target);
 
 private:
     std::string classType;

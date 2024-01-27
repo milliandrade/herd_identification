@@ -1,30 +1,6 @@
 [General]
-last-configname=Wifi-Farm-100-4U-8O
+last-configname=Wifi-Farm-100ha-4UAV-8Oox
 last-runnumber=0
-
-[Inspector-0]
-classname=omnetpp::cPar
-fullscreen=false
-geom=@Rect(38 59 400 300)
-id=@Variant(\0\0\0\x81\xff\xff\xff\xff\xff\xff\xff\xff)
-object=GradysNetwork.sensors[0].internalMobNodeId
-type=1
-
-[Inspector-1]
-classname=GradysNetwork
-fullscreen=false
-geom=@Rect(38 59 600 500)
-id=@Variant(\0\0\0\x81\0\0\0\0\0\0\0\x1)
-object=GradysNetwork
-type=2
-
-[Inspector-2]
-classname=omnetpp::cSimulation
-fullscreen=false
-geom=@Rect(38 59 400 300)
-id=@Variant(\0\0\0\x81\xff\xff\xff\xff\xff\xff\xff\xff)
-object=simulation
-type=1
 
 [RunModeProfiles]
 fast-max-animation-speed=nan

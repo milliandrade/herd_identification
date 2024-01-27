@@ -49,6 +49,7 @@
  gradys_simulations/protocols/sensor/QuadrantSensorProtocol.h \
  gradys_simulations/protocols/sensor/../base/CommunicationProtocolBase.h \
  gradys_simulations/protocols/messages/internal/MobilityCommand_m.h \
+ gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h \
  gradys_simulations/protocols/messages/internal/CommunicationCommand_m.h \
  gradys_simulations/protocols/messages/internal/Telemetry_m.h \
  ../../inet4.5/src/inet/common/geometry/common/Coord.h
@@ -152,6 +153,8 @@ gradys_simulations/protocols/sensor/QuadrantSensorProtocol.h:
 gradys_simulations/protocols/sensor/../base/CommunicationProtocolBase.h:
 
 gradys_simulations/protocols/messages/internal/MobilityCommand_m.h:
+
+gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h:
 
 gradys_simulations/protocols/messages/internal/CommunicationCommand_m.h:
 

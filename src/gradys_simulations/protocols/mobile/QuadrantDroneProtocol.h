@@ -13,14 +13,14 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __gradys_simulations_QuadrantDroneProtocol_H_
-#define __gradys_simulations_QuadrantDroneProtocol_H_
+#ifndef __gradys_simulations_HICADroneProtocol_H_
+#define __gradys_simulations_HICADroneProtocol_H_
 
 #include <omnetpp.h>
 #include <list>
 #include <vector>
 #include "../base/CommunicationProtocolBase.h"
-#include "../messages/network/QuadrantMessage_m.h"
+#include "../messages/network/HICAMessage_m.h"
 #include "inet/common/geometry/common/Coord.h"
 
 namespace gradys_simulations {
@@ -29,7 +29,7 @@ enum CommunicationStatus {
     FREE = 0, REQUESTING = 1, PAIRED = 2, COLLECTING = 3, PAIRED_FINISHED = 4
 };
 
-class QuadrantDroneProtocol: public CommunicationProtocolBase {
+class HICADroneProtocol: public CommunicationProtocolBase {
 protected:
     simtime_t timeoutDuration;
 
@@ -64,7 +64,7 @@ protected:
     std::string trackUuid;
 
 
-    QuadrantMessage lastPayload = QuadrantMessage();
+    HICAMessage lastPayload = HICAMessage();
 
 protected:
     // Performs the initialization of our module. This is a function that most OMNeT++ modules will override
@@ -118,4 +118,4 @@ public:
 
 } /* namespace gradys_simulations */
 
-#endif /* __gradys_simulations_QuadrantDroneProtocol_H_ */
+#endif /* __gradys_simulations_HICADroneProtocol_H_ */

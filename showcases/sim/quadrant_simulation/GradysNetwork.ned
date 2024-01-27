@@ -53,7 +53,7 @@ network GradysNetwork
             @display("p=200,0");
         }
         quads[numUAVs]: MobileNode {
-			@display("i=misc/drone_vl");
+			
         } 
         
         sensors[numSensors]: MobileSensorNode {
@@ -63,7 +63,7 @@ network GradysNetwork
        
         groundStation: GroundStation {
             @display("i=misc/sensor3");
-        }
+        }        
         
         farm: FarmNode{
         	@display("i=images/farm");

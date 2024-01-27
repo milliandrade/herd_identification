@@ -1,8 +1,8 @@
 version 3
-run Simple-0-20230928-13:14:15-232267
+run Simple-0-20231130-16:37:29-55945
 attr configname Simple
-attr datetime 20230928-13:14:15
-attr datetimef 20230928-131415
+attr datetime 20231130-16:37:29
+attr datetimef 20231130-163729
 attr experiment Simple
 attr inifile omnetpp.ini
 attr iterationvars ""
@@ -10,35 +10,38 @@ attr iterationvarsd ""
 attr iterationvarsf ""
 attr measurement ""
 attr network GradysNetwork
-attr processid 232267
+attr processid 55945
 attr repetition 0
 attr replication #0
 attr resultdir results
 attr runnumber 0
 attr seedset 0
+config debug-on-errors true
 config image-path ../../../../inet4.5/images
 config extends Wifi
 config description "Sets up an experiment with the simple drone configuration"
 config *.numUAVs 2
-config *.quads[*].protocol "\"simple\""
-config *.groundStation[*].protocol "\"simple\""
-config *.sensors[*].protocol "\"simple\""
-config *.quads[*].protocolFileName "\"protocol_mobile\""
-config *.groundStation[*].protocolFileName "\"protocol_ground\""
-config *.sensors[*].protocolFileName "\"protocol_sensor\""
-config *.quads[*].protocolMobile "\"SimpleProtocolMobile\""
-config *.groundStation[*].protocolGround "\"SimpleProtocolGround\""
-config *.sensors[*].protocolSensor "\"SimpleProtocolSensor\""
+config *.groundStation.protocol.customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+config *.quads[*].protocol.customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+config *.sensors[*].protocol.customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+config *.groundStation.protocol.protocol "\"zigzag\""
+config *.quads[*].protocol.protocol "\"zigzag\""
+config *.sensors[*].protocol.protocol "\"zigzag\""
+config *.groundStation.protocol.protocolFileName "\"protocol_sensor\""
+config *.quads[*].protocol.protocolFileName "\"protocol_mobile\""
+config *.sensors[*].protocol.protocolFileName "\"protocol_sensor\""
+config *.groundStation.protocol.protocolGround "\"ZigZagProtocolSensor\""
+config *.quads[*].protocol.protocolMobile "\"ZigZagProtocolMobile\""
+config *.sensors[*].protocol.protocolSensor "\"ZigZagProtocolSensor\""
 config *.quads[0].app[0].destAddresses "\"quads[1] sensors[0] sensors[1] sensors[2] groundStation\""
 config *.quads[1].app[0].destAddresses "\"quads[0] sensors[0] sensors[1] sensors[2] groundStation\""
 config *.quads[0].mobility.waypointFile "\"paths/voo_sensor1.waypoints\""
 config *.quads[1].mobility.waypointFile "\"paths/voo_sensor2.waypoints\""
 config *.quads[*].protocol.typename PythonDroneProtocol
-config *.quads[0].app[*].startTime "normal(1s, 1s)"
-config *.quads[1].app[*].startTime "normal(1s, 1s)"
+config *.quads[0].app[*].startTime 1s
+config *.quads[1].app[*].startTime 30s
 config *.sensors[*].app[*].destAddresses "\"quads[0] quads[1]\""
-config *.sensors[0..2].protocol.typename PythonSensorProtocol
-config *.groundStation.app[0].typename UdpCommunicationApp
+config *.sensors[0..7].protocol.typename PythonSensorProtocol
 config *.groundStation.app[*].destAddresses "\"quads[0] quads[1]\""
 config *.groundStation.app[0].startTime 0s
 config *.groundStation.protocol.typename PythonGroundProtocol
@@ -53,12 +56,13 @@ config *.quads[*].app[0].startTime 1s
 config *.quads[*].app[0].stopTime -1s
 config *.quads[*].app[0].messageLength 1454Byte
 config *.quads[*].protocol.typename PythonDroneProtocol
-config *.quads[*].mobility.typename DroneMobility
+config *.quads[*].mobility.typename PythonDroneMobility
 config *.quads[*].mobility.coordinateSystemModule "\"coordinateSystem\""
 config *.quads[*].mobility.waypointProximity 1m
 config *.quads[*].mobility.speed 10mps
-config *.quads[*].mobility.homeLatitude -15.840068deg
-config *.quads[*].mobility.homeLongitude -47.926633deg
+config *.quads[*].mobility.homeX 0
+config *.quads[*].mobility.homeY 0
+config *.quads[*].mobility.homeZ 0
 config *.groundStation.numApps 1
 config *.groundStation.app[0].typename UdpCommunicationApp
 config *.groundStation.app[0].destPort 1000
@@ -66,7 +70,7 @@ config *.groundStation.app[0].localPort 1000
 config *.groundStation.app[0].sendInterval 1s
 config *.groundStation.app[0].messageLength 1454Byte
 config *.groundStation.app[0].startTime 1s
-config *.groundStation.protocol.typename SimpleGroundProtocol
+config *.groundStation.protocol.typename PythonGroundProtocol
 config *.groundStation.mobility.typename StationaryMobility
 config *.groundStation.mobility.coordinateSystemModule "\"coordinateSystem\""
 config *.groundStation.mobility.initialAltitude 0m
@@ -80,7 +84,7 @@ config *.sensors[*].app[0].localPort 1000
 config *.sensors[*].app[0].sendInterval 8s
 config *.sensors[*].app[0].startTime exponential(1s)
 config *.sensors[*].app[0].messageLength 1454Byte
-config *.sensors[0..2].protocol.typename SimpleProtocolSensor
+config *.sensors[0..2].protocol.typename PythonSensorProtocol
 config *.sensors[*].mobility.typename StationaryMobility
 config *.sensors[*].mobility.coordinateSystemModule "\"coordinateSystem\""
 config *.sensors[*].mobility.initialAltitude 0m
@@ -1556,7 +1560,7 @@ attr unit mps
 par GradysNetwork.radioMedium.propagation ignoreMovementDuringTransmission true
 par GradysNetwork.radioMedium.propagation ignoreMovementDuringPropagation true
 par GradysNetwork.radioMedium.propagation ignoreMovementDuringReception true
-scalar GradysNetwork.radioMedium.propagation "Arrival computation count" 180
+scalar GradysNetwork.radioMedium.propagation "Arrival computation count" 3980
 par GradysNetwork.radioMedium.analogModel typename "\"inet.physicallayer.wireless.common.analogmodel.packetlevel.ScalarAnalogModel\""
 par GradysNetwork.radioMedium.analogModel ignorePartialInterference false
 par GradysNetwork.radioMedium.backgroundNoise typename "\"inet.physicallayer.wireless.common.backgroundnoise.IsotropicScalarBackgroundNoise\""
@@ -1603,12 +1607,12 @@ par GradysNetwork.radioMedium listeningFilter false
 par GradysNetwork.radioMedium macAddressFilter false
 par GradysNetwork.radioMedium recordTransmissionLog false
 par GradysNetwork.radioMedium recordReceptionLog false
-scalar GradysNetwork.radioMedium "transmission count" 18
-scalar GradysNetwork.radioMedium "signal send count" 180
-scalar GradysNetwork.radioMedium "reception computation count" 180
-scalar GradysNetwork.radioMedium "interference computation count" 574
-scalar GradysNetwork.radioMedium "reception decision computation count" 36
-scalar GradysNetwork.radioMedium "listening decision computation count" 358
+scalar GradysNetwork.radioMedium "transmission count" 398
+scalar GradysNetwork.radioMedium "signal send count" 3980
+scalar GradysNetwork.radioMedium "reception computation count" 3980
+scalar GradysNetwork.radioMedium "interference computation count" 12360
+scalar GradysNetwork.radioMedium "reception decision computation count" 796
+scalar GradysNetwork.radioMedium "listening decision computation count" 7584
 scalar GradysNetwork.radioMedium "reception cache hit" 78.260869565217
 attr unit %
 scalar GradysNetwork.radioMedium "interference cache hit" 66.666666666667
@@ -1622,7 +1626,7 @@ attr unit %
 scalar GradysNetwork.radioMedium "reception result cache hit" 0
 attr unit %
 par GradysNetwork.quads[0].radioIn[0].channel typename "\"ned.IdealChannel\""
-par GradysNetwork.quads[0].mobility typename "\"gradys_simulations.mobility.DroneMobility\""
+par GradysNetwork.quads[0].mobility typename "\"gradys_simulations.mobility.PythonDroneMobility\""
 par GradysNetwork.quads[0].mobility subjectModule "\"^\""
 par GradysNetwork.quads[0].mobility coordinateSystemModule "\"coordinateSystem\""
 par GradysNetwork.quads[0].mobility displayStringTextFormat "\"p: %p\\nv: %v\""
@@ -1643,9 +1647,6 @@ attr unit m
 par GradysNetwork.quads[0].mobility updateInterval 0.1s
 attr unit s
 par GradysNetwork.quads[0].mobility faceForward true
-par GradysNetwork.quads[0].mobility waypointFile "\"paths/voo_sensor1.waypoints\""
-par GradysNetwork.quads[0].mobility waypointProximity 1m
-attr unit m
 par GradysNetwork.quads[0].mobility speed 10mps
 attr unit mps
 par GradysNetwork.quads[0].mobility groundModule "\"environment.ground\""
@@ -1656,16 +1657,11 @@ attr unit m
 par GradysNetwork.quads[0].mobility initialZ 4303.79m
 attr unit m
 par GradysNetwork.quads[0].mobility initFromDisplayString false
-par GradysNetwork.quads[0].mobility verticalSpeed 10mps
-attr unit mps
-par GradysNetwork.quads[0].mobility yawSpeed 0.0872665rad
-attr unit rad
+par GradysNetwork.quads[0].mobility homeX 0
+par GradysNetwork.quads[0].mobility homeY 0
+par GradysNetwork.quads[0].mobility homeZ 0
 par GradysNetwork.quads[0].mobility startTime 0s
 attr unit s
-par GradysNetwork.quads[0].mobility homeLatitude -15.8401degree
-attr unit degree
-par GradysNetwork.quads[0].mobility homeLongitude -47.9266degree
-attr unit degree
 par GradysNetwork.quads[0].mobility telemetryFrequency 1s
 attr unit s
 par GradysNetwork.quads[0].interfaceTable typename "\"inet.networklayer.common.InterfaceTable\""
@@ -1688,22 +1684,22 @@ par GradysNetwork.quads[0].lo[0].lo typename "\"inet.linklayer.loopback.Loopback
 par GradysNetwork.quads[0].lo[0].lo interfaceTableModule "\"GradysNetwork.quads[0].interfaceTable\""
 par GradysNetwork.quads[0].lo[0].lo mtu 4470B
 attr unit B
-scalar GradysNetwork.quads[0].lo[0].lo rcvdPkFromHl:count 5
+scalar GradysNetwork.quads[0].lo[0].lo rcvdPkFromHl:count 87
 attr interpolationmode none
 attr recordingmode count
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, count"
-scalar GradysNetwork.quads[0].lo[0].lo rcvdPkFromHl:sum(packetBytes) 175
+scalar GradysNetwork.quads[0].lo[0].lo rcvdPkFromHl:sum(packetBytes) 3045
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, sum(packetBytes)"
-scalar GradysNetwork.quads[0].lo[0].lo passedUpPk:count 5
+scalar GradysNetwork.quads[0].lo[0].lo passedUpPk:count 87
 attr interpolationmode none
 attr recordingmode count
 attr source packetSentToUpper
 attr title "packets passed to higher layer, count"
-scalar GradysNetwork.quads[0].lo[0].lo passedUpPk:sum(packetBytes) 175
+scalar GradysNetwork.quads[0].lo[0].lo passedUpPk:sum(packetBytes) 3045
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetSentToUpper
@@ -1765,7 +1761,7 @@ attr recordingmode max
 attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
 attr title "queue length, max"
 attr unit pk
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:timeavg 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:timeavg 0.00011262480378122
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode timeavg
@@ -1786,7 +1782,7 @@ attr recordingmode max
 attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
 attr title "queue bit length, max"
 attr unit b
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:timeavg 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:timeavg 0.062881791666648
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode timeavg
@@ -1794,98 +1790,210 @@ attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetP
 attr title "queue bit length, timeavg"
 attr unit b
 statistic GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:histogram
-field count 5
-field mean 0
-field stddev 0
+field count 97
+field mean 5.3735447371134e-05
+field stddev 0.000170755652069
 field min 0
-field max 0
-field sum 0
-field sqrsum 0
+field max 0.000798069943
+field sum 0.005212338395
+field sqrsum 3.079206636002e-06
 attr interpolationmode none
 attr recordingmode histogram
 attr source queueingTime(packetPulled)
 attr title "queueing times"
 attr unit s
 bin	-inf	0
-bin	-0.5	0
-bin	-0.48	0
-bin	-0.46	0
-bin	-0.44	0
-bin	-0.42	0
-bin	-0.4	0
-bin	-0.38	0
-bin	-0.36	0
-bin	-0.34	0
-bin	-0.32	0
-bin	-0.3	0
-bin	-0.28	0
-bin	-0.26	0
-bin	-0.24	0
-bin	-0.22	0
-bin	-0.2	0
-bin	-0.18	0
-bin	-0.16	0
-bin	-0.14	0
-bin	-0.12	0
-bin	-0.1	0
-bin	-0.08	0
-bin	-0.06	0
-bin	-0.04	0
-bin	-0.02	0
-bin	0	5
-bin	0.02	0
-bin	0.04	0
-bin	0.06	0
-bin	0.08	0
-bin	0.1	0
-bin	0.12	0
-bin	0.14	0
-bin	0.16	0
-bin	0.18	0
-bin	0.2	0
-bin	0.22	0
-bin	0.24	0
-bin	0.26	0
-bin	0.28	0
-bin	0.3	0
-bin	0.32	0
-bin	0.34	0
-bin	0.36	0
-bin	0.38	0
-bin	0.4	0
-bin	0.42	0
-bin	0.44	0
-bin	0.46	0
-bin	0.48	0
-bin	0.5	0
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPackets:count 5
+bin	0	87
+bin	1e-05	0
+bin	2e-05	0
+bin	3e-05	0
+bin	4e-05	0
+bin	5e-05	0
+bin	6e-05	0
+bin	7e-05	0
+bin	8e-05	0
+bin	9e-05	0
+bin	0.0001	0
+bin	0.00011	0
+bin	0.00012	0
+bin	0.00013	0
+bin	0.00014	0
+bin	0.00015	1
+bin	0.00016	0
+bin	0.00017	0
+bin	0.00018	0
+bin	0.00019	0
+bin	0.0002	0
+bin	0.00021	0
+bin	0.00022	0
+bin	0.00023	0
+bin	0.00024	0
+bin	0.00025	0
+bin	0.00026	0
+bin	0.00027	0
+bin	0.00028	0
+bin	0.00029	0
+bin	0.0003	0
+bin	0.00031	1
+bin	0.00032	0
+bin	0.00033	0
+bin	0.00034	0
+bin	0.00035	0
+bin	0.00036	0
+bin	0.00037	0
+bin	0.00038	1
+bin	0.00039	0
+bin	0.0004	0
+bin	0.00041	0
+bin	0.00042	0
+bin	0.00043	0
+bin	0.00044	0
+bin	0.00045	0
+bin	0.00046	0
+bin	0.00047	1
+bin	0.00048	0
+bin	0.00049	0
+bin	0.0005	0
+bin	0.00051	1
+bin	0.00052	0
+bin	0.00053	0
+bin	0.00054	0
+bin	0.00055	1
+bin	0.00056	0
+bin	0.00057	0
+bin	0.00058	0
+bin	0.00059	1
+bin	0.0006	0
+bin	0.00061	0
+bin	0.00062	0
+bin	0.00063	1
+bin	0.00064	0
+bin	0.00065	0
+bin	0.00066	0
+bin	0.00067	0
+bin	0.00068	0
+bin	0.00069	0
+bin	0.0007	0
+bin	0.00071	0
+bin	0.00072	0
+bin	0.00073	0
+bin	0.00074	0
+bin	0.00075	0
+bin	0.00076	0
+bin	0.00077	0
+bin	0.00078	1
+bin	0.00079	1
+bin	0.0008	0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPackets:count 97
 attr recordingmode count
 attr source packetPulled
 attr title "outgoing packets, count"
 attr unit pk
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:sum 2840
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:sum 54984
 attr interpolationmode none
 attr recordingmode sum
 attr source packetLength(packetPulled)
 attr title "outgoing packet lengths, sum"
 attr unit b
 statistic GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:histogram
-field count 5
-field mean 568
-field stddev 0
-field min 568
+field count 97
+field mean 566.84536082474
+field stddev 7.9991408473366
+field min 512
 field max 568
-field sum 2840
-field sqrsum 1613120
+field sum 54984
+field sqrsum 31173568
 attr interpolationmode none
 attr recordingmode histogram
 attr source packetLength(packetPulled)
 attr title "outgoing packet lengths"
 attr unit b
 bin	-inf	0
+bin	498	0
+bin	499	0
+bin	500	0
+bin	501	0
+bin	502	0
+bin	503	0
+bin	504	0
+bin	505	0
+bin	506	0
+bin	507	0
+bin	508	0
+bin	509	0
+bin	510	0
+bin	511	0
+bin	512	2
+bin	513	0
+bin	514	0
+bin	515	0
+bin	516	0
+bin	517	0
+bin	518	0
+bin	519	0
+bin	520	0
+bin	521	0
+bin	522	0
+bin	523	0
+bin	524	0
+bin	525	0
+bin	526	0
+bin	527	0
+bin	528	0
+bin	529	0
+bin	530	0
+bin	531	0
+bin	532	0
+bin	533	0
+bin	534	0
+bin	535	0
+bin	536	0
+bin	537	0
+bin	538	0
+bin	539	0
+bin	540	0
+bin	541	0
+bin	542	0
+bin	543	0
+bin	544	0
+bin	545	0
+bin	546	0
+bin	547	0
+bin	548	0
+bin	549	0
+bin	550	0
+bin	551	0
+bin	552	0
+bin	553	0
+bin	554	0
+bin	555	0
+bin	556	0
+bin	557	0
+bin	558	0
+bin	559	0
+bin	560	0
+bin	561	0
+bin	562	0
+bin	563	0
+bin	564	0
+bin	565	0
+bin	566	0
 bin	567	0
-bin	568	5
+bin	568	95
 bin	569	0
+bin	570	0
+bin	571	0
+bin	572	0
+bin	573	0
+bin	574	0
+bin	575	0
+bin	576	0
+bin	577	0
+bin	578	0
+bin	579	0
+bin	580	0
+bin	581	0
+bin	582	0
 statistic GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue flowQueueingTime:histogram
 field count 0
 field mean -nan
@@ -1902,34 +2010,116 @@ attr unit s
 bin	-inf	0
 bin	0	0
 bin	1	0
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPackets:count 5
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPackets:count 97
 attr recordingmode count
 attr source packetPushStarted
 attr title "incoming packets, count"
 attr unit pk
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:sum 2840
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:sum 54984
 attr interpolationmode none
 attr recordingmode sum
 attr source packetLength(packetPushStarted)
 attr title "incoming packet lengths, sum"
 attr unit b
 statistic GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:histogram
-field count 5
-field mean 568
-field stddev 0
-field min 568
+field count 97
+field mean 566.84536082474
+field stddev 7.9991408473366
+field min 512
 field max 568
-field sum 2840
-field sqrsum 1613120
+field sum 54984
+field sqrsum 31173568
 attr interpolationmode none
 attr recordingmode histogram
 attr source packetLength(packetPushStarted)
 attr title "incoming packet lengths"
 attr unit b
 bin	-inf	0
+bin	498	0
+bin	499	0
+bin	500	0
+bin	501	0
+bin	502	0
+bin	503	0
+bin	504	0
+bin	505	0
+bin	506	0
+bin	507	0
+bin	508	0
+bin	509	0
+bin	510	0
+bin	511	0
+bin	512	2
+bin	513	0
+bin	514	0
+bin	515	0
+bin	516	0
+bin	517	0
+bin	518	0
+bin	519	0
+bin	520	0
+bin	521	0
+bin	522	0
+bin	523	0
+bin	524	0
+bin	525	0
+bin	526	0
+bin	527	0
+bin	528	0
+bin	529	0
+bin	530	0
+bin	531	0
+bin	532	0
+bin	533	0
+bin	534	0
+bin	535	0
+bin	536	0
+bin	537	0
+bin	538	0
+bin	539	0
+bin	540	0
+bin	541	0
+bin	542	0
+bin	543	0
+bin	544	0
+bin	545	0
+bin	546	0
+bin	547	0
+bin	548	0
+bin	549	0
+bin	550	0
+bin	551	0
+bin	552	0
+bin	553	0
+bin	554	0
+bin	555	0
+bin	556	0
+bin	557	0
+bin	558	0
+bin	559	0
+bin	560	0
+bin	561	0
+bin	562	0
+bin	563	0
+bin	564	0
+bin	565	0
+bin	566	0
 bin	567	0
-bin	568	5
+bin	568	95
 bin	569	0
+bin	570	0
+bin	571	0
+bin	572	0
+bin	573	0
+bin	574	0
+bin	575	0
+bin	576	0
+bin	577	0
+bin	578	0
+bin	579	0
+bin	580	0
+bin	581	0
+bin	582	0
 scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.pendingQueue droppedPacketsQueueOverflow:count 0
 attr interpolationmode none
 attr recordingmode count
@@ -1947,77 +2137,88 @@ par GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames pendin
 par GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames originatorMacDataServiceModule "\"^.^.originatorMacDataService\""
 par GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames ackHandlerModule "\"^.^.ackHandler\""
 statistic GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:histogram
-field count 5
-field mean 5.4e-05
-field stddev 0
-field min 5.4e-05
-field max 5.4e-05
-field sum 0.00027
-field sqrsum 1.458e-08
+field count 97
+field mean 5.8007464072165e-05
+field stddev 1.2751502151e-05
+field min 5e-05
+field max 9.8169824e-05
+field sum 0.005626724015
+field sqrsum 3.4200166862637e-07
 attr interpolationmode none
 attr recordingmode histogram
 attr source queueingTime(packetDequeued)
 attr title "queueing times"
 bin	-inf	0
-bin	0	5
-bin	0.01	0
-bin	0.02	0
-bin	0.03	0
-bin	0.04	0
-bin	0.05	0
-bin	0.06	0
-bin	0.07	0
-bin	0.08	0
-bin	0.09	0
-bin	0.1	0
-bin	0.11	0
-bin	0.12	0
-bin	0.13	0
-bin	0.14	0
-bin	0.15	0
-bin	0.16	0
-bin	0.17	0
-bin	0.18	0
-bin	0.19	0
-bin	0.2	0
-bin	0.21	0
-bin	0.22	0
-bin	0.23	0
-bin	0.24	0
-bin	0.25	0
-bin	0.26	0
-bin	0.27	0
-bin	0.28	0
-bin	0.29	0
-bin	0.3	0
-bin	0.31	0
-bin	0.32	0
-bin	0.33	0
-bin	0.34	0
-bin	0.35	0
-bin	0.36	0
-bin	0.37	0
-bin	0.38	0
-bin	0.39	0
-bin	0.4	0
-bin	0.41	0
-bin	0.42	0
-bin	0.43	0
-bin	0.44	0
-bin	0.45	0
-bin	0.46	0
-bin	0.47	0
-bin	0.48	0
-bin	0.49	0
-bin	0.5	0
-bin	0.51	0
+bin	4.3e-05	0
+bin	4.4e-05	0
+bin	4.5e-05	0
+bin	4.6e-05	0
+bin	4.7e-05	0
+bin	4.8e-05	0
+bin	4.9e-05	1
+bin	5e-05	0
+bin	5.1e-05	0
+bin	5.2e-05	0
+bin	5.3e-05	87
+bin	5.4e-05	0
+bin	5.5e-05	0
+bin	5.6e-05	0
+bin	5.7e-05	0
+bin	5.8e-05	0
+bin	5.9e-05	0
+bin	6e-05	0
+bin	6.1e-05	0
+bin	6.2e-05	0
+bin	6.3e-05	0
+bin	6.4e-05	0
+bin	6.5e-05	0
+bin	6.6e-05	0
+bin	6.7e-05	0
+bin	6.8e-05	0
+bin	6.9e-05	0
+bin	7e-05	0
+bin	7.1e-05	0
+bin	7.2e-05	0
+bin	7.3e-05	0
+bin	7.4e-05	0
+bin	7.5e-05	0
+bin	7.6e-05	0
+bin	7.7e-05	0
+bin	7.8e-05	0
+bin	7.9e-05	0
+bin	8e-05	0
+bin	8.1e-05	0
+bin	8.2e-05	0
+bin	8.3e-05	0
+bin	8.4e-05	0
+bin	8.5e-05	0
+bin	8.6e-05	0
+bin	8.7e-05	0
+bin	8.8e-05	0
+bin	8.9e-05	0
+bin	9e-05	0
+bin	9.1e-05	0
+bin	9.2e-05	0
+bin	9.3e-05	0
+bin	9.4e-05	1
+bin	9.5e-05	0
+bin	9.6e-05	0
+bin	9.7e-05	2
+bin	9.8e-05	6
+bin	9.9e-05	0
+bin	0.0001	0
+bin	0.000101	0
+bin	0.000102	0
+bin	0.000103	0
+bin	0.000104	0
+bin	0.000105	0
 scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:max 1
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode max
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length, max"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:timeavg 3.28516272668e-05
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:timeavg 0.00011831420503297
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode timeavg
@@ -2026,10 +2227,10 @@ attr title "queue length, timeavg"
 par GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention typename "\"inet.linklayer.ieee80211.mac.contention.Contention\""
 par GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention initialChannelBusy true
 par GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention backoffOptimization true
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention channelAccessGranted:count 5
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention channelAccessGranted:count 97
 attr recordingmode count
 attr title "channel access granted, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention stateChanged:count 94
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess.contention stateChanged:count 1946
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode count
@@ -2040,7 +2241,7 @@ par GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess difsn -1
 par GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess cwMin -1
 par GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess cwMax -1
 par GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess rxModule "\"^.^.rx\""
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess channelOwnershipChanged:count 10
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.channelAccess channelOwnershipChanged:count 194
 attr interpolationmode sample-hold
 attr recordingmode count
 attr title "channel ownership, count"
@@ -2058,7 +2259,7 @@ par GradysNetwork.quads[0].wlan[0].mac.dcf.recipientMacDataService typename "\"i
 scalar GradysNetwork.quads[0].wlan[0].mac.dcf.recipientMacDataService packetDeaggregated:count 0
 attr recordingmode count
 attr title "packets deaggregated, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf.recipientMacDataService packetDefragmented:count 13
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf.recipientMacDataService packetDefragmented:count 130
 attr recordingmode count
 attr title "packets defragmented, count"
 scalar GradysNetwork.quads[0].wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:count 0
@@ -2117,122 +2318,134 @@ par GradysNetwork.quads[0].wlan[0].mac.dcf.ctsPolicy rateSelectionModule "\"^.ra
 par GradysNetwork.quads[0].wlan[0].mac.dcf typename "\"inet.linklayer.ieee80211.mac.coordinationfunction.Dcf\""
 par GradysNetwork.quads[0].wlan[0].mac.dcf rxModule "\"^.rx\""
 par GradysNetwork.quads[0].wlan[0].mac.dcf txModule "\"^.tx\""
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf frameSequenceFinished:count 5
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf frameSequenceFinished:count 97
 attr recordingmode count
 attr title "finished frame sequences, count"
 statistic GradysNetwork.quads[0].wlan[0].mac.dcf frameSequenceDuration:histogram
-field count 5
-field mean 5.4e-05
-field stddev 0
-field min 5.4e-05
-field max 5.4e-05
-field sum 0.00027
-field sqrsum 1.458e-08
+field count 97
+field mean 5.8007464072165e-05
+field stddev 1.2751502151e-05
+field min 5e-05
+field max 9.8169824e-05
+field sum 0.005626724015
+field sqrsum 3.4200166862637e-07
 attr recordingmode histogram
 attr source frameSequenceDuration(frameSequenceFinished)
 attr title "frame sequence durations"
 bin	-inf	0
-bin	0	5
-bin	0.01	0
-bin	0.02	0
-bin	0.03	0
-bin	0.04	0
-bin	0.05	0
-bin	0.06	0
-bin	0.07	0
-bin	0.08	0
-bin	0.09	0
-bin	0.1	0
-bin	0.11	0
-bin	0.12	0
-bin	0.13	0
-bin	0.14	0
-bin	0.15	0
-bin	0.16	0
-bin	0.17	0
-bin	0.18	0
-bin	0.19	0
-bin	0.2	0
-bin	0.21	0
-bin	0.22	0
-bin	0.23	0
-bin	0.24	0
-bin	0.25	0
-bin	0.26	0
-bin	0.27	0
-bin	0.28	0
-bin	0.29	0
-bin	0.3	0
-bin	0.31	0
-bin	0.32	0
-bin	0.33	0
-bin	0.34	0
-bin	0.35	0
-bin	0.36	0
-bin	0.37	0
-bin	0.38	0
-bin	0.39	0
-bin	0.4	0
-bin	0.41	0
-bin	0.42	0
-bin	0.43	0
-bin	0.44	0
-bin	0.45	0
-bin	0.46	0
-bin	0.47	0
-bin	0.48	0
-bin	0.49	0
-bin	0.5	0
-bin	0.51	0
+bin	4.3e-05	0
+bin	4.4e-05	0
+bin	4.5e-05	0
+bin	4.6e-05	0
+bin	4.7e-05	0
+bin	4.8e-05	0
+bin	4.9e-05	1
+bin	5e-05	0
+bin	5.1e-05	0
+bin	5.2e-05	0
+bin	5.3e-05	87
+bin	5.4e-05	0
+bin	5.5e-05	0
+bin	5.6e-05	0
+bin	5.7e-05	0
+bin	5.8e-05	0
+bin	5.9e-05	0
+bin	6e-05	0
+bin	6.1e-05	0
+bin	6.2e-05	0
+bin	6.3e-05	0
+bin	6.4e-05	0
+bin	6.5e-05	0
+bin	6.6e-05	0
+bin	6.7e-05	0
+bin	6.8e-05	0
+bin	6.9e-05	0
+bin	7e-05	0
+bin	7.1e-05	0
+bin	7.2e-05	0
+bin	7.3e-05	0
+bin	7.4e-05	0
+bin	7.5e-05	0
+bin	7.6e-05	0
+bin	7.7e-05	0
+bin	7.8e-05	0
+bin	7.9e-05	0
+bin	8e-05	0
+bin	8.1e-05	0
+bin	8.2e-05	0
+bin	8.3e-05	0
+bin	8.4e-05	0
+bin	8.5e-05	0
+bin	8.6e-05	0
+bin	8.7e-05	0
+bin	8.8e-05	0
+bin	8.9e-05	0
+bin	9e-05	0
+bin	9.1e-05	0
+bin	9.2e-05	0
+bin	9.3e-05	0
+bin	9.4e-05	1
+bin	9.5e-05	0
+bin	9.6e-05	0
+bin	9.7e-05	2
+bin	9.8e-05	6
+bin	9.9e-05	0
+bin	0.0001	0
+bin	0.000101	0
+bin	0.000102	0
+bin	0.000103	0
+bin	0.000104	0
+bin	0.000105	0
 statistic GradysNetwork.quads[0].wlan[0].mac.dcf frameSequenceNumPackets:histogram
-field count 5
-field mean 1
-field stddev 0
+field count 97
+field mean 1.0927835051546
+field stddev 0.29163598267661
 field min 1
-field max 1
-field sum 5
-field sqrsum 5
+field max 2
+field sum 106
+field sqrsum 124
 attr recordingmode histogram
 attr source frameSequenceNumPackets(frameSequenceFinished)
 attr title "frame sequences: number of packets"
 bin	-inf	0
 bin	0	0
-bin	1	5
-bin	2	0
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeer:count 13
+bin	1	88
+bin	2	9
+bin	3	0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeer:count 139
 attr interpolationmode none
 attr recordingmode count
 attr title "packets received, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeer:sum(packetBytes) 923
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeer:sum(packetBytes) 9335
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets received, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerUnicast:count 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerUnicast:count 105
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Unicast(packetReceivedFromPeer)
 attr title "packets received: unicast, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerUnicast:sum(packetBytes) 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerUnicast:sum(packetBytes) 6935
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Unicast(packetReceivedFromPeer)
 attr title "packets received: unicast, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerMulticast:count 13
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerMulticast:count 34
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Multicast(packetReceivedFromPeer)
 attr title "packets received: multicast, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerMulticast:sum(packetBytes) 923
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerMulticast:sum(packetBytes) 2400
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Multicast(packetReceivedFromPeer)
 attr title "packets received: multicast, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:count 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:count 2
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Broadcast(packetReceivedFromPeer)
 attr title "packets received: broadcast, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:sum(packetBytes) 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:sum(packetBytes) 128
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Broadcast(packetReceivedFromPeer)
@@ -2247,50 +2460,50 @@ attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Retry(packetReceivedFromPeer)
 attr title "packets received: with retry, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:count 13
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:count 139
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211NotRetry(packetReceivedFromPeer)
 attr title "packets received: without retry, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:sum(packetBytes) 923
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:sum(packetBytes) 9335
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211NotRetry(packetReceivedFromPeer)
 attr title "packets received: without retry, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeer:count 5
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeer:count 193
 attr interpolationmode none
 attr recordingmode count
 attr title "packets sent, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeer:sum(packetBytes) 355
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeer:sum(packetBytes) 8217
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets sent, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerUnicast:count 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerUnicast:count 105
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Unicast(packetSentToPeer)
 attr title "packets sent: unicast, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerUnicast:sum(packetBytes) 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerUnicast:sum(packetBytes) 1976
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Unicast(packetSentToPeer)
 attr title "packets sent: unicast, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerMulticast:count 5
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerMulticast:count 88
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Multicast(packetSentToPeer)
 attr title "packets sent: multicast, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerMulticast:sum(packetBytes) 355
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerMulticast:sum(packetBytes) 6241
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Multicast(packetSentToPeer)
 attr title "packets sent: multicast, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerBroadcast:count 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerBroadcast:count 1
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Broadcast(packetSentToPeer)
 attr title "packets sent: broadcast , count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerBroadcast:sum(packetBytes) 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerBroadcast:sum(packetBytes) 64
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Broadcast(packetSentToPeer)
@@ -2305,32 +2518,32 @@ attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Retry(packetSentToPeer)
 attr title "packets sent: with retry, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerWithoutRetry:count 5
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerWithoutRetry:count 193
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211NotRetry(packetSentToPeer)
 attr title "packets sent: without retry, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerWithoutRetry:sum(packetBytes) 355
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetSentToPeerWithoutRetry:sum(packetBytes) 8217
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211NotRetry(packetSentToPeer)
 attr title "packets sent: without retry, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetDrop:count 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetDrop:count 66
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropped
 attr title "packet drops, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetDrop:sum(packetBytes) 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetDrop:sum(packetBytes) 2798
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropped
 attr title "packet drops, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetDropNotAddressedToUs:count 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetDropNotAddressedToUs:count 66
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drops: not addressed to us, count"
-scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetDropNotAddressedToUs:sum(packetBytes) 0
+scalar GradysNetwork.quads[0].wlan[0].mac.dcf packetDropNotAddressedToUs:sum(packetBytes) 2798
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
@@ -2376,44 +2589,44 @@ attr enum off,sleep,receiver,transmitter,transceiver
 par GradysNetwork.quads[0].wlan[0].mac mtu 2304B
 attr unit B
 par GradysNetwork.quads[0].wlan[0].mac qosStation false
-scalar GradysNetwork.quads[0].wlan[0].mac packetReceivedFromLower:count 13
+scalar GradysNetwork.quads[0].wlan[0].mac packetReceivedFromLower:count 205
 attr interpolationmode none
 attr recordingmode count
 attr title "packets received from lower layer, count"
-scalar GradysNetwork.quads[0].wlan[0].mac packetReceivedFromLower:sum(packetBytes) 923
+scalar GradysNetwork.quads[0].wlan[0].mac packetReceivedFromLower:sum(packetBytes) 12133
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac packetSentToLower:count 5
+scalar GradysNetwork.quads[0].wlan[0].mac packetSentToLower:count 193
 attr interpolationmode none
 attr recordingmode count
 attr title "packets sent to lower layer, count"
-scalar GradysNetwork.quads[0].wlan[0].mac packetSentToLower:sum(packetBytes) 355
+scalar GradysNetwork.quads[0].wlan[0].mac packetSentToLower:sum(packetBytes) 8217
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets sent to lower layer, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac packetReceivedFromUpper:count 5
+scalar GradysNetwork.quads[0].wlan[0].mac packetReceivedFromUpper:count 97
 attr interpolationmode none
 attr recordingmode count
 attr title "packets received from upper layer, count"
-scalar GradysNetwork.quads[0].wlan[0].mac packetReceivedFromUpper:sum(packetBytes) 215
+scalar GradysNetwork.quads[0].wlan[0].mac packetReceivedFromUpper:sum(packetBytes) 4157
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets received from upper layer, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac packetSentToUpper:count 13
+scalar GradysNetwork.quads[0].wlan[0].mac packetSentToUpper:count 130
 attr interpolationmode none
 attr recordingmode count
 attr title "packets sent to upper layer, count"
-scalar GradysNetwork.quads[0].wlan[0].mac packetSentToUpper:sum(packetBytes) 559
+scalar GradysNetwork.quads[0].wlan[0].mac packetSentToUpper:sum(packetBytes) 5569
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets sent to upper layer, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac packetDrop:count 0
+scalar GradysNetwork.quads[0].wlan[0].mac packetDrop:count 66
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropped
 attr title "packet drops, count"
-scalar GradysNetwork.quads[0].wlan[0].mac packetDrop:sum(packetBytes) 0
+scalar GradysNetwork.quads[0].wlan[0].mac packetDrop:sum(packetBytes) 2798
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropped
@@ -2428,12 +2641,12 @@ attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drops: incorrectly received, sum(packetBytes)"
-scalar GradysNetwork.quads[0].wlan[0].mac packetDropNotAddressedToUs:count 0
+scalar GradysNetwork.quads[0].wlan[0].mac packetDropNotAddressedToUs:count 66
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drops: not addressed to us, count"
-scalar GradysNetwork.quads[0].wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 0
+scalar GradysNetwork.quads[0].wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 2798
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
@@ -2619,34 +2832,34 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar GradysNetwork.quads[0].wlan[0].radio radioMode:count 13
+scalar GradysNetwork.quads[0].wlan[0].radio radioMode:count 389
 attr interpolationmode sample-hold
 attr recordingmode count
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar GradysNetwork.quads[0].wlan[0].radio receptionState:count 37
+scalar GradysNetwork.quads[0].wlan[0].radio receptionState:count 797
 attr interpolationmode sample-hold
 attr recordingmode count
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar GradysNetwork.quads[0].wlan[0].radio transmissionState:count 20
+scalar GradysNetwork.quads[0].wlan[0].radio transmissionState:count 772
 attr interpolationmode sample-hold
 attr recordingmode count
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic GradysNetwork.quads[0].wlan[0].radio minSnir:histogram
-field count 13
-field mean 14116174288.022
-field stddev 34457119504.257
-field min 217.69630923515
+field count 205
+field mean 3580980368.8957
+field stddev 17812079864.078
+field min 2842.6319746958
 field max 91755054109.427
-field sum 183510265744.29
-field sqrsum 1.6837979909255e+22
+field sum 734100975623.63
+field sqrsum 6.735191975569e+22
 attr recordingmode histogram
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR"
 bin	-inf	0
-bin	0	11
+bin	0	197
 bin	2000000000	0
 bin	4000000000	0
 bin	6000000000	0
@@ -2691,7 +2904,7 @@ bin	82000000000	0
 bin	84000000000	0
 bin	86000000000	0
 bin	88000000000	0
-bin	90000000000	2
+bin	90000000000	8
 bin	92000000000	0
 bin	94000000000	0
 bin	96000000000	0
@@ -2706,7 +2919,7 @@ bin	112000000000	0
 bin	114000000000	0
 bin	116000000000	0
 statistic GradysNetwork.quads[0].wlan[0].radio packetErrorRate:histogram
-field count 13
+field count 205
 field mean 0
 field stddev 0
 field min 0
@@ -2742,7 +2955,7 @@ bin	-0.08	0
 bin	-0.06	0
 bin	-0.04	0
 bin	-0.02	0
-bin	0	13
+bin	0	205
 bin	0.02	0
 bin	0.04	0
 bin	0.06	0
@@ -2974,25 +3187,25 @@ par GradysNetwork.quads[0].ipv4.arp proxyArpInterfaces "\"\""
 scalar GradysNetwork.quads[0].ipv4.arp arpResolutionFailed:count 0
 attr recordingmode count
 attr title "ARP failed resolutions, count"
-scalar GradysNetwork.quads[0].ipv4.arp arpResolutionCompleted:count 0
+scalar GradysNetwork.quads[0].ipv4.arp arpResolutionCompleted:count 3
 attr recordingmode count
 attr title "ARP completed resolutions, count"
-scalar GradysNetwork.quads[0].ipv4.arp arpResolutionInitiated:count 0
+scalar GradysNetwork.quads[0].ipv4.arp arpResolutionInitiated:count 1
 attr recordingmode count
 attr title "ARP initiated resolutions, count"
-scalar GradysNetwork.quads[0].ipv4.arp arpReplySent:count 0
+scalar GradysNetwork.quads[0].ipv4.arp arpReplySent:count 1
 attr recordingmode count
 attr source arpReplySent
 attr title "ARP replies sent, count"
-scalar GradysNetwork.quads[0].ipv4.arp arpReplySent:sum(packetBytes) 0
+scalar GradysNetwork.quads[0].ipv4.arp arpReplySent:sum(packetBytes) 28
 attr recordingmode sum(packetBytes)
 attr source arpReplySent
 attr title "ARP replies sent, sum(packetBytes)"
-scalar GradysNetwork.quads[0].ipv4.arp arpRequestSent:count 0
+scalar GradysNetwork.quads[0].ipv4.arp arpRequestSent:count 1
 attr recordingmode count
 attr source arpRequestSent
 attr title "ARP request sent, count"
-scalar GradysNetwork.quads[0].ipv4.arp arpRequestSent:sum(packetBytes) 0
+scalar GradysNetwork.quads[0].ipv4.arp arpRequestSent:sum(packetBytes) 28
 attr recordingmode sum(packetBytes)
 attr source arpRequestSent
 attr title "ARP request sent, sum(packetBytes)"
@@ -3016,27 +3229,27 @@ par GradysNetwork.quads[0].udp icmpv6Module "\"^.ipv6.icmpv6\""
 par GradysNetwork.quads[0].udp crcMode "\"declared\""
 attr enum disabled,declared,computed
 par GradysNetwork.quads[0].udp defaultMulticastLoop true
-scalar GradysNetwork.quads[0].udp packetReceived:count 18
+scalar GradysNetwork.quads[0].udp packetReceived:count 214
 attr interpolationmode none
 attr recordingmode count
 attr source packetReceived
 attr title "packets received, count"
-scalar GradysNetwork.quads[0].udp packetReceived:sum(packetBytes) 270
+scalar GradysNetwork.quads[0].udp packetReceived:sum(packetBytes) 3210
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
-scalar GradysNetwork.quads[0].udp packetSent:count 5
+scalar GradysNetwork.quads[0].udp packetSent:count 95
 attr interpolationmode none
 attr recordingmode count
 attr source packetSent
 attr title "packets sent, count"
-scalar GradysNetwork.quads[0].udp packetSent:sum(packetBytes) 75
+scalar GradysNetwork.quads[0].udp packetSent:sum(packetBytes) 1425
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
-scalar GradysNetwork.quads[0].udp passedUpPk:count 18
+scalar GradysNetwork.quads[0].udp passedUpPk:count 214
 attr interpolationmode none
 attr recordingmode count
 attr source packetSentToUpper
@@ -3091,7 +3304,7 @@ par GradysNetwork.quads[0].app[0] packetName "\"UdpBasicAppData\""
 par GradysNetwork.quads[0].app[0] destPort 1000
 par GradysNetwork.quads[0].app[0] messageLength 1454B
 attr unit B
-par GradysNetwork.quads[0].app[0] startTime -0.540294s
+par GradysNetwork.quads[0].app[0] startTime 1s
 attr unit s
 par GradysNetwork.quads[0].app[0] stopTime -1s
 attr unit s
@@ -3108,37 +3321,37 @@ par GradysNetwork.quads[0].app[0] stopOperationExtraTime -1s
 attr unit s
 par GradysNetwork.quads[0].app[0] stopOperationTimeout 2s
 attr unit s
-scalar GradysNetwork.quads[0].app[0] "packets sent" 5
+scalar GradysNetwork.quads[0].app[0] "packets sent" 95
 scalar GradysNetwork.quads[0].app[0] "packets received" 0
-scalar GradysNetwork.quads[0].app[0] packetReceived:count 13
+scalar GradysNetwork.quads[0].app[0] packetReceived:count 127
 attr interpolationmode none
 attr recordingmode count
 attr source packetReceived
 attr title "packets received, count"
-scalar GradysNetwork.quads[0].app[0] packetReceived:sum(packetBytes) 91
+scalar GradysNetwork.quads[0].app[0] packetReceived:sum(packetBytes) 889
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
 statistic GradysNetwork.quads[0].app[0] rcvdPkLifetime:stats
-field count 13
-field mean 0.00030100875838462
-field stddev 0.00024864709353588
+field count 127
+field mean 0.00030212267977953
+field stddev 0.00024112982309702
 field min 5.4e-05
-field max 0.000724120061
-field sum 0.003913113859
-field sqrsum 1.9197860696013e-06
+field max 0.00154806548
+field sum 0.038369580332
+field sqrsum 1.8918412971857e-05
 attr interpolationmode none
 attr recordingmode stats
 attr source dataAge(packetReceived)
 attr title "received packet lifetime"
 attr unit s
-scalar GradysNetwork.quads[0].app[0] packetSent:count 5
+scalar GradysNetwork.quads[0].app[0] packetSent:count 95
 attr interpolationmode none
 attr recordingmode count
 attr source packetSent
 attr title "packets sent, count"
-scalar GradysNetwork.quads[0].app[0] packetSent:sum(packetBytes) 35
+scalar GradysNetwork.quads[0].app[0] packetSent:sum(packetBytes) 665
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetSent
@@ -3150,9 +3363,10 @@ par GradysNetwork.quads[0].at forwardProtocolRegistration true
 par GradysNetwork.quads[0].protocol typename "\"gradys_simulations.protocols.mobile.PythonDroneProtocol\""
 par GradysNetwork.quads[0].protocol timeoutDuration 3s
 attr unit s
-par GradysNetwork.quads[0].protocol protocol "\"simple\""
+par GradysNetwork.quads[0].protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.quads[0].protocol protocol "\"zigzag\""
 par GradysNetwork.quads[0].protocol protocolFileName "\"protocol_mobile\""
-par GradysNetwork.quads[0].protocol protocolMobile "\"SimpleProtocolMobile\""
+par GradysNetwork.quads[0].protocol protocolMobile "\"ZigZagProtocolMobile\""
 par GradysNetwork.quads[0] typename "\"gradys_simulations.MobileNode\""
 par GradysNetwork.quads[0] hasStatus false
 par GradysNetwork.quads[0] osgModel "\"3d/drone.ive.10.scale.0,0,90.rot\""
@@ -3180,7 +3394,7 @@ par GradysNetwork.quads[0] hasSctp false
 par GradysNetwork.quads[0] numApps 1
 par GradysNetwork.quads[0] numFailures 0
 par GradysNetwork.quads[1].radioIn[0].channel typename "\"ned.IdealChannel\""
-par GradysNetwork.quads[1].mobility typename "\"gradys_simulations.mobility.DroneMobility\""
+par GradysNetwork.quads[1].mobility typename "\"gradys_simulations.mobility.PythonDroneMobility\""
 par GradysNetwork.quads[1].mobility subjectModule "\"^\""
 par GradysNetwork.quads[1].mobility coordinateSystemModule "\"coordinateSystem\""
 par GradysNetwork.quads[1].mobility displayStringTextFormat "\"p: %p\\nv: %v\""
@@ -3201,29 +3415,21 @@ attr unit m
 par GradysNetwork.quads[1].mobility updateInterval 0.1s
 attr unit s
 par GradysNetwork.quads[1].mobility faceForward true
-par GradysNetwork.quads[1].mobility waypointFile "\"paths/voo_sensor2.waypoints\""
-par GradysNetwork.quads[1].mobility waypointProximity 1m
-attr unit m
 par GradysNetwork.quads[1].mobility speed 10mps
 attr unit mps
 par GradysNetwork.quads[1].mobility groundModule "\"environment.ground\""
-par GradysNetwork.quads[1].mobility initialX 7158.91m
+par GradysNetwork.quads[1].mobility initialX 6885.31m
 attr unit m
-par GradysNetwork.quads[1].mobility initialY 897.664m
+par GradysNetwork.quads[1].mobility initialY 2055.27m
 attr unit m
-par GradysNetwork.quads[1].mobility initialZ 6945.03m
+par GradysNetwork.quads[1].mobility initialZ 7158.91m
 attr unit m
 par GradysNetwork.quads[1].mobility initFromDisplayString false
-par GradysNetwork.quads[1].mobility verticalSpeed 10mps
-attr unit mps
-par GradysNetwork.quads[1].mobility yawSpeed 0.0872665rad
-attr unit rad
+par GradysNetwork.quads[1].mobility homeX 0
+par GradysNetwork.quads[1].mobility homeY 0
+par GradysNetwork.quads[1].mobility homeZ 0
 par GradysNetwork.quads[1].mobility startTime 0s
 attr unit s
-par GradysNetwork.quads[1].mobility homeLatitude -15.8401degree
-attr unit degree
-par GradysNetwork.quads[1].mobility homeLongitude -47.9266degree
-attr unit degree
 par GradysNetwork.quads[1].mobility telemetryFrequency 1s
 attr unit s
 par GradysNetwork.quads[1].interfaceTable typename "\"inet.networklayer.common.InterfaceTable\""
@@ -3246,22 +3452,22 @@ par GradysNetwork.quads[1].lo[0].lo typename "\"inet.linklayer.loopback.Loopback
 par GradysNetwork.quads[1].lo[0].lo interfaceTableModule "\"GradysNetwork.quads[1].interfaceTable\""
 par GradysNetwork.quads[1].lo[0].lo mtu 4470B
 attr unit B
-scalar GradysNetwork.quads[1].lo[0].lo rcvdPkFromHl:count 4
+scalar GradysNetwork.quads[1].lo[0].lo rcvdPkFromHl:count 32
 attr interpolationmode none
 attr recordingmode count
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, count"
-scalar GradysNetwork.quads[1].lo[0].lo rcvdPkFromHl:sum(packetBytes) 140
+scalar GradysNetwork.quads[1].lo[0].lo rcvdPkFromHl:sum(packetBytes) 1120
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, sum(packetBytes)"
-scalar GradysNetwork.quads[1].lo[0].lo passedUpPk:count 4
+scalar GradysNetwork.quads[1].lo[0].lo passedUpPk:count 32
 attr interpolationmode none
 attr recordingmode count
 attr source packetSentToUpper
 attr title "packets passed to higher layer, count"
-scalar GradysNetwork.quads[1].lo[0].lo passedUpPk:sum(packetBytes) 140
+scalar GradysNetwork.quads[1].lo[0].lo passedUpPk:sum(packetBytes) 1120
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetSentToUpper
@@ -3316,14 +3522,14 @@ attr recordingmode last
 attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
 attr title "queue length, last"
 attr unit pk
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:max 1
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:max 2
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode max
 attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
 attr title "queue length, max"
 attr unit pk
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:timeavg 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:timeavg 0.00019059483529564
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode timeavg
@@ -3337,14 +3543,14 @@ attr recordingmode last
 attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
 attr title "queue bit length, last"
 attr unit b
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:max 568
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:max 1024
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode max
 attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
 attr title "queue bit length, max"
 attr unit b
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:timeavg 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:timeavg 0.10473426445086
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode timeavg
@@ -3352,98 +3558,215 @@ attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetP
 attr title "queue bit length, timeavg"
 attr unit b
 statistic GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:histogram
-field count 4
-field mean 0
-field stddev 0
+field count 42
+field mean 7.9333333333333e-05
+field stddev 0.00017513683384458
 field min 0
-field max 0
-field sum 0
-field sqrsum 0
+field max 0.000674
+field sum 0.003332
+field sqrsum 1.521928e-06
 attr interpolationmode none
 attr recordingmode histogram
 attr source queueingTime(packetPulled)
 attr title "queueing times"
 attr unit s
 bin	-inf	0
-bin	-0.5	0
-bin	-0.48	0
-bin	-0.46	0
-bin	-0.44	0
-bin	-0.42	0
-bin	-0.4	0
-bin	-0.38	0
-bin	-0.36	0
-bin	-0.34	0
-bin	-0.32	0
-bin	-0.3	0
-bin	-0.28	0
-bin	-0.26	0
-bin	-0.24	0
-bin	-0.22	0
-bin	-0.2	0
-bin	-0.18	0
-bin	-0.16	0
-bin	-0.14	0
-bin	-0.12	0
-bin	-0.1	0
-bin	-0.08	0
-bin	-0.06	0
-bin	-0.04	0
-bin	-0.02	0
-bin	0	4
-bin	0.02	0
-bin	0.04	0
-bin	0.06	0
-bin	0.08	0
-bin	0.1	0
-bin	0.12	0
-bin	0.14	0
-bin	0.16	0
-bin	0.18	0
-bin	0.2	0
-bin	0.22	0
-bin	0.24	0
-bin	0.26	0
-bin	0.28	0
-bin	0.3	0
-bin	0.32	0
-bin	0.34	0
-bin	0.36	0
-bin	0.38	0
-bin	0.4	0
-bin	0.42	0
-bin	0.44	0
-bin	0.46	0
-bin	0.48	0
-bin	0.5	0
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPackets:count 4
+bin	0	32
+bin	1e-05	0
+bin	2e-05	0
+bin	3e-05	0
+bin	4e-05	0
+bin	5e-05	0
+bin	6e-05	0
+bin	7e-05	0
+bin	8e-05	0
+bin	9e-05	0
+bin	0.0001	0
+bin	0.00011	1
+bin	0.00012	0
+bin	0.00013	3
+bin	0.00014	0
+bin	0.00015	0
+bin	0.00016	0
+bin	0.00017	0
+bin	0.00018	0
+bin	0.00019	0
+bin	0.0002	0
+bin	0.00021	0
+bin	0.00022	0
+bin	0.00023	0
+bin	0.00024	0
+bin	0.00025	0
+bin	0.00026	0
+bin	0.00027	0
+bin	0.00028	0
+bin	0.00029	1
+bin	0.0003	0
+bin	0.00031	0
+bin	0.00032	0
+bin	0.00033	0
+bin	0.00034	0
+bin	0.00035	1
+bin	0.00036	0
+bin	0.00037	0
+bin	0.00038	0
+bin	0.00039	1
+bin	0.0004	0
+bin	0.00041	0
+bin	0.00042	1
+bin	0.00043	0
+bin	0.00044	0
+bin	0.00045	0
+bin	0.00046	0
+bin	0.00047	0
+bin	0.00048	0
+bin	0.00049	0
+bin	0.0005	0
+bin	0.00051	0
+bin	0.00052	0
+bin	0.00053	0
+bin	0.00054	0
+bin	0.00055	0
+bin	0.00056	0
+bin	0.00057	0
+bin	0.00058	0
+bin	0.00059	0
+bin	0.0006	0
+bin	0.00061	0
+bin	0.00062	0
+bin	0.00063	0
+bin	0.00064	0
+bin	0.00065	0
+bin	0.00066	0
+bin	0.00067	2
+bin	0.00068	0
+bin	0.00069	0
+bin	0.0007	0
+bin	0.00071	0
+bin	0.00072	0
+bin	0.00073	0
+bin	0.00074	0
+bin	0.00075	0
+bin	0.00076	0
+bin	0.00077	0
+bin	0.00078	0
+bin	0.00079	0
+bin	0.0008	0
+bin	0.00081	0
+bin	0.00082	0
+bin	0.00083	0
+bin	0.00084	0
+bin	0.00085	0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPackets:count 42
 attr recordingmode count
 attr source packetPulled
 attr title "outgoing packets, count"
 attr unit pk
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:sum 2272
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:sum 23744
 attr interpolationmode none
 attr recordingmode sum
 attr source packetLength(packetPulled)
 attr title "outgoing packet lengths, sum"
 attr unit b
 statistic GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:histogram
-field count 4
-field mean 568
-field stddev 0
-field min 568
+field count 42
+field mean 565.33333333333
+field stddev 12.070255047454
+field min 512
 field max 568
-field sum 2272
-field sqrsum 1290496
+field sum 23744
+field sqrsum 13429248
 attr interpolationmode none
 attr recordingmode histogram
 attr source packetLength(packetPulled)
 attr title "outgoing packet lengths"
 attr unit b
 bin	-inf	0
+bin	498	0
+bin	499	0
+bin	500	0
+bin	501	0
+bin	502	0
+bin	503	0
+bin	504	0
+bin	505	0
+bin	506	0
+bin	507	0
+bin	508	0
+bin	509	0
+bin	510	0
+bin	511	0
+bin	512	2
+bin	513	0
+bin	514	0
+bin	515	0
+bin	516	0
+bin	517	0
+bin	518	0
+bin	519	0
+bin	520	0
+bin	521	0
+bin	522	0
+bin	523	0
+bin	524	0
+bin	525	0
+bin	526	0
+bin	527	0
+bin	528	0
+bin	529	0
+bin	530	0
+bin	531	0
+bin	532	0
+bin	533	0
+bin	534	0
+bin	535	0
+bin	536	0
+bin	537	0
+bin	538	0
+bin	539	0
+bin	540	0
+bin	541	0
+bin	542	0
+bin	543	0
+bin	544	0
+bin	545	0
+bin	546	0
+bin	547	0
+bin	548	0
+bin	549	0
+bin	550	0
+bin	551	0
+bin	552	0
+bin	553	0
+bin	554	0
+bin	555	0
+bin	556	0
+bin	557	0
+bin	558	0
+bin	559	0
+bin	560	0
+bin	561	0
+bin	562	0
+bin	563	0
+bin	564	0
+bin	565	0
+bin	566	0
 bin	567	0
-bin	568	4
+bin	568	40
 bin	569	0
+bin	570	0
+bin	571	0
+bin	572	0
+bin	573	0
+bin	574	0
+bin	575	0
+bin	576	0
+bin	577	0
+bin	578	0
+bin	579	0
+bin	580	0
+bin	581	0
+bin	582	0
 statistic GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue flowQueueingTime:histogram
 field count 0
 field mean -nan
@@ -3460,34 +3783,116 @@ attr unit s
 bin	-inf	0
 bin	0	0
 bin	1	0
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPackets:count 4
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPackets:count 42
 attr recordingmode count
 attr source packetPushStarted
 attr title "incoming packets, count"
 attr unit pk
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:sum 2272
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:sum 23744
 attr interpolationmode none
 attr recordingmode sum
 attr source packetLength(packetPushStarted)
 attr title "incoming packet lengths, sum"
 attr unit b
 statistic GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:histogram
-field count 4
-field mean 568
-field stddev 0
-field min 568
+field count 42
+field mean 565.33333333333
+field stddev 12.070255047454
+field min 512
 field max 568
-field sum 2272
-field sqrsum 1290496
+field sum 23744
+field sqrsum 13429248
 attr interpolationmode none
 attr recordingmode histogram
 attr source packetLength(packetPushStarted)
 attr title "incoming packet lengths"
 attr unit b
 bin	-inf	0
+bin	498	0
+bin	499	0
+bin	500	0
+bin	501	0
+bin	502	0
+bin	503	0
+bin	504	0
+bin	505	0
+bin	506	0
+bin	507	0
+bin	508	0
+bin	509	0
+bin	510	0
+bin	511	0
+bin	512	2
+bin	513	0
+bin	514	0
+bin	515	0
+bin	516	0
+bin	517	0
+bin	518	0
+bin	519	0
+bin	520	0
+bin	521	0
+bin	522	0
+bin	523	0
+bin	524	0
+bin	525	0
+bin	526	0
+bin	527	0
+bin	528	0
+bin	529	0
+bin	530	0
+bin	531	0
+bin	532	0
+bin	533	0
+bin	534	0
+bin	535	0
+bin	536	0
+bin	537	0
+bin	538	0
+bin	539	0
+bin	540	0
+bin	541	0
+bin	542	0
+bin	543	0
+bin	544	0
+bin	545	0
+bin	546	0
+bin	547	0
+bin	548	0
+bin	549	0
+bin	550	0
+bin	551	0
+bin	552	0
+bin	553	0
+bin	554	0
+bin	555	0
+bin	556	0
+bin	557	0
+bin	558	0
+bin	559	0
+bin	560	0
+bin	561	0
+bin	562	0
+bin	563	0
+bin	564	0
+bin	565	0
+bin	566	0
 bin	567	0
-bin	568	4
+bin	568	40
 bin	569	0
+bin	570	0
+bin	571	0
+bin	572	0
+bin	573	0
+bin	574	0
+bin	575	0
+bin	576	0
+bin	577	0
+bin	578	0
+bin	579	0
+bin	580	0
+bin	581	0
+bin	582	0
 scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.pendingQueue droppedPacketsQueueOverflow:count 0
 attr interpolationmode none
 attr recordingmode count
@@ -3505,77 +3910,112 @@ par GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames pendin
 par GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames originatorMacDataServiceModule "\"^.^.originatorMacDataService\""
 par GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames ackHandlerModule "\"^.^.ackHandler\""
 statistic GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:histogram
-field count 4
-field mean 5.4e-05
-field stddev 0
+field count 42
+field mean 7.8686273333333e-05
+field stddev 9.9558360107286e-05
 field min 5.4e-05
-field max 5.4e-05
-field sum 0.000216
-field sqrsum 1.1664e-08
+field max 0.000698071537
+field sum 0.00330482348
+field sqrsum 6.6643079342303e-07
 attr interpolationmode none
 attr recordingmode histogram
 attr source queueingTime(packetDequeued)
 attr title "queueing times"
 bin	-inf	0
-bin	0	4
-bin	0.01	0
-bin	0.02	0
-bin	0.03	0
-bin	0.04	0
-bin	0.05	0
-bin	0.06	0
-bin	0.07	0
-bin	0.08	0
-bin	0.09	0
-bin	0.1	0
-bin	0.11	0
-bin	0.12	0
-bin	0.13	0
-bin	0.14	0
-bin	0.15	0
-bin	0.16	0
-bin	0.17	0
-bin	0.18	0
-bin	0.19	0
-bin	0.2	0
-bin	0.21	0
-bin	0.22	0
-bin	0.23	0
-bin	0.24	0
-bin	0.25	0
-bin	0.26	0
-bin	0.27	0
-bin	0.28	0
-bin	0.29	0
-bin	0.3	0
-bin	0.31	0
-bin	0.32	0
-bin	0.33	0
-bin	0.34	0
-bin	0.35	0
-bin	0.36	0
-bin	0.37	0
-bin	0.38	0
-bin	0.39	0
-bin	0.4	0
-bin	0.41	0
-bin	0.42	0
-bin	0.43	0
-bin	0.44	0
-bin	0.45	0
-bin	0.46	0
-bin	0.47	0
-bin	0.48	0
-bin	0.49	0
-bin	0.5	0
-bin	0.51	0
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:max 1
+bin	0	0
+bin	1e-05	0
+bin	2e-05	0
+bin	3e-05	0
+bin	4e-05	0
+bin	5e-05	32
+bin	6e-05	0
+bin	7e-05	0
+bin	8e-05	0
+bin	9e-05	9
+bin	0.0001	0
+bin	0.00011	0
+bin	0.00012	0
+bin	0.00013	0
+bin	0.00014	0
+bin	0.00015	0
+bin	0.00016	0
+bin	0.00017	0
+bin	0.00018	0
+bin	0.00019	0
+bin	0.0002	0
+bin	0.00021	0
+bin	0.00022	0
+bin	0.00023	0
+bin	0.00024	0
+bin	0.00025	0
+bin	0.00026	0
+bin	0.00027	0
+bin	0.00028	0
+bin	0.00029	0
+bin	0.0003	0
+bin	0.00031	0
+bin	0.00032	0
+bin	0.00033	0
+bin	0.00034	0
+bin	0.00035	0
+bin	0.00036	0
+bin	0.00037	0
+bin	0.00038	0
+bin	0.00039	0
+bin	0.0004	0
+bin	0.00041	0
+bin	0.00042	0
+bin	0.00043	0
+bin	0.00044	0
+bin	0.00045	0
+bin	0.00046	0
+bin	0.00047	0
+bin	0.00048	0
+bin	0.00049	0
+bin	0.0005	0
+bin	0.00051	0
+bin	0.00052	0
+bin	0.00053	0
+bin	0.00054	0
+bin	0.00055	0
+bin	0.00056	0
+bin	0.00057	0
+bin	0.00058	0
+bin	0.00059	0
+bin	0.0006	0
+bin	0.00061	0
+bin	0.00062	0
+bin	0.00063	0
+bin	0.00064	0
+bin	0.00065	0
+bin	0.00066	0
+bin	0.00067	0
+bin	0.00068	0
+bin	0.00069	1
+bin	0.0007	0
+bin	0.00071	0
+bin	0.00072	0
+bin	0.00073	0
+bin	0.00074	0
+bin	0.00075	0
+bin	0.00076	0
+bin	0.00077	0
+bin	0.00078	0
+bin	0.00079	0
+bin	0.0008	0
+bin	0.00081	0
+bin	0.00082	0
+bin	0.00083	0
+bin	0.00084	0
+bin	0.00085	0
+bin	0.00086	0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:max 2
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode max
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length, max"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:timeavg 2.628130181344e-05
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:timeavg 6.9491157157899e-05
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode timeavg
@@ -3584,10 +4024,10 @@ attr title "queue length, timeavg"
 par GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention typename "\"inet.linklayer.ieee80211.mac.contention.Contention\""
 par GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention initialChannelBusy true
 par GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention backoffOptimization true
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention channelAccessGranted:count 4
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention channelAccessGranted:count 42
 attr recordingmode count
 attr title "channel access granted, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention stateChanged:count 90
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess.contention stateChanged:count 1722
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode count
@@ -3598,7 +4038,7 @@ par GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess difsn -1
 par GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess cwMin -1
 par GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess cwMax -1
 par GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess rxModule "\"^.^.rx\""
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess channelOwnershipChanged:count 8
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.channelAccess channelOwnershipChanged:count 84
 attr interpolationmode sample-hold
 attr recordingmode count
 attr title "channel ownership, count"
@@ -3616,7 +4056,7 @@ par GradysNetwork.quads[1].wlan[0].mac.dcf.recipientMacDataService typename "\"i
 scalar GradysNetwork.quads[1].wlan[0].mac.dcf.recipientMacDataService packetDeaggregated:count 0
 attr recordingmode count
 attr title "packets deaggregated, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf.recipientMacDataService packetDefragmented:count 14
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf.recipientMacDataService packetDefragmented:count 130
 attr recordingmode count
 attr title "packets defragmented, count"
 scalar GradysNetwork.quads[1].wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:count 0
@@ -3675,122 +4115,140 @@ par GradysNetwork.quads[1].wlan[0].mac.dcf.ctsPolicy rateSelectionModule "\"^.ra
 par GradysNetwork.quads[1].wlan[0].mac.dcf typename "\"inet.linklayer.ieee80211.mac.coordinationfunction.Dcf\""
 par GradysNetwork.quads[1].wlan[0].mac.dcf rxModule "\"^.rx\""
 par GradysNetwork.quads[1].wlan[0].mac.dcf txModule "\"^.tx\""
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf frameSequenceFinished:count 4
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf frameSequenceFinished:count 42
 attr recordingmode count
 attr title "finished frame sequences, count"
 statistic GradysNetwork.quads[1].wlan[0].mac.dcf frameSequenceDuration:histogram
-field count 4
-field mean 5.4e-05
-field stddev 0
+field count 42
+field mean 6.4303617690476e-05
+field stddev 1.867227123369e-05
 field min 5.4e-05
-field max 5.4e-05
-field sum 0.000216
-field sqrsum 1.1664e-08
+field max 9.8169824e-05
+field sum 0.002700751943
+field sqrsum 1.8796292265349e-07
 attr recordingmode histogram
 attr source frameSequenceDuration(frameSequenceFinished)
 attr title "frame sequence durations"
 bin	-inf	0
-bin	0	4
-bin	0.01	0
-bin	0.02	0
-bin	0.03	0
-bin	0.04	0
-bin	0.05	0
-bin	0.06	0
-bin	0.07	0
-bin	0.08	0
-bin	0.09	0
-bin	0.1	0
-bin	0.11	0
-bin	0.12	0
-bin	0.13	0
-bin	0.14	0
-bin	0.15	0
-bin	0.16	0
-bin	0.17	0
-bin	0.18	0
-bin	0.19	0
-bin	0.2	0
-bin	0.21	0
-bin	0.22	0
-bin	0.23	0
-bin	0.24	0
-bin	0.25	0
-bin	0.26	0
-bin	0.27	0
-bin	0.28	0
-bin	0.29	0
-bin	0.3	0
-bin	0.31	0
-bin	0.32	0
-bin	0.33	0
-bin	0.34	0
-bin	0.35	0
-bin	0.36	0
-bin	0.37	0
-bin	0.38	0
-bin	0.39	0
-bin	0.4	0
-bin	0.41	0
-bin	0.42	0
-bin	0.43	0
-bin	0.44	0
-bin	0.45	0
-bin	0.46	0
-bin	0.47	0
-bin	0.48	0
-bin	0.49	0
-bin	0.5	0
-bin	0.51	0
+bin	4.2e-05	0
+bin	4.3e-05	0
+bin	4.4e-05	0
+bin	4.5e-05	0
+bin	4.6e-05	0
+bin	4.7e-05	0
+bin	4.8e-05	0
+bin	4.9e-05	0
+bin	5e-05	0
+bin	5.1e-05	0
+bin	5.2e-05	0
+bin	5.3e-05	32
+bin	5.4e-05	0
+bin	5.5e-05	0
+bin	5.6e-05	0
+bin	5.7e-05	0
+bin	5.8e-05	0
+bin	5.9e-05	0
+bin	6e-05	0
+bin	6.1e-05	0
+bin	6.2e-05	0
+bin	6.3e-05	0
+bin	6.4e-05	0
+bin	6.5e-05	0
+bin	6.6e-05	0
+bin	6.7e-05	0
+bin	6.8e-05	0
+bin	6.9e-05	0
+bin	7e-05	0
+bin	7.1e-05	0
+bin	7.2e-05	0
+bin	7.3e-05	0
+bin	7.4e-05	0
+bin	7.5e-05	0
+bin	7.6e-05	0
+bin	7.7e-05	0
+bin	7.8e-05	0
+bin	7.9e-05	0
+bin	8e-05	0
+bin	8.1e-05	0
+bin	8.2e-05	0
+bin	8.3e-05	0
+bin	8.4e-05	0
+bin	8.5e-05	0
+bin	8.6e-05	0
+bin	8.7e-05	0
+bin	8.8e-05	0
+bin	8.9e-05	0
+bin	9e-05	0
+bin	9.1e-05	0
+bin	9.2e-05	0
+bin	9.3e-05	1
+bin	9.4e-05	1
+bin	9.5e-05	0
+bin	9.6e-05	0
+bin	9.7e-05	1
+bin	9.8e-05	7
+bin	9.9e-05	0
+bin	0.0001	0
+bin	0.000101	0
+bin	0.000102	0
+bin	0.000103	0
+bin	0.000104	0
+bin	0.000105	0
+bin	0.000106	0
+bin	0.000107	0
+bin	0.000108	0
+bin	0.000109	0
+bin	0.00011	0
 statistic GradysNetwork.quads[1].wlan[0].mac.dcf frameSequenceNumPackets:histogram
-field count 4
-field mean 1
-field stddev 0
+field count 42
+field mean 1.2380952380952
+field stddev 0.43108053740904
 field min 1
-field max 1
-field sum 4
-field sqrsum 4
+field max 2
+field sum 52
+field sqrsum 72
 attr recordingmode histogram
 attr source frameSequenceNumPackets(frameSequenceFinished)
 attr title "frame sequences: number of packets"
 bin	-inf	0
 bin	0	0
-bin	1	4
-bin	2	0
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeer:count 14
+bin	1	32
+bin	2	10
+bin	3	0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeer:count 140
 attr interpolationmode none
 attr recordingmode count
 attr title "packets received, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeer:sum(packetBytes) 994
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeer:sum(packetBytes) 9349
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets received, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerUnicast:count 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerUnicast:count 50
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Unicast(packetReceivedFromPeer)
 attr title "packets received: unicast, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerUnicast:sum(packetBytes) 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerUnicast:sum(packetBytes) 2980
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Unicast(packetReceivedFromPeer)
 attr title "packets received: unicast, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerMulticast:count 14
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerMulticast:count 90
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Multicast(packetReceivedFromPeer)
 attr title "packets received: multicast, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerMulticast:sum(packetBytes) 994
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerMulticast:sum(packetBytes) 6369
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Multicast(packetReceivedFromPeer)
 attr title "packets received: multicast, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:count 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:count 3
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Broadcast(packetReceivedFromPeer)
 attr title "packets received: broadcast, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:sum(packetBytes) 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerBroadcast:sum(packetBytes) 192
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Broadcast(packetReceivedFromPeer)
@@ -3805,40 +4263,40 @@ attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Retry(packetReceivedFromPeer)
 attr title "packets received: with retry, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:count 14
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:count 140
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211NotRetry(packetReceivedFromPeer)
 attr title "packets received: without retry, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:sum(packetBytes) 994
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:sum(packetBytes) 9349
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211NotRetry(packetReceivedFromPeer)
 attr title "packets received: without retry, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeer:count 4
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeer:count 82
 attr interpolationmode none
 attr recordingmode count
 attr title "packets sent, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeer:sum(packetBytes) 284
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeer:sum(packetBytes) 3528
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets sent, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerUnicast:count 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerUnicast:count 50
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Unicast(packetSentToPeer)
 attr title "packets sent: unicast, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerUnicast:sum(packetBytes) 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerUnicast:sum(packetBytes) 1256
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Unicast(packetSentToPeer)
 attr title "packets sent: unicast, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerMulticast:count 4
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerMulticast:count 32
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Multicast(packetSentToPeer)
 attr title "packets sent: multicast, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerMulticast:sum(packetBytes) 284
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerMulticast:sum(packetBytes) 2272
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Multicast(packetSentToPeer)
@@ -3863,32 +4321,32 @@ attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Retry(packetSentToPeer)
 attr title "packets sent: with retry, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerWithoutRetry:count 4
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerWithoutRetry:count 82
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211NotRetry(packetSentToPeer)
 attr title "packets sent: without retry, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerWithoutRetry:sum(packetBytes) 284
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetSentToPeerWithoutRetry:sum(packetBytes) 3528
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211NotRetry(packetSentToPeer)
 attr title "packets sent: without retry, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetDrop:count 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetDrop:count 176
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropped
 attr title "packet drops, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetDrop:sum(packetBytes) 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetDrop:sum(packetBytes) 7473
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropped
 attr title "packet drops, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetDropNotAddressedToUs:count 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetDropNotAddressedToUs:count 176
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drops: not addressed to us, count"
-scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetDropNotAddressedToUs:sum(packetBytes) 0
+scalar GradysNetwork.quads[1].wlan[0].mac.dcf packetDropNotAddressedToUs:sum(packetBytes) 7473
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
@@ -3934,44 +4392,44 @@ attr enum off,sleep,receiver,transmitter,transceiver
 par GradysNetwork.quads[1].wlan[0].mac mtu 2304B
 attr unit B
 par GradysNetwork.quads[1].wlan[0].mac qosStation false
-scalar GradysNetwork.quads[1].wlan[0].mac packetReceivedFromLower:count 14
+scalar GradysNetwork.quads[1].wlan[0].mac packetReceivedFromLower:count 316
 attr interpolationmode none
 attr recordingmode count
 attr title "packets received from lower layer, count"
-scalar GradysNetwork.quads[1].wlan[0].mac packetReceivedFromLower:sum(packetBytes) 994
+scalar GradysNetwork.quads[1].wlan[0].mac packetReceivedFromLower:sum(packetBytes) 16822
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac packetSentToLower:count 4
+scalar GradysNetwork.quads[1].wlan[0].mac packetSentToLower:count 82
 attr interpolationmode none
 attr recordingmode count
 attr title "packets sent to lower layer, count"
-scalar GradysNetwork.quads[1].wlan[0].mac packetSentToLower:sum(packetBytes) 284
+scalar GradysNetwork.quads[1].wlan[0].mac packetSentToLower:sum(packetBytes) 3528
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets sent to lower layer, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac packetReceivedFromUpper:count 4
+scalar GradysNetwork.quads[1].wlan[0].mac packetReceivedFromUpper:count 42
 attr interpolationmode none
 attr recordingmode count
 attr title "packets received from upper layer, count"
-scalar GradysNetwork.quads[1].wlan[0].mac packetReceivedFromUpper:sum(packetBytes) 172
+scalar GradysNetwork.quads[1].wlan[0].mac packetReceivedFromUpper:sum(packetBytes) 1792
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets received from upper layer, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac packetSentToUpper:count 14
+scalar GradysNetwork.quads[1].wlan[0].mac packetSentToUpper:count 130
 attr interpolationmode none
 attr recordingmode count
 attr title "packets sent to upper layer, count"
-scalar GradysNetwork.quads[1].wlan[0].mac packetSentToUpper:sum(packetBytes) 602
+scalar GradysNetwork.quads[1].wlan[0].mac packetSentToUpper:sum(packetBytes) 5569
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets sent to upper layer, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac packetDrop:count 0
+scalar GradysNetwork.quads[1].wlan[0].mac packetDrop:count 176
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropped
 attr title "packet drops, count"
-scalar GradysNetwork.quads[1].wlan[0].mac packetDrop:sum(packetBytes) 0
+scalar GradysNetwork.quads[1].wlan[0].mac packetDrop:sum(packetBytes) 7473
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropped
@@ -3986,12 +4444,12 @@ attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drops: incorrectly received, sum(packetBytes)"
-scalar GradysNetwork.quads[1].wlan[0].mac packetDropNotAddressedToUs:count 0
+scalar GradysNetwork.quads[1].wlan[0].mac packetDropNotAddressedToUs:count 176
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drops: not addressed to us, count"
-scalar GradysNetwork.quads[1].wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 0
+scalar GradysNetwork.quads[1].wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 7473
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
@@ -4177,34 +4635,34 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar GradysNetwork.quads[1].wlan[0].radio radioMode:count 11
+scalar GradysNetwork.quads[1].wlan[0].radio radioMode:count 167
 attr interpolationmode sample-hold
 attr recordingmode count
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar GradysNetwork.quads[1].wlan[0].radio receptionState:count 37
+scalar GradysNetwork.quads[1].wlan[0].radio receptionState:count 797
 attr interpolationmode sample-hold
 attr recordingmode count
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar GradysNetwork.quads[1].wlan[0].radio transmissionState:count 16
+scalar GradysNetwork.quads[1].wlan[0].radio transmissionState:count 328
 attr interpolationmode sample-hold
 attr recordingmode count
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic GradysNetwork.quads[1].wlan[0].radio minSnir:histogram
-field count 14
-field mean 19661811610.218
-field stddev 39070699392.005
-field min 217.69630923515
+field count 316
+field mean 33392236497.121
+field stddev 44215588225.232
+field min 2842.6508922987
 field max 91755054109.427
-field sum 275265362543.05
-field sqrsum 2.5256969863886e+22
+field sum 10551946733090
+field sqrsum 9.681838470789e+23
 attr recordingmode histogram
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR"
 bin	-inf	0
-bin	0	11
+bin	0	201
 bin	2000000000	0
 bin	4000000000	0
 bin	6000000000	0
@@ -4249,7 +4707,7 @@ bin	82000000000	0
 bin	84000000000	0
 bin	86000000000	0
 bin	88000000000	0
-bin	90000000000	3
+bin	90000000000	115
 bin	92000000000	0
 bin	94000000000	0
 bin	96000000000	0
@@ -4264,7 +4722,7 @@ bin	112000000000	0
 bin	114000000000	0
 bin	116000000000	0
 statistic GradysNetwork.quads[1].wlan[0].radio packetErrorRate:histogram
-field count 14
+field count 316
 field mean 0
 field stddev 0
 field min 0
@@ -4300,7 +4758,7 @@ bin	-0.08	0
 bin	-0.06	0
 bin	-0.04	0
 bin	-0.02	0
-bin	0	14
+bin	0	316
 bin	0.02	0
 bin	0.04	0
 bin	0.06	0
@@ -4532,17 +4990,17 @@ par GradysNetwork.quads[1].ipv4.arp proxyArpInterfaces "\"\""
 scalar GradysNetwork.quads[1].ipv4.arp arpResolutionFailed:count 0
 attr recordingmode count
 attr title "ARP failed resolutions, count"
-scalar GradysNetwork.quads[1].ipv4.arp arpResolutionCompleted:count 0
+scalar GradysNetwork.quads[1].ipv4.arp arpResolutionCompleted:count 2
 attr recordingmode count
 attr title "ARP completed resolutions, count"
 scalar GradysNetwork.quads[1].ipv4.arp arpResolutionInitiated:count 0
 attr recordingmode count
 attr title "ARP initiated resolutions, count"
-scalar GradysNetwork.quads[1].ipv4.arp arpReplySent:count 0
+scalar GradysNetwork.quads[1].ipv4.arp arpReplySent:count 2
 attr recordingmode count
 attr source arpReplySent
 attr title "ARP replies sent, count"
-scalar GradysNetwork.quads[1].ipv4.arp arpReplySent:sum(packetBytes) 0
+scalar GradysNetwork.quads[1].ipv4.arp arpReplySent:sum(packetBytes) 56
 attr recordingmode sum(packetBytes)
 attr source arpReplySent
 attr title "ARP replies sent, sum(packetBytes)"
@@ -4574,27 +5032,27 @@ par GradysNetwork.quads[1].udp icmpv6Module "\"^.ipv6.icmpv6\""
 par GradysNetwork.quads[1].udp crcMode "\"declared\""
 attr enum disabled,declared,computed
 par GradysNetwork.quads[1].udp defaultMulticastLoop true
-scalar GradysNetwork.quads[1].udp packetReceived:count 16
+scalar GradysNetwork.quads[1].udp packetReceived:count 105
 attr interpolationmode none
 attr recordingmode count
 attr source packetReceived
 attr title "packets received, count"
-scalar GradysNetwork.quads[1].udp packetReceived:sum(packetBytes) 240
+scalar GradysNetwork.quads[1].udp packetReceived:sum(packetBytes) 1575
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
-scalar GradysNetwork.quads[1].udp packetSent:count 4
+scalar GradysNetwork.quads[1].udp packetSent:count 41
 attr interpolationmode none
 attr recordingmode count
 attr source packetSent
 attr title "packets sent, count"
-scalar GradysNetwork.quads[1].udp packetSent:sum(packetBytes) 60
+scalar GradysNetwork.quads[1].udp packetSent:sum(packetBytes) 615
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
-scalar GradysNetwork.quads[1].udp passedUpPk:count 16
+scalar GradysNetwork.quads[1].udp passedUpPk:count 105
 attr interpolationmode none
 attr recordingmode count
 attr source packetSentToUpper
@@ -4649,7 +5107,7 @@ par GradysNetwork.quads[1].app[0] packetName "\"UdpBasicAppData\""
 par GradysNetwork.quads[1].app[0] destPort 1000
 par GradysNetwork.quads[1].app[0] messageLength 1454B
 attr unit B
-par GradysNetwork.quads[1].app[0] startTime 0.251005s
+par GradysNetwork.quads[1].app[0] startTime 30s
 attr unit s
 par GradysNetwork.quads[1].app[0] stopTime -1s
 attr unit s
@@ -4666,37 +5124,37 @@ par GradysNetwork.quads[1].app[0] stopOperationExtraTime -1s
 attr unit s
 par GradysNetwork.quads[1].app[0] stopOperationTimeout 2s
 attr unit s
-scalar GradysNetwork.quads[1].app[0] "packets sent" 4
+scalar GradysNetwork.quads[1].app[0] "packets sent" 41
 scalar GradysNetwork.quads[1].app[0] "packets received" 0
-scalar GradysNetwork.quads[1].app[0] packetReceived:count 12
+scalar GradysNetwork.quads[1].app[0] packetReceived:count 73
 attr interpolationmode none
 attr recordingmode count
 attr source packetReceived
 attr title "packets received, count"
-scalar GradysNetwork.quads[1].app[0] packetReceived:sum(packetBytes) 84
+scalar GradysNetwork.quads[1].app[0] packetReceived:sum(packetBytes) 511
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
 statistic GradysNetwork.quads[1].app[0] rcvdPkLifetime:stats
-field count 12
-field mean 0.00028575817675
-field stddev 0.00025327590778673
-field min 5.4e-05
-field max 0.000724120061
-field sum 0.003429098121
-field sqrsum 1.6855283670709e-06
+field count 73
+field mean 0.00032315925005479
+field stddev 0.00040524561487279
+field min 5.4001793e-05
+field max 0.00248021462
+field sum 0.023590625254
+field sqrsum 1.9447657368308e-05
 attr interpolationmode none
 attr recordingmode stats
 attr source dataAge(packetReceived)
 attr title "received packet lifetime"
 attr unit s
-scalar GradysNetwork.quads[1].app[0] packetSent:count 4
+scalar GradysNetwork.quads[1].app[0] packetSent:count 41
 attr interpolationmode none
 attr recordingmode count
 attr source packetSent
 attr title "packets sent, count"
-scalar GradysNetwork.quads[1].app[0] packetSent:sum(packetBytes) 28
+scalar GradysNetwork.quads[1].app[0] packetSent:sum(packetBytes) 287
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetSent
@@ -4708,9 +5166,10 @@ par GradysNetwork.quads[1].at forwardProtocolRegistration true
 par GradysNetwork.quads[1].protocol typename "\"gradys_simulations.protocols.mobile.PythonDroneProtocol\""
 par GradysNetwork.quads[1].protocol timeoutDuration 3s
 attr unit s
-par GradysNetwork.quads[1].protocol protocol "\"simple\""
+par GradysNetwork.quads[1].protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.quads[1].protocol protocol "\"zigzag\""
 par GradysNetwork.quads[1].protocol protocolFileName "\"protocol_mobile\""
-par GradysNetwork.quads[1].protocol protocolMobile "\"SimpleProtocolMobile\""
+par GradysNetwork.quads[1].protocol protocolMobile "\"ZigZagProtocolMobile\""
 par GradysNetwork.quads[1] typename "\"gradys_simulations.MobileNode\""
 par GradysNetwork.quads[1] hasStatus false
 par GradysNetwork.quads[1] osgModel "\"3d/drone.ive.10.scale.0,0,90.rot\""
@@ -4763,11 +5222,11 @@ par GradysNetwork.sensors[0].mobility constraintAreaMaxY 10000m
 attr unit m
 par GradysNetwork.sensors[0].mobility constraintAreaMaxZ 10000m
 attr unit m
-par GradysNetwork.sensors[0].mobility initialX 2917.88m
+par GradysNetwork.sensors[0].mobility initialX 897.664m
 attr unit m
-par GradysNetwork.sensors[0].mobility initialY -2312.37m
+par GradysNetwork.sensors[0].mobility initialY 6945.03m
 attr unit m
-par GradysNetwork.sensors[0].mobility initialZ -1248.26m
+par GradysNetwork.sensors[0].mobility initialZ -1526.9m
 attr unit m
 par GradysNetwork.sensors[0].mobility initialLatitude -15.8425deg
 attr unit deg
@@ -5978,7 +6437,7 @@ par GradysNetwork.sensors[0].app[0] packetName "\"UdpBasicAppData\""
 par GradysNetwork.sensors[0].app[0] destPort 1000
 par GradysNetwork.sensors[0].app[0] messageLength 1454B
 attr unit B
-par GradysNetwork.sensors[0].app[0] startTime 0.353159s
+par GradysNetwork.sensors[0].app[0] startTime 0.977006s
 attr unit s
 par GradysNetwork.sensors[0].app[0] stopTime -1s
 attr unit s
@@ -6035,9 +6494,10 @@ par GradysNetwork.sensors[0].at displayStringTextFormat "\"processed %p pk (%l)\
 par GradysNetwork.sensors[0].at forwardServiceRegistration true
 par GradysNetwork.sensors[0].at forwardProtocolRegistration true
 par GradysNetwork.sensors[0].protocol typename "\"gradys_simulations.protocols.sensor.PythonSensorProtocol\""
-par GradysNetwork.sensors[0].protocol protocol "\"simple\""
+par GradysNetwork.sensors[0].protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.sensors[0].protocol protocol "\"zigzag\""
 par GradysNetwork.sensors[0].protocol protocolFileName "\"protocol_sensor\""
-par GradysNetwork.sensors[0].protocol protocolSensor "\"SimpleProtocolSensor\""
+par GradysNetwork.sensors[0].protocol protocolSensor "\"ZigZagProtocolSensor\""
 par GradysNetwork.sensors[0] typename "\"gradys_simulations.MobileSensorNode\""
 par GradysNetwork.sensors[0] hasStatus false
 par GradysNetwork.sensors[0] osgModel "\"\""
@@ -6092,11 +6552,11 @@ par GradysNetwork.sensors[1].mobility constraintAreaMaxY 10000m
 attr unit m
 par GradysNetwork.sensors[1].mobility constraintAreaMaxZ 10000m
 attr unit m
-par GradysNetwork.sensors[1].mobility initialX 7835.46m
+par GradysNetwork.sensors[1].mobility initialX 2917.88m
 attr unit m
-par GradysNetwork.sensors[1].mobility initialY -8865.74m
+par GradysNetwork.sensors[1].mobility initialY -2312.37m
 attr unit m
-par GradysNetwork.sensors[1].mobility initialZ 9273.26m
+par GradysNetwork.sensors[1].mobility initialZ -1248.26m
 attr unit m
 par GradysNetwork.sensors[1].mobility initialLatitude -15.8426deg
 attr unit deg
@@ -7307,7 +7767,7 @@ par GradysNetwork.sensors[1].app[0] packetName "\"UdpBasicAppData\""
 par GradysNetwork.sensors[1].app[0] destPort 1000
 par GradysNetwork.sensors[1].app[0] messageLength 1454B
 attr unit B
-par GradysNetwork.sensors[1].app[0] startTime 0.318356s
+par GradysNetwork.sensors[1].app[0] startTime 0.353159s
 attr unit s
 par GradysNetwork.sensors[1].app[0] stopTime -1s
 attr unit s
@@ -7364,9 +7824,10 @@ par GradysNetwork.sensors[1].at displayStringTextFormat "\"processed %p pk (%l)\
 par GradysNetwork.sensors[1].at forwardServiceRegistration true
 par GradysNetwork.sensors[1].at forwardProtocolRegistration true
 par GradysNetwork.sensors[1].protocol typename "\"gradys_simulations.protocols.sensor.PythonSensorProtocol\""
-par GradysNetwork.sensors[1].protocol protocol "\"simple\""
+par GradysNetwork.sensors[1].protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.sensors[1].protocol protocol "\"zigzag\""
 par GradysNetwork.sensors[1].protocol protocolFileName "\"protocol_sensor\""
-par GradysNetwork.sensors[1].protocol protocolSensor "\"SimpleProtocolSensor\""
+par GradysNetwork.sensors[1].protocol protocolSensor "\"ZigZagProtocolSensor\""
 par GradysNetwork.sensors[1] typename "\"gradys_simulations.MobileSensorNode\""
 par GradysNetwork.sensors[1] hasStatus false
 par GradysNetwork.sensors[1] osgModel "\"\""
@@ -7421,11 +7882,11 @@ par GradysNetwork.sensors[2].mobility constraintAreaMaxY 10000m
 attr unit m
 par GradysNetwork.sensors[2].mobility constraintAreaMaxZ 10000m
 attr unit m
-par GradysNetwork.sensors[2].mobility initialX -2331.17m
+par GradysNetwork.sensors[2].mobility initialX 7835.46m
 attr unit m
-par GradysNetwork.sensors[2].mobility initialY -446.698m
+par GradysNetwork.sensors[2].mobility initialY -8865.74m
 attr unit m
-par GradysNetwork.sensors[2].mobility initialZ 5834.5m
+par GradysNetwork.sensors[2].mobility initialZ 9273.26m
 attr unit m
 par GradysNetwork.sensors[2].mobility initialLatitude -15.8416deg
 attr unit deg
@@ -8636,7 +9097,7 @@ par GradysNetwork.sensors[2].app[0] packetName "\"UdpBasicAppData\""
 par GradysNetwork.sensors[2].app[0] destPort 1000
 par GradysNetwork.sensors[2].app[0] messageLength 1454B
 attr unit B
-par GradysNetwork.sensors[2].app[0] startTime 1.67221s
+par GradysNetwork.sensors[2].app[0] startTime 0.318356s
 attr unit s
 par GradysNetwork.sensors[2].app[0] stopTime -1s
 attr unit s
@@ -8693,9 +9154,10 @@ par GradysNetwork.sensors[2].at displayStringTextFormat "\"processed %p pk (%l)\
 par GradysNetwork.sensors[2].at forwardServiceRegistration true
 par GradysNetwork.sensors[2].at forwardProtocolRegistration true
 par GradysNetwork.sensors[2].protocol typename "\"gradys_simulations.protocols.sensor.PythonSensorProtocol\""
-par GradysNetwork.sensors[2].protocol protocol "\"simple\""
+par GradysNetwork.sensors[2].protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.sensors[2].protocol protocol "\"zigzag\""
 par GradysNetwork.sensors[2].protocol protocolFileName "\"protocol_sensor\""
-par GradysNetwork.sensors[2].protocol protocolSensor "\"SimpleProtocolSensor\""
+par GradysNetwork.sensors[2].protocol protocolSensor "\"ZigZagProtocolSensor\""
 par GradysNetwork.sensors[2] typename "\"gradys_simulations.MobileSensorNode\""
 par GradysNetwork.sensors[2] hasStatus false
 par GradysNetwork.sensors[2] osgModel "\"\""
@@ -8750,11 +9212,11 @@ par GradysNetwork.sensors[3].mobility constraintAreaMaxY 10000m
 attr unit m
 par GradysNetwork.sensors[3].mobility constraintAreaMaxZ 10000m
 attr unit m
-par GradysNetwork.sensors[3].mobility initialX 577.898m
+par GradysNetwork.sensors[3].mobility initialX -2331.17m
 attr unit m
-par GradysNetwork.sensors[3].mobility initialY -400.457m
+par GradysNetwork.sensors[3].mobility initialY -446.698m
 attr unit m
-par GradysNetwork.sensors[3].mobility initialZ 1360.89m
+par GradysNetwork.sensors[3].mobility initialZ 5834.5m
 attr unit m
 par GradysNetwork.sensors[3].mobility initialLatitude -15.8436deg
 attr unit deg
@@ -9965,7 +10427,7 @@ par GradysNetwork.sensors[3].app[0] packetName "\"UdpBasicAppData\""
 par GradysNetwork.sensors[3].app[0] destPort 1000
 par GradysNetwork.sensors[3].app[0] messageLength 1454B
 attr unit B
-par GradysNetwork.sensors[3].app[0] startTime 0.498872s
+par GradysNetwork.sensors[3].app[0] startTime 1.67221s
 attr unit s
 par GradysNetwork.sensors[3].app[0] stopTime -1s
 attr unit s
@@ -10021,7 +10483,11 @@ par GradysNetwork.sensors[3].at typename "\"inet.common.MessageDispatcher\""
 par GradysNetwork.sensors[3].at displayStringTextFormat "\"processed %p pk (%l)\""
 par GradysNetwork.sensors[3].at forwardServiceRegistration true
 par GradysNetwork.sensors[3].at forwardProtocolRegistration true
-par GradysNetwork.sensors[3].protocol typename "\"gradys_simulations.protocols.base.CommunicationProtocolBase\""
+par GradysNetwork.sensors[3].protocol typename "\"gradys_simulations.protocols.sensor.PythonSensorProtocol\""
+par GradysNetwork.sensors[3].protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.sensors[3].protocol protocol "\"zigzag\""
+par GradysNetwork.sensors[3].protocol protocolFileName "\"protocol_sensor\""
+par GradysNetwork.sensors[3].protocol protocolSensor "\"ZigZagProtocolSensor\""
 par GradysNetwork.sensors[3] typename "\"gradys_simulations.MobileSensorNode\""
 par GradysNetwork.sensors[3] hasStatus false
 par GradysNetwork.sensors[3] osgModel "\"\""
@@ -10076,11 +10542,11 @@ par GradysNetwork.sensors[4].mobility constraintAreaMaxY 10000m
 attr unit m
 par GradysNetwork.sensors[4].mobility constraintAreaMaxZ 10000m
 attr unit m
-par GradysNetwork.sensors[4].mobility initialX 8511.93m
+par GradysNetwork.sensors[4].mobility initialX 577.898m
 attr unit m
-par GradysNetwork.sensors[4].mobility initialY 6721.58m
+par GradysNetwork.sensors[4].mobility initialY -400.457m
 attr unit m
-par GradysNetwork.sensors[4].mobility initialZ -8579.28m
+par GradysNetwork.sensors[4].mobility initialZ 1360.89m
 attr unit m
 par GradysNetwork.sensors[4].mobility initialLatitude -15.8406deg
 attr unit deg
@@ -11291,7 +11757,7 @@ par GradysNetwork.sensors[4].app[0] packetName "\"UdpBasicAppData\""
 par GradysNetwork.sensors[4].app[0] destPort 1000
 par GradysNetwork.sensors[4].app[0] messageLength 1454B
 attr unit B
-par GradysNetwork.sensors[4].app[0] startTime 0.411578s
+par GradysNetwork.sensors[4].app[0] startTime 0.498872s
 attr unit s
 par GradysNetwork.sensors[4].app[0] stopTime -1s
 attr unit s
@@ -11347,7 +11813,11 @@ par GradysNetwork.sensors[4].at typename "\"inet.common.MessageDispatcher\""
 par GradysNetwork.sensors[4].at displayStringTextFormat "\"processed %p pk (%l)\""
 par GradysNetwork.sensors[4].at forwardServiceRegistration true
 par GradysNetwork.sensors[4].at forwardProtocolRegistration true
-par GradysNetwork.sensors[4].protocol typename "\"gradys_simulations.protocols.base.CommunicationProtocolBase\""
+par GradysNetwork.sensors[4].protocol typename "\"gradys_simulations.protocols.sensor.PythonSensorProtocol\""
+par GradysNetwork.sensors[4].protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.sensors[4].protocol protocol "\"zigzag\""
+par GradysNetwork.sensors[4].protocol protocolFileName "\"protocol_sensor\""
+par GradysNetwork.sensors[4].protocol protocolSensor "\"ZigZagProtocolSensor\""
 par GradysNetwork.sensors[4] typename "\"gradys_simulations.MobileSensorNode\""
 par GradysNetwork.sensors[4] hasStatus false
 par GradysNetwork.sensors[4] osgModel "\"\""
@@ -11402,11 +11872,11 @@ par GradysNetwork.sensors[5].mobility constraintAreaMaxY 10000m
 attr unit m
 par GradysNetwork.sensors[5].mobility constraintAreaMaxZ 10000m
 attr unit m
-par GradysNetwork.sensors[5].mobility initialX -8257.41m
+par GradysNetwork.sensors[5].mobility initialX 8511.93m
 attr unit m
-par GradysNetwork.sensors[5].mobility initialY 2963.44m
+par GradysNetwork.sensors[5].mobility initialY 6721.58m
 attr unit m
-par GradysNetwork.sensors[5].mobility initialZ -9595.63m
+par GradysNetwork.sensors[5].mobility initialZ -8579.28m
 attr unit m
 par GradysNetwork.sensors[5].mobility initialLatitude -15.8416deg
 attr unit deg
@@ -12617,7 +13087,7 @@ par GradysNetwork.sensors[5].app[0] packetName "\"UdpBasicAppData\""
 par GradysNetwork.sensors[5].app[0] destPort 1000
 par GradysNetwork.sensors[5].app[0] messageLength 1454B
 attr unit B
-par GradysNetwork.sensors[5].app[0] startTime 0.459248s
+par GradysNetwork.sensors[5].app[0] startTime 0.411578s
 attr unit s
 par GradysNetwork.sensors[5].app[0] stopTime -1s
 attr unit s
@@ -12673,7 +13143,11 @@ par GradysNetwork.sensors[5].at typename "\"inet.common.MessageDispatcher\""
 par GradysNetwork.sensors[5].at displayStringTextFormat "\"processed %p pk (%l)\""
 par GradysNetwork.sensors[5].at forwardServiceRegistration true
 par GradysNetwork.sensors[5].at forwardProtocolRegistration true
-par GradysNetwork.sensors[5].protocol typename "\"gradys_simulations.protocols.base.CommunicationProtocolBase\""
+par GradysNetwork.sensors[5].protocol typename "\"gradys_simulations.protocols.sensor.PythonSensorProtocol\""
+par GradysNetwork.sensors[5].protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.sensors[5].protocol protocol "\"zigzag\""
+par GradysNetwork.sensors[5].protocol protocolFileName "\"protocol_sensor\""
+par GradysNetwork.sensors[5].protocol protocolSensor "\"ZigZagProtocolSensor\""
 par GradysNetwork.sensors[5] typename "\"gradys_simulations.MobileSensorNode\""
 par GradysNetwork.sensors[5] hasStatus false
 par GradysNetwork.sensors[5] osgModel "\"\""
@@ -12728,11 +13202,11 @@ par GradysNetwork.sensors[6].mobility constraintAreaMaxY 10000m
 attr unit m
 par GradysNetwork.sensors[6].mobility constraintAreaMaxZ 10000m
 attr unit m
-par GradysNetwork.sensors[6].mobility initialX 6652.4m
+par GradysNetwork.sensors[6].mobility initialX -8257.41m
 attr unit m
-par GradysNetwork.sensors[6].mobility initialY 9143.1m
+par GradysNetwork.sensors[6].mobility initialY 2963.44m
 attr unit m
-par GradysNetwork.sensors[6].mobility initialZ 5563.14m
+par GradysNetwork.sensors[6].mobility initialZ -9595.63m
 attr unit m
 par GradysNetwork.sensors[6].mobility initialLatitude -15.8437deg
 attr unit deg
@@ -13943,7 +14417,7 @@ par GradysNetwork.sensors[6].app[0] packetName "\"UdpBasicAppData\""
 par GradysNetwork.sensors[6].app[0] destPort 1000
 par GradysNetwork.sensors[6].app[0] messageLength 1454B
 attr unit B
-par GradysNetwork.sensors[6].app[0] startTime 0.151231s
+par GradysNetwork.sensors[6].app[0] startTime 0.459248s
 attr unit s
 par GradysNetwork.sensors[6].app[0] stopTime -1s
 attr unit s
@@ -13999,7 +14473,11 @@ par GradysNetwork.sensors[6].at typename "\"inet.common.MessageDispatcher\""
 par GradysNetwork.sensors[6].at displayStringTextFormat "\"processed %p pk (%l)\""
 par GradysNetwork.sensors[6].at forwardServiceRegistration true
 par GradysNetwork.sensors[6].at forwardProtocolRegistration true
-par GradysNetwork.sensors[6].protocol typename "\"gradys_simulations.protocols.base.CommunicationProtocolBase\""
+par GradysNetwork.sensors[6].protocol typename "\"gradys_simulations.protocols.sensor.PythonSensorProtocol\""
+par GradysNetwork.sensors[6].protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.sensors[6].protocol protocol "\"zigzag\""
+par GradysNetwork.sensors[6].protocol protocolFileName "\"protocol_sensor\""
+par GradysNetwork.sensors[6].protocol protocolSensor "\"ZigZagProtocolSensor\""
 par GradysNetwork.sensors[6] typename "\"gradys_simulations.MobileSensorNode\""
 par GradysNetwork.sensors[6] hasStatus false
 par GradysNetwork.sensors[6] osgModel "\"\""
@@ -14054,11 +14532,11 @@ par GradysNetwork.sensors[7].mobility constraintAreaMaxY 10000m
 attr unit m
 par GradysNetwork.sensors[7].mobility constraintAreaMaxZ 10000m
 attr unit m
-par GradysNetwork.sensors[7].mobility initialX 7400.24m
+par GradysNetwork.sensors[7].mobility initialX 6652.4m
 attr unit m
-par GradysNetwork.sensors[7].mobility initialY 7401.75m
+par GradysNetwork.sensors[7].mobility initialY 9143.1m
 attr unit m
-par GradysNetwork.sensors[7].mobility initialZ 9572.37m
+par GradysNetwork.sensors[7].mobility initialZ 5563.14m
 attr unit m
 par GradysNetwork.sensors[7].mobility initialLatitude -15.8437deg
 attr unit deg
@@ -15269,7 +15747,7 @@ par GradysNetwork.sensors[7].app[0] packetName "\"UdpBasicAppData\""
 par GradysNetwork.sensors[7].app[0] destPort 1000
 par GradysNetwork.sensors[7].app[0] messageLength 1454B
 attr unit B
-par GradysNetwork.sensors[7].app[0] startTime 0.641709s
+par GradysNetwork.sensors[7].app[0] startTime 0.151231s
 attr unit s
 par GradysNetwork.sensors[7].app[0] stopTime -1s
 attr unit s
@@ -15325,7 +15803,11 @@ par GradysNetwork.sensors[7].at typename "\"inet.common.MessageDispatcher\""
 par GradysNetwork.sensors[7].at displayStringTextFormat "\"processed %p pk (%l)\""
 par GradysNetwork.sensors[7].at forwardServiceRegistration true
 par GradysNetwork.sensors[7].at forwardProtocolRegistration true
-par GradysNetwork.sensors[7].protocol typename "\"gradys_simulations.protocols.base.CommunicationProtocolBase\""
+par GradysNetwork.sensors[7].protocol typename "\"gradys_simulations.protocols.sensor.PythonSensorProtocol\""
+par GradysNetwork.sensors[7].protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.sensors[7].protocol protocol "\"zigzag\""
+par GradysNetwork.sensors[7].protocol protocolFileName "\"protocol_sensor\""
+par GradysNetwork.sensors[7].protocol protocolSensor "\"ZigZagProtocolSensor\""
 par GradysNetwork.sensors[7] typename "\"gradys_simulations.MobileSensorNode\""
 par GradysNetwork.sensors[7] hasStatus false
 par GradysNetwork.sensors[7] osgModel "\"\""
@@ -15413,22 +15895,22 @@ par GradysNetwork.groundStation.lo[0].lo typename "\"inet.linklayer.loopback.Loo
 par GradysNetwork.groundStation.lo[0].lo interfaceTableModule "\"GradysNetwork.groundStation.interfaceTable\""
 par GradysNetwork.groundStation.lo[0].lo mtu 4470B
 attr unit B
-scalar GradysNetwork.groundStation.lo[0].lo rcvdPkFromHl:count 9
+scalar GradysNetwork.groundStation.lo[0].lo rcvdPkFromHl:count 0
 attr interpolationmode none
 attr recordingmode count
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, count"
-scalar GradysNetwork.groundStation.lo[0].lo rcvdPkFromHl:sum(packetBytes) 315
+scalar GradysNetwork.groundStation.lo[0].lo rcvdPkFromHl:sum(packetBytes) 0
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetReceivedFromUpper
 attr title "packets received from higher layer, sum(packetBytes)"
-scalar GradysNetwork.groundStation.lo[0].lo passedUpPk:count 9
+scalar GradysNetwork.groundStation.lo[0].lo passedUpPk:count 0
 attr interpolationmode none
 attr recordingmode count
 attr source packetSentToUpper
 attr title "packets passed to higher layer, count"
-scalar GradysNetwork.groundStation.lo[0].lo passedUpPk:sum(packetBytes) 315
+scalar GradysNetwork.groundStation.lo[0].lo passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetSentToUpper
@@ -15490,7 +15972,7 @@ attr recordingmode max
 attr source "warmup(atomic(constant0(packetPushEnded) + count(packetPushStarted) - count(packetPulled) - count(packetRemoved) - count(packetDropped)))"
 attr title "queue length, max"
 attr unit pk
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:timeavg 0.00039240323213438
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueLength:timeavg 0.0009010721771089
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode timeavg
@@ -15511,7 +15993,7 @@ attr recordingmode max
 attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetPushStarted)) - sum(packetLength(packetPulled)) - sum(packetLength(packetRemoved)) - sum(packetLength(packetDropped))))"
 attr title "queue bit length, max"
 attr unit b
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:timeavg 0.22288503585233
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueBitLength:timeavg 0.51084098632749
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode timeavg
@@ -15519,13 +16001,13 @@ attr source "warmup(atomic(constant0(packetPushEnded) + sum(packetLength(packetP
 attr title "queue bit length, timeavg"
 attr unit b
 statistic GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue queueingTime:histogram
-field count 9
-field mean 0.00035666666666667
-field stddev 0.00022068076490714
+field count 121
+field mean 0.00034464521923967
+field stddev 0.00019431167323504
 field min 5e-05
-field max 0.00067
-field sum 0.00321
-field sqrsum 1.5345e-06
+field max 0.000858071528
+field sum 0.041702071528
+field sqrsum 1.8903262747164e-05
 attr interpolationmode none
 attr recordingmode histogram
 attr source queueingTime(packetPulled)
@@ -15533,117 +16015,170 @@ attr title "queueing times"
 attr unit s
 bin	-inf	0
 bin	0	0
-bin	1e-05	0
 bin	2e-05	0
-bin	3e-05	0
-bin	4e-05	1
-bin	5e-05	0
-bin	6e-05	0
-bin	7e-05	0
-bin	8e-05	0
-bin	9e-05	0
-bin	0.0001	0
-bin	0.00011	1
-bin	0.00012	0
-bin	0.00013	0
-bin	0.00014	0
-bin	0.00015	0
-bin	0.00016	0
-bin	0.00017	0
-bin	0.00018	0
-bin	0.00019	0
-bin	0.0002	0
-bin	0.00021	0
-bin	0.00022	0
-bin	0.00023	1
-bin	0.00024	0
-bin	0.00025	0
-bin	0.00026	0
-bin	0.00027	1
-bin	0.00028	0
-bin	0.00029	0
-bin	0.0003	0
-bin	0.00031	0
-bin	0.00032	1
-bin	0.00033	0
-bin	0.00034	0
-bin	0.00035	0
+bin	4e-05	9
+bin	6e-05	2
+bin	8e-05	4
+bin	0.0001	8
+bin	0.00012	4
+bin	0.00014	1
+bin	0.00016	2
+bin	0.00018	1
+bin	0.0002	5
+bin	0.00022	6
+bin	0.00024	3
+bin	0.00026	6
+bin	0.00028	2
+bin	0.0003	6
+bin	0.00032	4
+bin	0.00034	4
 bin	0.00036	0
-bin	0.00037	0
-bin	0.00038	0
-bin	0.00039	0
-bin	0.0004	0
-bin	0.00041	0
-bin	0.00042	1
-bin	0.00043	0
-bin	0.00044	1
-bin	0.00045	0
-bin	0.00046	0
-bin	0.00047	0
-bin	0.00048	0
-bin	0.00049	0
-bin	0.0005	0
-bin	0.00051	0
-bin	0.00052	0
-bin	0.00053	0
-bin	0.00054	0
-bin	0.00055	0
-bin	0.00056	0
-bin	0.00057	0
-bin	0.00058	0
-bin	0.00059	0
-bin	0.0006	0
-bin	0.00061	0
-bin	0.00062	0
-bin	0.00063	0
-bin	0.00064	0
-bin	0.00065	0
-bin	0.00066	0
-bin	0.00067	2
+bin	0.00038	2
+bin	0.0004	3
+bin	0.00042	4
+bin	0.00044	4
+bin	0.00046	7
+bin	0.00048	2
+bin	0.0005	4
+bin	0.00052	6
+bin	0.00054	4
+bin	0.00056	1
+bin	0.00058	4
+bin	0.0006	2
+bin	0.00062	5
+bin	0.00064	1
+bin	0.00066	4
 bin	0.00068	0
-bin	0.00069	0
 bin	0.0007	0
-bin	0.00071	0
 bin	0.00072	0
-bin	0.00073	0
 bin	0.00074	0
-bin	0.00075	0
 bin	0.00076	0
-bin	0.00077	0
 bin	0.00078	0
-bin	0.00079	0
 bin	0.0008	0
-bin	0.00081	0
 bin	0.00082	0
-bin	0.00083	0
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPackets:count 9
+bin	0.00084	1
+bin	0.00086	0
+bin	0.00088	0
+bin	0.0009	0
+bin	0.00092	0
+bin	0.00094	0
+bin	0.00096	0
+bin	0.00098	0
+bin	0.001	0
+bin	0.00102	0
+bin	0.00104	0
+bin	0.00106	0
+bin	0.00108	0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPackets:count 121
 attr recordingmode count
 attr source packetPulled
 attr title "outgoing packets, count"
 attr unit pk
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:sum 5112
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:sum 68616
 attr interpolationmode none
 attr recordingmode sum
 attr source packetLength(packetPulled)
 attr title "outgoing packet lengths, sum"
 attr unit b
 statistic GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue outgoingPacketLengths:histogram
-field count 9
-field mean 568
-field stddev 0
-field min 568
+field count 121
+field mean 567.07438016529
+field stddev 7.1695714530888
+field min 512
 field max 568
-field sum 5112
-field sqrsum 2903616
+field sum 68616
+field sqrsum 38916544
 attr interpolationmode none
 attr recordingmode histogram
 attr source packetLength(packetPulled)
 attr title "outgoing packet lengths"
 attr unit b
 bin	-inf	0
+bin	498	0
+bin	499	0
+bin	500	0
+bin	501	0
+bin	502	0
+bin	503	0
+bin	504	0
+bin	505	0
+bin	506	0
+bin	507	0
+bin	508	0
+bin	509	0
+bin	510	0
+bin	511	0
+bin	512	2
+bin	513	0
+bin	514	0
+bin	515	0
+bin	516	0
+bin	517	0
+bin	518	0
+bin	519	0
+bin	520	0
+bin	521	0
+bin	522	0
+bin	523	0
+bin	524	0
+bin	525	0
+bin	526	0
+bin	527	0
+bin	528	0
+bin	529	0
+bin	530	0
+bin	531	0
+bin	532	0
+bin	533	0
+bin	534	0
+bin	535	0
+bin	536	0
+bin	537	0
+bin	538	0
+bin	539	0
+bin	540	0
+bin	541	0
+bin	542	0
+bin	543	0
+bin	544	0
+bin	545	0
+bin	546	0
+bin	547	0
+bin	548	0
+bin	549	0
+bin	550	0
+bin	551	0
+bin	552	0
+bin	553	0
+bin	554	0
+bin	555	0
+bin	556	0
+bin	557	0
+bin	558	0
+bin	559	0
+bin	560	0
+bin	561	0
+bin	562	0
+bin	563	0
+bin	564	0
+bin	565	0
+bin	566	0
 bin	567	0
-bin	568	9
+bin	568	119
 bin	569	0
+bin	570	0
+bin	571	0
+bin	572	0
+bin	573	0
+bin	574	0
+bin	575	0
+bin	576	0
+bin	577	0
+bin	578	0
+bin	579	0
+bin	580	0
+bin	581	0
+bin	582	0
 statistic GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue flowQueueingTime:histogram
 field count 0
 field mean -nan
@@ -15660,34 +16195,116 @@ attr unit s
 bin	-inf	0
 bin	0	0
 bin	1	0
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPackets:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPackets:count 121
 attr recordingmode count
 attr source packetPushStarted
 attr title "incoming packets, count"
 attr unit pk
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:sum 5112
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:sum 68616
 attr interpolationmode none
 attr recordingmode sum
 attr source packetLength(packetPushStarted)
 attr title "incoming packet lengths, sum"
 attr unit b
 statistic GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue incomingPacketLengths:histogram
-field count 9
-field mean 568
-field stddev 0
-field min 568
+field count 121
+field mean 567.07438016529
+field stddev 7.1695714530888
+field min 512
 field max 568
-field sum 5112
-field sqrsum 2903616
+field sum 68616
+field sqrsum 38916544
 attr interpolationmode none
 attr recordingmode histogram
 attr source packetLength(packetPushStarted)
 attr title "incoming packet lengths"
 attr unit b
 bin	-inf	0
+bin	498	0
+bin	499	0
+bin	500	0
+bin	501	0
+bin	502	0
+bin	503	0
+bin	504	0
+bin	505	0
+bin	506	0
+bin	507	0
+bin	508	0
+bin	509	0
+bin	510	0
+bin	511	0
+bin	512	2
+bin	513	0
+bin	514	0
+bin	515	0
+bin	516	0
+bin	517	0
+bin	518	0
+bin	519	0
+bin	520	0
+bin	521	0
+bin	522	0
+bin	523	0
+bin	524	0
+bin	525	0
+bin	526	0
+bin	527	0
+bin	528	0
+bin	529	0
+bin	530	0
+bin	531	0
+bin	532	0
+bin	533	0
+bin	534	0
+bin	535	0
+bin	536	0
+bin	537	0
+bin	538	0
+bin	539	0
+bin	540	0
+bin	541	0
+bin	542	0
+bin	543	0
+bin	544	0
+bin	545	0
+bin	546	0
+bin	547	0
+bin	548	0
+bin	549	0
+bin	550	0
+bin	551	0
+bin	552	0
+bin	553	0
+bin	554	0
+bin	555	0
+bin	556	0
+bin	557	0
+bin	558	0
+bin	559	0
+bin	560	0
+bin	561	0
+bin	562	0
+bin	563	0
+bin	564	0
+bin	565	0
+bin	566	0
 bin	567	0
-bin	568	9
+bin	568	119
 bin	569	0
+bin	570	0
+bin	571	0
+bin	572	0
+bin	573	0
+bin	574	0
+bin	575	0
+bin	576	0
+bin	577	0
+bin	578	0
+bin	579	0
+bin	580	0
+bin	581	0
+bin	582	0
 scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.pendingQueue droppedPacketsQueueOverflow:count 0
 attr interpolationmode none
 attr recordingmode count
@@ -15705,77 +16322,100 @@ par GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames p
 par GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames originatorMacDataServiceModule "\"^.^.originatorMacDataService\""
 par GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames ackHandlerModule "\"^.^.ackHandler\""
 statistic GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames queueingTime:histogram
-field count 9
-field mean 5.4e-05
-field stddev 0
-field min 5.4e-05
-field max 5.4e-05
-field sum 0.000486
-field sqrsum 2.6244e-08
+field count 121
+field mean 9.728784631405e-05
+field stddev 6.1560249738456e-06
+field min 5e-05
+field max 9.8153611e-05
+field sum 0.011771829404
+field sqrsum 1.149803527109e-06
 attr interpolationmode none
 attr recordingmode histogram
 attr source queueingTime(packetDequeued)
 attr title "queueing times"
 bin	-inf	0
-bin	0	9
-bin	0.01	0
-bin	0.02	0
-bin	0.03	0
-bin	0.04	0
-bin	0.05	0
-bin	0.06	0
-bin	0.07	0
-bin	0.08	0
-bin	0.09	0
-bin	0.1	0
-bin	0.11	0
-bin	0.12	0
-bin	0.13	0
-bin	0.14	0
-bin	0.15	0
-bin	0.16	0
-bin	0.17	0
-bin	0.18	0
-bin	0.19	0
-bin	0.2	0
-bin	0.21	0
-bin	0.22	0
-bin	0.23	0
-bin	0.24	0
-bin	0.25	0
-bin	0.26	0
-bin	0.27	0
-bin	0.28	0
-bin	0.29	0
-bin	0.3	0
-bin	0.31	0
-bin	0.32	0
-bin	0.33	0
-bin	0.34	0
-bin	0.35	0
-bin	0.36	0
-bin	0.37	0
-bin	0.38	0
-bin	0.39	0
-bin	0.4	0
-bin	0.41	0
-bin	0.42	0
-bin	0.43	0
-bin	0.44	0
-bin	0.45	0
-bin	0.46	0
-bin	0.47	0
-bin	0.48	0
-bin	0.49	0
-bin	0.5	0
-bin	0.51	0
+bin	3.7e-05	0
+bin	3.8e-05	0
+bin	3.9e-05	0
+bin	4e-05	0
+bin	4.1e-05	0
+bin	4.2e-05	0
+bin	4.3e-05	0
+bin	4.4e-05	0
+bin	4.5e-05	0
+bin	4.6e-05	0
+bin	4.7e-05	0
+bin	4.8e-05	0
+bin	4.9e-05	2
+bin	5e-05	0
+bin	5.1e-05	0
+bin	5.2e-05	0
+bin	5.3e-05	0
+bin	5.4e-05	0
+bin	5.5e-05	0
+bin	5.6e-05	0
+bin	5.7e-05	0
+bin	5.8e-05	0
+bin	5.9e-05	0
+bin	6e-05	0
+bin	6.1e-05	0
+bin	6.2e-05	0
+bin	6.3e-05	0
+bin	6.4e-05	0
+bin	6.5e-05	0
+bin	6.6e-05	0
+bin	6.7e-05	0
+bin	6.8e-05	0
+bin	6.9e-05	0
+bin	7e-05	0
+bin	7.1e-05	0
+bin	7.2e-05	0
+bin	7.3e-05	0
+bin	7.4e-05	0
+bin	7.5e-05	0
+bin	7.6e-05	0
+bin	7.7e-05	0
+bin	7.8e-05	0
+bin	7.9e-05	0
+bin	8e-05	0
+bin	8.1e-05	0
+bin	8.2e-05	0
+bin	8.3e-05	0
+bin	8.4e-05	0
+bin	8.5e-05	0
+bin	8.6e-05	0
+bin	8.7e-05	0
+bin	8.8e-05	0
+bin	8.9e-05	0
+bin	9e-05	0
+bin	9.1e-05	0
+bin	9.2e-05	0
+bin	9.3e-05	0
+bin	9.4e-05	0
+bin	9.5e-05	0
+bin	9.6e-05	0
+bin	9.7e-05	0
+bin	9.8e-05	119
+bin	9.9e-05	0
+bin	0.0001	0
+bin	0.000101	0
+bin	0.000102	0
+bin	0.000103	0
+bin	0.000104	0
+bin	0.000105	0
+bin	0.000106	0
+bin	0.000107	0
+bin	0.000108	0
+bin	0.000109	0
+bin	0.00011	0
+bin	0.000111	0
 scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:max 1
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode max
 attr source "warmup(count(packetEnqueued) - count(packetDequeued))"
 attr title "queue length, max"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:timeavg 5.913292908024e-05
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.inProgressFrames queueLength:timeavg 0.00024752851463926
 attr autoWarmupFilter false
 attr interpolationmode sample-hold
 attr recordingmode timeavg
@@ -15784,10 +16424,10 @@ attr title "queue length, timeavg"
 par GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention typename "\"inet.linklayer.ieee80211.mac.contention.Contention\""
 par GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention initialChannelBusy true
 par GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention backoffOptimization true
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention channelAccessGranted:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention channelAccessGranted:count 121
 attr recordingmode count
 attr title "channel access granted, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention stateChanged:count 110
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess.contention stateChanged:count 1602
 attr enum IDLE,DEFER,IFS_AND_BACKOFF
 attr interpolationmode none
 attr recordingmode count
@@ -15798,7 +16438,7 @@ par GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess difsn -1
 par GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess cwMin -1
 par GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess cwMax -1
 par GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess rxModule "\"^.^.rx\""
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess channelOwnershipChanged:count 18
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.channelAccess channelOwnershipChanged:count 242
 attr interpolationmode sample-hold
 attr recordingmode count
 attr title "channel ownership, count"
@@ -15816,7 +16456,7 @@ par GradysNetwork.groundStation.wlan[0].mac.dcf.recipientMacDataService typename
 scalar GradysNetwork.groundStation.wlan[0].mac.dcf.recipientMacDataService packetDeaggregated:count 0
 attr recordingmode count
 attr title "packets deaggregated, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf.recipientMacDataService packetDefragmented:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf.recipientMacDataService packetDefragmented:count 122
 attr recordingmode count
 attr title "packets defragmented, count"
 scalar GradysNetwork.groundStation.wlan[0].mac.dcf.recipientMacDataService packetDropDuplicateDetected:count 0
@@ -15875,122 +16515,146 @@ par GradysNetwork.groundStation.wlan[0].mac.dcf.ctsPolicy rateSelectionModule "\
 par GradysNetwork.groundStation.wlan[0].mac.dcf typename "\"inet.linklayer.ieee80211.mac.coordinationfunction.Dcf\""
 par GradysNetwork.groundStation.wlan[0].mac.dcf rxModule "\"^.rx\""
 par GradysNetwork.groundStation.wlan[0].mac.dcf txModule "\"^.tx\""
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf frameSequenceFinished:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf frameSequenceFinished:count 121
 attr recordingmode count
 attr title "finished frame sequences, count"
 statistic GradysNetwork.groundStation.wlan[0].mac.dcf frameSequenceDuration:histogram
-field count 9
-field mean 5.4e-05
-field stddev 0
-field min 5.4e-05
-field max 5.4e-05
-field sum 0.000486
-field sqrsum 2.6244e-08
+field count 121
+field mean 9.728784631405e-05
+field stddev 6.1560249738456e-06
+field min 5e-05
+field max 9.8153611e-05
+field sum 0.011771829404
+field sqrsum 1.149803527109e-06
 attr recordingmode histogram
 attr source frameSequenceDuration(frameSequenceFinished)
 attr title "frame sequence durations"
 bin	-inf	0
-bin	0	9
-bin	0.01	0
-bin	0.02	0
-bin	0.03	0
-bin	0.04	0
-bin	0.05	0
-bin	0.06	0
-bin	0.07	0
-bin	0.08	0
-bin	0.09	0
-bin	0.1	0
-bin	0.11	0
-bin	0.12	0
-bin	0.13	0
-bin	0.14	0
-bin	0.15	0
-bin	0.16	0
-bin	0.17	0
-bin	0.18	0
-bin	0.19	0
-bin	0.2	0
-bin	0.21	0
-bin	0.22	0
-bin	0.23	0
-bin	0.24	0
-bin	0.25	0
-bin	0.26	0
-bin	0.27	0
-bin	0.28	0
-bin	0.29	0
-bin	0.3	0
-bin	0.31	0
-bin	0.32	0
-bin	0.33	0
-bin	0.34	0
-bin	0.35	0
-bin	0.36	0
-bin	0.37	0
-bin	0.38	0
-bin	0.39	0
-bin	0.4	0
-bin	0.41	0
-bin	0.42	0
-bin	0.43	0
-bin	0.44	0
-bin	0.45	0
-bin	0.46	0
-bin	0.47	0
-bin	0.48	0
-bin	0.49	0
-bin	0.5	0
-bin	0.51	0
+bin	3.7e-05	0
+bin	3.8e-05	0
+bin	3.9e-05	0
+bin	4e-05	0
+bin	4.1e-05	0
+bin	4.2e-05	0
+bin	4.3e-05	0
+bin	4.4e-05	0
+bin	4.5e-05	0
+bin	4.6e-05	0
+bin	4.7e-05	0
+bin	4.8e-05	0
+bin	4.9e-05	2
+bin	5e-05	0
+bin	5.1e-05	0
+bin	5.2e-05	0
+bin	5.3e-05	0
+bin	5.4e-05	0
+bin	5.5e-05	0
+bin	5.6e-05	0
+bin	5.7e-05	0
+bin	5.8e-05	0
+bin	5.9e-05	0
+bin	6e-05	0
+bin	6.1e-05	0
+bin	6.2e-05	0
+bin	6.3e-05	0
+bin	6.4e-05	0
+bin	6.5e-05	0
+bin	6.6e-05	0
+bin	6.7e-05	0
+bin	6.8e-05	0
+bin	6.9e-05	0
+bin	7e-05	0
+bin	7.1e-05	0
+bin	7.2e-05	0
+bin	7.3e-05	0
+bin	7.4e-05	0
+bin	7.5e-05	0
+bin	7.6e-05	0
+bin	7.7e-05	0
+bin	7.8e-05	0
+bin	7.9e-05	0
+bin	8e-05	0
+bin	8.1e-05	0
+bin	8.2e-05	0
+bin	8.3e-05	0
+bin	8.4e-05	0
+bin	8.5e-05	0
+bin	8.6e-05	0
+bin	8.7e-05	0
+bin	8.8e-05	0
+bin	8.9e-05	0
+bin	9e-05	0
+bin	9.1e-05	0
+bin	9.2e-05	0
+bin	9.3e-05	0
+bin	9.4e-05	0
+bin	9.5e-05	0
+bin	9.6e-05	0
+bin	9.7e-05	0
+bin	9.8e-05	119
+bin	9.9e-05	0
+bin	0.0001	0
+bin	0.000101	0
+bin	0.000102	0
+bin	0.000103	0
+bin	0.000104	0
+bin	0.000105	0
+bin	0.000106	0
+bin	0.000107	0
+bin	0.000108	0
+bin	0.000109	0
+bin	0.00011	0
+bin	0.000111	0
 statistic GradysNetwork.groundStation.wlan[0].mac.dcf frameSequenceNumPackets:histogram
-field count 9
-field mean 1
-field stddev 0
+field count 121
+field mean 1.9834710743802
+field stddev 0.12802806166229
 field min 1
-field max 1
-field sum 9
-field sqrsum 9
+field max 2
+field sum 240
+field sqrsum 478
 attr recordingmode histogram
 attr source frameSequenceNumPackets(frameSequenceFinished)
 attr title "frame sequences: number of packets"
 bin	-inf	0
 bin	0	0
-bin	1	9
-bin	2	0
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeer:count 9
+bin	1	2
+bin	2	119
+bin	3	0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeer:count 241
 attr interpolationmode none
 attr recordingmode count
 attr title "packets received, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeer:sum(packetBytes) 639
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeer:sum(packetBytes) 10307
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets received, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerUnicast:count 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerUnicast:count 121
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Unicast(packetReceivedFromPeer)
 attr title "packets received: unicast, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerUnicast:sum(packetBytes) 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerUnicast:sum(packetBytes) 1794
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Unicast(packetReceivedFromPeer)
 attr title "packets received: unicast, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerMulticast:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerMulticast:count 120
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Multicast(packetReceivedFromPeer)
 attr title "packets received: multicast, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerMulticast:sum(packetBytes) 639
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerMulticast:sum(packetBytes) 8513
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Multicast(packetReceivedFromPeer)
 attr title "packets received: multicast, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerBroadcast:count 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerBroadcast:count 1
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Broadcast(packetReceivedFromPeer)
 attr title "packets received: broadcast, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerBroadcast:sum(packetBytes) 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerBroadcast:sum(packetBytes) 64
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Broadcast(packetReceivedFromPeer)
@@ -16005,50 +16669,50 @@ attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Retry(packetReceivedFromPeer)
 attr title "packets received: with retry, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:count 241
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211NotRetry(packetReceivedFromPeer)
 attr title "packets received: without retry, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:sum(packetBytes) 639
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetReceivedFromPeerWithoutRetry:sum(packetBytes) 10307
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211NotRetry(packetReceivedFromPeer)
 attr title "packets received: without retry, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeer:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeer:count 123
 attr interpolationmode none
 attr recordingmode count
 attr title "packets sent, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeer:sum(packetBytes) 639
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeer:sum(packetBytes) 8605
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets sent, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerUnicast:count 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerUnicast:count 121
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Unicast(packetSentToPeer)
 attr title "packets sent: unicast, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerUnicast:sum(packetBytes) 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerUnicast:sum(packetBytes) 8477
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Unicast(packetSentToPeer)
 attr title "packets sent: unicast, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerMulticast:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerMulticast:count 2
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Multicast(packetSentToPeer)
 attr title "packets sent: multicast, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerMulticast:sum(packetBytes) 639
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerMulticast:sum(packetBytes) 128
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Multicast(packetSentToPeer)
 attr title "packets sent: multicast, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerBroadcast:count 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerBroadcast:count 2
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211Broadcast(packetSentToPeer)
 attr title "packets sent: broadcast , count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerBroadcast:sum(packetBytes) 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerBroadcast:sum(packetBytes) 128
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Broadcast(packetSentToPeer)
@@ -16063,32 +16727,32 @@ attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211Retry(packetSentToPeer)
 attr title "packets sent: with retry, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerWithoutRetry:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerWithoutRetry:count 123
 attr interpolationmode none
 attr recordingmode count
 attr source ieee80211NotRetry(packetSentToPeer)
 attr title "packets sent: without retry, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerWithoutRetry:sum(packetBytes) 639
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetSentToPeerWithoutRetry:sum(packetBytes) 8605
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source ieee80211NotRetry(packetSentToPeer)
 attr title "packets sent: without retry, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetDrop:count 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetDrop:count 34
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropped
 attr title "packet drops, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetDrop:sum(packetBytes) 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetDrop:sum(packetBytes) 1438
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropped
 attr title "packet drops, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetDropNotAddressedToUs:count 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetDropNotAddressedToUs:count 34
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drops: not addressed to us, count"
-scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetDropNotAddressedToUs:sum(packetBytes) 0
+scalar GradysNetwork.groundStation.wlan[0].mac.dcf packetDropNotAddressedToUs:sum(packetBytes) 1438
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
@@ -16134,44 +16798,44 @@ attr enum off,sleep,receiver,transmitter,transceiver
 par GradysNetwork.groundStation.wlan[0].mac mtu 2304B
 attr unit B
 par GradysNetwork.groundStation.wlan[0].mac qosStation false
-scalar GradysNetwork.groundStation.wlan[0].mac packetReceivedFromLower:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac packetReceivedFromLower:count 275
 attr interpolationmode none
 attr recordingmode count
 attr title "packets received from lower layer, count"
-scalar GradysNetwork.groundStation.wlan[0].mac packetReceivedFromLower:sum(packetBytes) 639
+scalar GradysNetwork.groundStation.wlan[0].mac packetReceivedFromLower:sum(packetBytes) 11745
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets received from lower layer, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac packetSentToLower:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac packetSentToLower:count 123
 attr interpolationmode none
 attr recordingmode count
 attr title "packets sent to lower layer, count"
-scalar GradysNetwork.groundStation.wlan[0].mac packetSentToLower:sum(packetBytes) 639
+scalar GradysNetwork.groundStation.wlan[0].mac packetSentToLower:sum(packetBytes) 8605
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets sent to lower layer, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac packetReceivedFromUpper:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac packetReceivedFromUpper:count 121
 attr interpolationmode none
 attr recordingmode count
 attr title "packets received from upper layer, count"
-scalar GradysNetwork.groundStation.wlan[0].mac packetReceivedFromUpper:sum(packetBytes) 387
+scalar GradysNetwork.groundStation.wlan[0].mac packetReceivedFromUpper:sum(packetBytes) 5189
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets received from upper layer, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac packetSentToUpper:count 9
+scalar GradysNetwork.groundStation.wlan[0].mac packetSentToUpper:count 122
 attr interpolationmode none
 attr recordingmode count
 attr title "packets sent to upper layer, count"
-scalar GradysNetwork.groundStation.wlan[0].mac packetSentToUpper:sum(packetBytes) 387
+scalar GradysNetwork.groundStation.wlan[0].mac packetSentToUpper:sum(packetBytes) 5225
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr title "packets sent to upper layer, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac packetDrop:count 0
+scalar GradysNetwork.groundStation.wlan[0].mac packetDrop:count 34
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropped
 attr title "packet drops, count"
-scalar GradysNetwork.groundStation.wlan[0].mac packetDrop:sum(packetBytes) 0
+scalar GradysNetwork.groundStation.wlan[0].mac packetDrop:sum(packetBytes) 1438
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropped
@@ -16186,12 +16850,12 @@ attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packet drops: incorrectly received, sum(packetBytes)"
-scalar GradysNetwork.groundStation.wlan[0].mac packetDropNotAddressedToUs:count 0
+scalar GradysNetwork.groundStation.wlan[0].mac packetDropNotAddressedToUs:count 34
 attr interpolationmode none
 attr recordingmode count
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
 attr title "packet drops: not addressed to us, count"
-scalar GradysNetwork.groundStation.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 0
+scalar GradysNetwork.groundStation.wlan[0].mac packetDropNotAddressedToUs:sum(packetBytes) 1438
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetDropReasonIsNotAddressedToUs(packetDropped)
@@ -16377,94 +17041,84 @@ bin	0.44	0
 bin	0.46	0
 bin	0.48	0
 bin	0.5	0
-scalar GradysNetwork.groundStation.wlan[0].radio radioMode:count 21
+scalar GradysNetwork.groundStation.wlan[0].radio radioMode:count 249
 attr interpolationmode sample-hold
 attr recordingmode count
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar GradysNetwork.groundStation.wlan[0].radio receptionState:count 37
+scalar GradysNetwork.groundStation.wlan[0].radio receptionState:count 797
 attr interpolationmode sample-hold
 attr recordingmode count
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar GradysNetwork.groundStation.wlan[0].radio transmissionState:count 36
+scalar GradysNetwork.groundStation.wlan[0].radio transmissionState:count 492
 attr interpolationmode sample-hold
 attr recordingmode count
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
 statistic GradysNetwork.groundStation.wlan[0].radio minSnir:histogram
-field count 9
-field mean 10195016852.783
-field stddev 30585013971.247
-field min 217.73548483803
-field max 91755054109.427
-field sum 91755151675.05
-field sqrsum 8.418989954628e+21
+field count 275
+field mean 137364.61482729
+field stddev 304731.77039387
+field min 3956.8844976351
+field max 2129332.971788
+field sum 37775269.077506
+field sqrsum 30633023103972
 attr recordingmode histogram
 attr source minimumSnir(packetSentToUpper)
 attr title "Min SNIR"
 bin	-inf	0
-bin	0	8
-bin	2000000000	0
-bin	4000000000	0
-bin	6000000000	0
-bin	8000000000	0
-bin	10000000000	0
-bin	12000000000	0
-bin	14000000000	0
-bin	16000000000	0
-bin	18000000000	0
-bin	20000000000	0
-bin	22000000000	0
-bin	24000000000	0
-bin	26000000000	0
-bin	28000000000	0
-bin	30000000000	0
-bin	32000000000	0
-bin	34000000000	0
-bin	36000000000	0
-bin	38000000000	0
-bin	40000000000	0
-bin	42000000000	0
-bin	44000000000	0
-bin	46000000000	0
-bin	48000000000	0
-bin	50000000000	0
-bin	52000000000	0
-bin	54000000000	0
-bin	56000000000	0
-bin	58000000000	0
-bin	60000000000	0
-bin	62000000000	0
-bin	64000000000	0
-bin	66000000000	0
-bin	68000000000	0
-bin	70000000000	0
-bin	72000000000	0
-bin	74000000000	0
-bin	76000000000	0
-bin	78000000000	0
-bin	80000000000	0
-bin	82000000000	0
-bin	84000000000	0
-bin	86000000000	0
-bin	88000000000	0
-bin	90000000000	1
-bin	92000000000	0
-bin	94000000000	0
-bin	96000000000	0
-bin	98000000000	0
-bin	100000000000	0
-bin	102000000000	0
-bin	104000000000	0
-bin	106000000000	0
-bin	108000000000	0
-bin	110000000000	0
-bin	112000000000	0
-bin	114000000000	0
-bin	116000000000	0
+bin	0	152
+bin	45000	64
+bin	90000	8
+bin	135000	8
+bin	180000	7
+bin	225000	4
+bin	270000	2
+bin	315000	0
+bin	360000	2
+bin	405000	6
+bin	450000	2
+bin	495000	0
+bin	540000	0
+bin	585000	2
+bin	630000	2
+bin	675000	2
+bin	720000	2
+bin	765000	0
+bin	810000	2
+bin	855000	0
+bin	900000	0
+bin	945000	0
+bin	990000	0
+bin	1035000	2
+bin	1080000	0
+bin	1125000	2
+bin	1170000	0
+bin	1215000	0
+bin	1260000	0
+bin	1305000	0
+bin	1350000	2
+bin	1395000	0
+bin	1440000	0
+bin	1485000	0
+bin	1530000	2
+bin	1575000	0
+bin	1620000	0
+bin	1665000	0
+bin	1710000	0
+bin	1755000	0
+bin	1800000	0
+bin	1845000	0
+bin	1890000	0
+bin	1935000	0
+bin	1980000	0
+bin	2025000	0
+bin	2070000	0
+bin	2115000	2
+bin	2160000	0
 statistic GradysNetwork.groundStation.wlan[0].radio packetErrorRate:histogram
-field count 9
+field count 275
 field mean 0
 field stddev 0
 field min 0
@@ -16500,7 +17154,7 @@ bin	-0.08	0
 bin	-0.06	0
 bin	-0.04	0
 bin	-0.02	0
-bin	0	9
+bin	0	275
 bin	0.02	0
 bin	0.04	0
 bin	0.06	0
@@ -16732,10 +17386,10 @@ par GradysNetwork.groundStation.ipv4.arp proxyArpInterfaces "\"\""
 scalar GradysNetwork.groundStation.ipv4.arp arpResolutionFailed:count 0
 attr recordingmode count
 attr title "ARP failed resolutions, count"
-scalar GradysNetwork.groundStation.ipv4.arp arpResolutionCompleted:count 0
+scalar GradysNetwork.groundStation.ipv4.arp arpResolutionCompleted:count 3
 attr recordingmode count
 attr title "ARP completed resolutions, count"
-scalar GradysNetwork.groundStation.ipv4.arp arpResolutionInitiated:count 0
+scalar GradysNetwork.groundStation.ipv4.arp arpResolutionInitiated:count 2
 attr recordingmode count
 attr title "ARP initiated resolutions, count"
 scalar GradysNetwork.groundStation.ipv4.arp arpReplySent:count 0
@@ -16746,11 +17400,11 @@ scalar GradysNetwork.groundStation.ipv4.arp arpReplySent:sum(packetBytes) 0
 attr recordingmode sum(packetBytes)
 attr source arpReplySent
 attr title "ARP replies sent, sum(packetBytes)"
-scalar GradysNetwork.groundStation.ipv4.arp arpRequestSent:count 0
+scalar GradysNetwork.groundStation.ipv4.arp arpRequestSent:count 2
 attr recordingmode count
 attr source arpRequestSent
 attr title "ARP request sent, count"
-scalar GradysNetwork.groundStation.ipv4.arp arpRequestSent:sum(packetBytes) 0
+scalar GradysNetwork.groundStation.ipv4.arp arpRequestSent:sum(packetBytes) 56
 attr recordingmode sum(packetBytes)
 attr source arpRequestSent
 attr title "ARP request sent, sum(packetBytes)"
@@ -16774,27 +17428,27 @@ par GradysNetwork.groundStation.udp icmpv6Module "\"^.ipv6.icmpv6\""
 par GradysNetwork.groundStation.udp crcMode "\"declared\""
 attr enum disabled,declared,computed
 par GradysNetwork.groundStation.udp defaultMulticastLoop true
-scalar GradysNetwork.groundStation.udp packetReceived:count 18
+scalar GradysNetwork.groundStation.udp packetReceived:count 119
 attr interpolationmode none
 attr recordingmode count
 attr source packetReceived
 attr title "packets received, count"
-scalar GradysNetwork.groundStation.udp packetReceived:sum(packetBytes) 270
+scalar GradysNetwork.groundStation.udp packetReceived:sum(packetBytes) 1785
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
-scalar GradysNetwork.groundStation.udp packetSent:count 9
+scalar GradysNetwork.groundStation.udp packetSent:count 119
 attr interpolationmode none
 attr recordingmode count
 attr source packetSent
 attr title "packets sent, count"
-scalar GradysNetwork.groundStation.udp packetSent:sum(packetBytes) 135
+scalar GradysNetwork.groundStation.udp packetSent:sum(packetBytes) 1785
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
-scalar GradysNetwork.groundStation.udp passedUpPk:count 18
+scalar GradysNetwork.groundStation.udp passedUpPk:count 119
 attr interpolationmode none
 attr recordingmode count
 attr source packetSentToUpper
@@ -16866,37 +17520,37 @@ par GradysNetwork.groundStation.app[0] stopOperationExtraTime -1s
 attr unit s
 par GradysNetwork.groundStation.app[0] stopOperationTimeout 2s
 attr unit s
-scalar GradysNetwork.groundStation.app[0] "packets sent" 9
+scalar GradysNetwork.groundStation.app[0] "packets sent" 119
 scalar GradysNetwork.groundStation.app[0] "packets received" 0
-scalar GradysNetwork.groundStation.app[0] packetReceived:count 9
+scalar GradysNetwork.groundStation.app[0] packetReceived:count 119
 attr interpolationmode none
 attr recordingmode count
 attr source packetReceived
 attr title "packets received, count"
-scalar GradysNetwork.groundStation.app[0] packetReceived:sum(packetBytes) 63
+scalar GradysNetwork.groundStation.app[0] packetReceived:sum(packetBytes) 833
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
 statistic GradysNetwork.groundStation.app[0] rcvdPkLifetime:stats
-field count 9
-field mean 5.4092946888889e-05
-field stddev 6.4288974261951e-08
-field min 5.4e-05
-field max 5.4184964e-05
-field sum 0.000486836522
-field sqrsum 2.6334455192695e-08
+field count 119
+field mean 5.4041300294118e-05
+field stddev 1.7945906242252e-08
+field min 5.4006767e-05
+field max 5.4076815e-05
+field sum 0.006430914735
+field sqrsum 3.4753503236256e-07
 attr interpolationmode none
 attr recordingmode stats
 attr source dataAge(packetReceived)
 attr title "received packet lifetime"
 attr unit s
-scalar GradysNetwork.groundStation.app[0] packetSent:count 9
+scalar GradysNetwork.groundStation.app[0] packetSent:count 119
 attr interpolationmode none
 attr recordingmode count
 attr source packetSent
 attr title "packets sent, count"
-scalar GradysNetwork.groundStation.app[0] packetSent:sum(packetBytes) 63
+scalar GradysNetwork.groundStation.app[0] packetSent:sum(packetBytes) 833
 attr interpolationmode none
 attr recordingmode sum(packetBytes)
 attr source packetSent
@@ -16906,9 +17560,10 @@ par GradysNetwork.groundStation.at displayStringTextFormat "\"processed %p pk (%
 par GradysNetwork.groundStation.at forwardServiceRegistration true
 par GradysNetwork.groundStation.at forwardProtocolRegistration true
 par GradysNetwork.groundStation.protocol typename "\"gradys_simulations.protocols.ground.PythonGroundProtocol\""
-par GradysNetwork.groundStation.protocol protocol "\"simple\""
-par GradysNetwork.groundStation.protocol protocolFileName "\"protocol_ground\""
-par GradysNetwork.groundStation.protocol protocolGround "\"SimpleProtocolGround\""
+par GradysNetwork.groundStation.protocol customProtocolLocation "\"/home/lac/Documents/Gradys/workspace/gradys-sim-prototype/showcases\""
+par GradysNetwork.groundStation.protocol protocol "\"zigzag\""
+par GradysNetwork.groundStation.protocol protocolFileName "\"protocol_sensor\""
+par GradysNetwork.groundStation.protocol protocolGround "\"ZigZagProtocolSensor\""
 par GradysNetwork.groundStation typename "\"gradys_simulations.GroundStation\""
 par GradysNetwork.groundStation hasStatus false
 par GradysNetwork.groundStation osgModel "\"\""

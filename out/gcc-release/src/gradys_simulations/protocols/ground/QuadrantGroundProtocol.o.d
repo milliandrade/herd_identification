@@ -73,6 +73,7 @@
  gradys_simulations/protocols/ground/QuadrantGroundProtocol.h \
  gradys_simulations/protocols/ground/../base/CommunicationProtocolBase.h \
  gradys_simulations/protocols/messages/internal/MobilityCommand_m.h \
+ gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h \
  gradys_simulations/protocols/messages/internal/CommunicationCommand_m.h \
  gradys_simulations/protocols/messages/internal/Telemetry_m.h \
  gradys_simulations/protocols/ground/../messages/network/QuadrantMessage_m.h
@@ -224,6 +225,8 @@ gradys_simulations/protocols/ground/QuadrantGroundProtocol.h:
 gradys_simulations/protocols/ground/../base/CommunicationProtocolBase.h:
 
 gradys_simulations/protocols/messages/internal/MobilityCommand_m.h:
+
+gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h:
 
 gradys_simulations/protocols/messages/internal/CommunicationCommand_m.h:
 

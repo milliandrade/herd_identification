@@ -32,25 +32,39 @@ Define_Module(PythonDroneProtocol);
 void PythonDroneProtocol::initialize(int stage) {
     CommunicationProtocolPythonBase::initialize(stage, "Drones");
 
-    protocol = par("protocol").stringValue();
-    protocolFileName = par("protocolFileName").stringValue();
-    protocolType = par("protocolMobile").stringValue();
+    if(stage == INITSTAGE_LOCAL) {
+        customProtocolLocation = par("customProtocolLocation").stringValue();
+        protocol = par("protocol").stringValue();
+        protocolFileName = par("protocolFileName").stringValue();
+        protocolType = par("protocolMobile").stringValue();
 
-    pybind11::object InteropEncapsulator = pybind11::module_::import(
-            "simulator.encapsulator.interop").attr("InteropEncapsulator");
-    instance = InteropEncapsulator();
+        pybind11::object InteropEncapsulator = pybind11::module_::import(
+                "gradysim.encapsulator.interop").attr("InteropEncapsulator");
+        instance = InteropEncapsulator();
 
-    std::string importPath = "simulator.protocols." + protocol + "."
-            + protocolFileName;
-    pybind11::object protocolMobileClass = pybind11::module_::import(
-            importPath.c_str()).attr(protocolType.c_str());
-    instance.attr("encapsulate")(protocolMobileClass);
+        py::object scope = py::module_::import("__main__").attr("__dict__");
 
-    instance.attr("set_timestamp")(simTime().dbl());
+        std::string sysPath = "sys.path.append('" + customProtocolLocation + "/"
+                + protocol + "')";
+        pybind11::exec(sysPath, scope);
 
-    pybind11::list consequences = instance.attr("initialize")(stage);
-    for (auto consequence : consequences) {
-        dealWithConsequence(consequence.cast<pybind11::object>());
+        std::string import = "from " + protocolFileName + " import " + protocolType;
+        pybind11::exec(import, scope);
+
+        pybind11::object protocolMobileClass =
+                pybind11::eval(protocolType, scope).cast<pybind11::object>();
+
+        instance.attr("encapsulate")(protocolMobileClass);
+
+        instance.attr("set_timestamp")(simTime().dbl());
+
+        instance.attr("set_id")(this->getParentModule()->getId());
+
+        pybind11::list consequences = instance.attr("initialize")();
+        for (auto consequence : consequences) {
+            dealWithConsequence(consequence.cast<pybind11::object>(), nullptr);
+        }
+
     }
 }
 

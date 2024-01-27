@@ -37,8 +37,8 @@ void QuadrantSensorProtocol::initialize(int stage) {
     payload->setContent(payloadSize);
     payload->setUuids(uuid.c_str());
 
-//    std::cout << "[SENSOR] [ID: " << this->getParentModule()->getId()
-//            << "] inicializando .... [UUID: " << uuid.c_str() << "]." << endl;
+    std::cout << "[SENSOR] [ID: " << this->getParentModule()->getId()
+            << "] inicializando .... [UUID: " << uuid.c_str() << "]." << endl;
 
     CommunicationCommand *command = new CommunicationCommand();
     command->setCommandType(CommunicationCommandType::SET_PAYLOAD);
@@ -51,50 +51,44 @@ void QuadrantSensorProtocol::handlePacket(Packet *pk) {
     auto message = pk->peekAtFront<QuadrantMessage>(B(7), 1);
     uuid = this->getParentModule()->par("sensorUid").str();
 
-//    std::cout << "[SENSOR] [ID: " << this->getParentModule()->getId() << "Recebeu pacote do drone "
-//            << message->getSourceID() << ". [UUID: " << uuid << "]."
-//            << endl;
+    std::cout << "[SENSOR] [ID: " << this->getParentModule()->getId() << "Recebeu pacote do drone "
+            << message->getSourceID() << ". [UUID: " << uuid << "]."
+            << endl;
     QuadrantMessage *payload = new QuadrantMessage();
     payload->addTag<CreationTimeTag>()->setCreationTime(simTime());
     payload->setSenderType(SENSOR);
     payload->setContent(payloadSize);
     payload->setUuids(this->uuid.c_str());
 
-    CommunicationCommand *targetCommand = new CommunicationCommand();
-//    targetCommand->setCommandType(CommunicationCommandType::SET_PAYLOAD);
-    targetCommand->setCommandType(CommunicationCommandType::SET_TARGET);
-    targetCommand->setTarget(pk->getName());
-    targetCommand->setPayloadTemplate(payload);
-    sendCommand(targetCommand);
 
-//    if (message != nullptr) {
-//        switch (message->getSenderType()) {
-//        case DRONE: {
-//            std::cout << "[SENSOR] Enviando mensagem para ID: \t"
-//                    << message->getSourceID() << "\tUUID: \t"
-//                    << payload->getUuids() << endl;
-//            // Sets the correct target
-//            CommunicationCommand *targetCommand = new CommunicationCommand();
-//            targetCommand->setCommandType(CommunicationCommandType::SET_TARGET);
-//            targetCommand->setTarget(pk->getName());
-//            targetCommand->setPayloadTemplate(payload);
-//            sendCommand(targetCommand);
-//            break;
-//        }
-//        case SENSOR: {
-//            // Sets the correct target
-//            CommunicationCommand *targetCommand = new CommunicationCommand();
-//            targetCommand->setCommandType(CommunicationCommandType::SET_TARGET);
-//            targetCommand->setTarget(pk->getName());
-//            targetCommand->setPayloadTemplate(payload);
-//            sendCommand(targetCommand);
-//            break;
-//        }
-//        case GROUND_STATION: {
-//            break;
-//        }
-//        }
-//    }
+    if(message != nullptr) {
+            switch(message->getSenderType()) {
+                case DRONE:
+                {
+                    // Sets the correct target
+                    CommunicationCommand *targetCommand = new CommunicationCommand();
+                    targetCommand->setCommandType(CommunicationCommandType::SET_TARGET);
+                    targetCommand->setTarget(pk->getName());
+                    targetCommand->setPayloadTemplate(payload);
+                    sendCommand(targetCommand);
+                    break;
+                }
+                case SENSOR:
+                {
+//                    CommunicationCommand *targetCommand = new CommunicationCommand();
+//                    targetCommand->setCommandType(CommunicationCommandType::SET_TARGET);
+//                    targetCommand->setTarget(pk->getName());
+//                    targetCommand->setPayloadTemplate(payload);
+//                    sendCommand(targetCommand);
+                    break;
+                }
+                case GROUND_STATION:
+                {
+                    break;
+                }
+            }
+        }
+
 } /* namespace gradys_simulations */
 
 // Redirects message to the proper function

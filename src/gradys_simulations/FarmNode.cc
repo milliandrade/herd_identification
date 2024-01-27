@@ -72,7 +72,9 @@ void FarmNode::actualizeSensorsUid(cModule *module) {
     std::string tmpUid = "default ID";
     //read bd and get the first numSensors oxen
 
-    std::ifstream myfile("tmp_uuid.txt");
+//    std::ifstream myfile("tmp_uuid.txt");
+    std::ifstream myfile("/home/lac/workspace/gradys-simulations/showcases/sim/quadrant_simulation/tmp_uuid.txt");
+
 
     if (myfile.is_open()) {
         while (myfile) {

@@ -32,8 +32,10 @@ namespace gradys_simulations {
 class MobileNode : public cModule  {
   protected:
     virtual void initialize() override;
+
     string mobileNodeUUid = "";
     string trackingUUid = "";
+
 };
 
 } //namespace

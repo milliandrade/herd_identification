@@ -72,13 +72,17 @@
  ../../inet4.5/src/inet/common/packet/chunk/FieldsChunk.h \
  gradys_simulations/protocols/mobile/../../applications/mamapp/BMeshPacket_m.h \
  ../../inet4.5/src/inet/linklayer/common/MacAddress_m.h \
- gradys_simulations/protocols/mobile/QuadrantDroneProtocol.h \
+ gradys_simulations/protocols/mobile/HICADroneProtocol.h \
  gradys_simulations/protocols/mobile/../base/CommunicationProtocolBase.h \
  gradys_simulations/protocols/messages/internal/MobilityCommand_m.h \
+ gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h \
  gradys_simulations/protocols/messages/internal/CommunicationCommand_m.h \
  gradys_simulations/protocols/messages/internal/Telemetry_m.h \
- gradys_simulations/protocols/mobile/../messages/network/QuadrantMessage_m.h \
- ../../inet4.5/src/inet/common/geometry/common/Coord.h
+ gradys_simulations/protocols/mobile/../messages/network/HICAMessage_m.h \
+ ../../inet4.5/src/inet/common/geometry/common/Coord.h \
+ ../../inet4.5/src/inet/common/geometry/common/GeographicCoordinateSystem.h \
+ ../../inet4.5/src/inet/common/geometry/common/Quaternion.h \
+ ../../inet4.5/src/inet/common/geometry/common/EulerAngles.h
 
 ../../inet4.5/src/inet/common/ModuleAccess.h:
 
@@ -226,16 +230,24 @@ gradys_simulations/protocols/mobile/../../applications/mamapp/BMeshPacket_m.h:
 
 ../../inet4.5/src/inet/linklayer/common/MacAddress_m.h:
 
-gradys_simulations/protocols/mobile/QuadrantDroneProtocol.h:
+gradys_simulations/protocols/mobile/HICADroneProtocol.h:
 
 gradys_simulations/protocols/mobile/../base/CommunicationProtocolBase.h:
 
 gradys_simulations/protocols/messages/internal/MobilityCommand_m.h:
 
+gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.h:
+
 gradys_simulations/protocols/messages/internal/CommunicationCommand_m.h:
 
 gradys_simulations/protocols/messages/internal/Telemetry_m.h:
 
-gradys_simulations/protocols/mobile/../messages/network/QuadrantMessage_m.h:
+gradys_simulations/protocols/mobile/../messages/network/HICAMessage_m.h:
 
 ../../inet4.5/src/inet/common/geometry/common/Coord.h:
+
+../../inet4.5/src/inet/common/geometry/common/GeographicCoordinateSystem.h:
+
+../../inet4.5/src/inet/common/geometry/common/Quaternion.h:
+
+../../inet4.5/src/inet/common/geometry/common/EulerAngles.h:

@@ -2,7 +2,7 @@
 # OMNeT++/OMNEST Makefile for gradys_simulations_build
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep -o gradys_simulations_build -KINET4_5_PROJ=/home/lac/workspace/inet4.5 -DINET_IMPORT -I/mavlink -I/json -I/pybind11 -I/pybind11_json -I/gradys_simulations -I. -I/home/lac/workspace/gradys-simulations/src/gradys_simulations -I/home/lac/.pyenv/versions/3.11.4/include/python3.11 -I/home/lac/workspace/gradys-simulations/src/json/include -I/home/lac/workspace/gradys-simulations/src/pybind11_json/include -I/home/lac/workspace/gradys-simulations/src/pybind11/include -I$$\(INET4_5_PROJ\)/src -L$$\(INET4_5_PROJ\)/src -lpthread -lINET$$\(D\) -Xgradys-sim-prototype/build -Xjson/docs -Xjson/tests -Xjson/tools -Xpybind11/tests -Xpybind11_json/test -- /home/lac/.pyenv/versions/3.11.4/lib/libpython3.11.so.1.0
+#  opp_makemake -f --deep -o gradys_simulations_build -KINET4_5_PROJ=../../inet4.5 -DINET_IMPORT -I/mavlink -I/json -I/pybind11 -I/pybind11_json -I/gradys_simulations -I. -Igradys_simulations -I/home/lac/.pyenv/versions/3.11.4/include/python3.11 -Ijson/include -Ipybind11_json/include -Ipybind11/include -I$$\(INET4_5_PROJ\)/src -L$$\(INET4_5_PROJ\)/src -lpthread -lINET$$\(D\) -Xjson/docs -Xjson/tests -Xjson/tools -Xpybind11/tests -Xpybind11_json/test -- /home/lac/.pyenv/versions/3.11.4/lib/libpython3.11.so.1.0
 #
 
 # Name of target to be created (-o option)
@@ -26,11 +26,11 @@ INCLUDE_PATH = \
     -I/pybind11_json \
     -I/gradys_simulations \
     -I. \
-    -I/home/lac/workspace/gradys-simulations/src/gradys_simulations \
+    -Igradys_simulations \
     -I/home/lac/.pyenv/versions/3.11.4/include/python3.11 \
-    -I/home/lac/workspace/gradys-simulations/src/json/include \
-    -I/home/lac/workspace/gradys-simulations/src/pybind11_json/include \
-    -I/home/lac/workspace/gradys-simulations/src/pybind11/include \
+    -Ijson/include \
+    -Ipybind11_json/include \
+    -Ipybind11/include \
     -I$(INET4_5_PROJ)/src
 
 # Additional object and library files to link with
@@ -61,6 +61,7 @@ OBJS = \
     $O/gradys_simulations/mobility/DroneMobilityMav.o \
     $O/gradys_simulations/mobility/MAVLinkFileMobility.o \
     $O/gradys_simulations/mobility/MAVLinkRandomWaypointMobility.o \
+    $O/gradys_simulations/mobility/PythonDroneMobility.o \
     $O/gradys_simulations/mobility/base/MAVLinkMobilityBase.o \
     $O/gradys_simulations/mobility/failures/RandomFailureGenerator.o \
     $O/gradys_simulations/mobility/failures/SimpleConsumptionEnergy.o \
@@ -72,17 +73,20 @@ OBJS = \
     $O/gradys_simulations/protocols/base/CommunicationProtocolPythonBase.o \
     $O/gradys_simulations/protocols/ground/CentralizedQProtocolGround.o \
     $O/gradys_simulations/protocols/ground/DadcaProtocolGround.o \
+    $O/gradys_simulations/protocols/ground/HICAGroundProtocol.o \
     $O/gradys_simulations/protocols/ground/PythonGroundProtocol.o \
     $O/gradys_simulations/protocols/ground/QuadrantGroundProtocol.o \
     $O/gradys_simulations/protocols/ground/SimpleGroundProtocol.o \
     $O/gradys_simulations/protocols/mobile/CentralizedQProtocol.o \
     $O/gradys_simulations/protocols/mobile/DadcaProtocol.o \
+    $O/gradys_simulations/protocols/mobile/HICADroneProtocol.o \
     $O/gradys_simulations/protocols/mobile/PythonDroneProtocol.o \
     $O/gradys_simulations/protocols/mobile/QuadrantDroneProtocol.o \
     $O/gradys_simulations/protocols/mobile/SimpleDroneProtocol.o \
     $O/gradys_simulations/protocols/mobile/ZigzagProtocol.o \
     $O/gradys_simulations/protocols/sensor/CentralizedQProtocolSensor.o \
     $O/gradys_simulations/protocols/sensor/DadcaProtocolSensor.o \
+    $O/gradys_simulations/protocols/sensor/HICASensorProtocol.o \
     $O/gradys_simulations/protocols/sensor/PythonSensorProtocol.o \
     $O/gradys_simulations/protocols/sensor/QuadrantSensorProtocol.o \
     $O/gradys_simulations/protocols/sensor/SimpleSensorProtocol.o \
@@ -98,9 +102,12 @@ OBJS = \
     $O/gradys_simulations/linklayer/blemesh/BleMeshMacHeader_m.o \
     $O/gradys_simulations/protocols/messages/internal/CommunicationCommand_m.o \
     $O/gradys_simulations/protocols/messages/internal/MobilityCommand_m.o \
+    $O/gradys_simulations/protocols/messages/internal/PythonMobilityCommand_m.o \
     $O/gradys_simulations/protocols/messages/internal/Telemetry_m.o \
+    $O/gradys_simulations/protocols/messages/internal/TimerCommand_m.o \
     $O/gradys_simulations/protocols/messages/network/CentralizedQMessage_m.o \
     $O/gradys_simulations/protocols/messages/network/DadcaMessage_m.o \
+    $O/gradys_simulations/protocols/messages/network/HICAMessage_m.o \
     $O/gradys_simulations/protocols/messages/network/PythonMessage_m.o \
     $O/gradys_simulations/protocols/messages/network/QuadrantMessage_m.o \
     $O/gradys_simulations/protocols/messages/network/SimpleMessage_m.o \
@@ -112,9 +119,12 @@ MSGFILES = \
     gradys_simulations/linklayer/blemesh/BleMeshMacHeader.msg \
     gradys_simulations/protocols/messages/internal/CommunicationCommand.msg \
     gradys_simulations/protocols/messages/internal/MobilityCommand.msg \
+    gradys_simulations/protocols/messages/internal/PythonMobilityCommand.msg \
     gradys_simulations/protocols/messages/internal/Telemetry.msg \
+    gradys_simulations/protocols/messages/internal/TimerCommand.msg \
     gradys_simulations/protocols/messages/network/CentralizedQMessage.msg \
     gradys_simulations/protocols/messages/network/DadcaMessage.msg \
+    gradys_simulations/protocols/messages/network/HICAMessage.msg \
     gradys_simulations/protocols/messages/network/PythonMessage.msg \
     gradys_simulations/protocols/messages/network/QuadrantMessage.msg \
     gradys_simulations/protocols/messages/network/SimpleMessage.msg \
@@ -124,7 +134,7 @@ MSGFILES = \
 SMFILES =
 
 # Other makefile variables (-K)
-INET4_5_PROJ=/home/lac/workspace/inet4.5
+INET4_5_PROJ=../../inet4.5
 
 #------------------------------------------------------------------------------
 

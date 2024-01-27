@@ -1,0 +1,88 @@
+# Result files
+*.sca
+*.vci
+*.vec
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+gradys_simulations_build
+gradys_simulations_build_dbg
+
+# Ignore cache files
+**/cache/**
+
+# Ignore binary files
+/gradys_simulations/gradys_simulations
+/gradys_simulations/gradys_simulations_dbg
+out/**
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.exe
+*.o
+*.obj
+*.pdb
+*.idb
+*.manifest
+.qtenv.ini
+.qtenvrc
+.tkenvrc
+.tkenvlog
+.cmdenv-log
+netanim-trace.txt
+*.out
+/tmp/
+/.computed/
+*.DS_Store
+
+*_m.h
+*_m.cc
+*_sm.h
+*_sm.cc
+
+# IDE-specific
+.vscode/*
+.idea/*
+*.iml
+.pydevproject
+.pydevproject
+.settings/
+
+# Q Tables
+**/qtable*.json
+
+/.metadata/
+/doc/
+/out/

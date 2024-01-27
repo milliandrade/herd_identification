@@ -39,8 +39,7 @@
  ../../inet4.5/src/inet/common/packet/chunk/EncryptedChunk.h \
  ../../inet4.5/src/inet/common/packet/chunk/FieldsChunk.h \
  ../../inet4.5/src/inet/common/packet/chunk/SequenceChunk.h \
- ../../inet4.5/src/inet/common/packet/chunk/SliceChunk.h \
- gradys_simulations/protocols/messages/network/SimpleMessage_m.h
+ ../../inet4.5/src/inet/common/packet/chunk/SliceChunk.h
 
 gradys_simulations/protocols/messages/network/PythonMessage_m.h:
 
@@ -123,5 +122,3 @@ gradys_simulations/protocols/messages/network/PythonMessage_m.h:
 ../../inet4.5/src/inet/common/packet/chunk/SequenceChunk.h:
 
 ../../inet4.5/src/inet/common/packet/chunk/SliceChunk.h:
-
-gradys_simulations/protocols/messages/network/SimpleMessage_m.h:

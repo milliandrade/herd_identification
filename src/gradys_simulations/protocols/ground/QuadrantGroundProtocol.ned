@@ -17,10 +17,10 @@ package gradys_simulations.protocols.ground;
 
 import gradys_simulations.protocols.base.CommunicationProtocolBase;
 
-simple QuadrantGroundProtocol extends CommunicationProtocolBase
+simple HICAGroundProtocol extends CommunicationProtocolBase
 {
     parameters:
-        @class(QuadrantGroundProtocol);
+        @class(HICAGroundProtocol);
         @signal[dataLoad](type=long); // Declaration of dataLoad signal used to track current data load that the drone is carrying
         @signal[dronesIDs](type=string); // Declaration of dataLoad signal used to track the drones IDs
         @signal[oxenIDs](type=string); // Declaration of dataLoad signal used to track the oxen IDs
